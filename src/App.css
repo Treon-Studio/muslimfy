@@ -1,34 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  background-color: #fff;
-  --color-text: #000;
+  background-color: #000;
+  --color-text: #fff;
 }
 
 .Background {
   position: fixed;
-  background: #000;
-  box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.1) inset;
+  background: radial-gradient(
+    71.43% 62.3% at 46.43% 36.43%,
+    rgba(18, 229, 229, 0) 15%,
+    rgba(239, 155, 255, 0.3) 56.35%,
+    #ff6448 100%
+  );
+  box-shadow: 0px 12.93px 28.74px 0px #ffd28db2 inset;
   border-radius: 50%;
   width: 200vw;
-  height: 100vw;
-  top: -40vw;
-  left: -50vw;
-  transform: rotate(-10deg);
+  height: 200vw;
+  top: -60vw;
+  left: -14.27vw;
+  transform: rotate(15.25deg);
 }
 
-.Section {
-  padding-bottom: 20px;
-}
-
-.Highlight{
-  font-weight: 700;
-}
 .App {
-  width: 100%;
-  height: 100%;
+  position: relative;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  flex: 1;
-  position: absolute;
+  align-items: center;
+  justify-content: center;
 }
 
 text {
@@ -41,7 +43,6 @@ text {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-top: 20px;
   z-index: 100;
 }
 
@@ -87,10 +88,9 @@ text {
 
 .Content {
   display: flex;
-  flex: 1;
-  flex-direction: row;
-  justify-content: flex-end;
-  background-color: aquamarine;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .Arrow {
@@ -98,32 +98,14 @@ text {
   height: 24px;
 }
 
-.HeaderTitle {
-  font-size: 36px;
-  font-weight: 700;
-  color: #fff;
-}
-
-.HeaderSubtitle {
-  font-style: italic;
-  font-size: 22px;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: #fff;
-}
-
-.Welcome {
-  padding-bottom: 40px;
-}
-
-
 .Title {
-  font-size: 28px;
+  font-size: 36px;
   font-weight: 700;
 }
 
 .Subtitle {
-  font-size: 18px;
+  font-style: italic;
+  font-size: 22px;
   font-weight: 600;
   margin-bottom: 8px;
 }
@@ -131,10 +113,11 @@ text {
 .Description {
   font-size: 20px;
   color: rgba(255, 255, 255, 0.85);
+  margin: 15rpx;
 }
 
 .Hint {
   font-size: 12px;
   margin: 5px;
-  background-color: aquamarine;
+  color: rgba(255, 255, 255, 0.65);
 }

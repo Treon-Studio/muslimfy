@@ -1,40 +1,48 @@
-import { useEffect } from "@lynx-js/react";
-import Header from "./components/Header.jsx"; // Corrected extension and component name casing
-import "./App.css";
+import { useCallback, useEffect, useState } from '@lynx-js/react'
 
-export function App() {
+import './App.css'
+import arrow from './assets/arrow.png'
+import lynxLogo from './assets/lynx-logo.png'
+import reactLynxLogo from './assets/react-logo.png'
+
+export function App(props: {
+  onMounted?: () => void
+}) {
+  const [alterLogo, setAlterLogo] = useState(false)
+
   useEffect(() => {
-    console.info("Hello, ReactLynx");
-  }, []);
+    console.info('Hello, ReactLynx')
+    props.onMounted?.()
+  }, [])
+
+  const onTap = useCallback(() => {
+    'background only'
+    setAlterLogo(!alterLogo)
+  }, [alterLogo])
 
   return (
-    <page>
-      <view className="App">
-        <view className="Background" />
-        <Header />
-        <view style={{ marginTop: "80px", padding: "16px" }}>
-          <view className="Welcome">
-            <text className="Title">Welcome 👋</text>
+    <view>
+      <view className='Background' />
+      <view className='App'>
+        <view className='Banner'>
+          <view className='Logo' bindtap={onTap}>
+            {alterLogo
+              ? <image src={reactLynxLogo} className='Logo--react' />
+              : <image src={lynxLogo} className='Logo--lynx' />}
           </view>
-
-          <view className="Section">
-            <text className="Subtitle">Step 1: Try It</text>
-            <text>
-              Edit App.tsx to see changes. Shake or Press{" "}
-              <text className="Highlight">cmd + m</text> to open
-              developer tools.
-            </text>
-          </view>
-
-          <view className="Section">
-            <text className="Subtitle">Step 2: Debug</text>
-            <text>
-              Double tap <text className="Highlight">R</text> on your keyboard to
-              reload your app's code.
-            </text>
-          </view>
+          <text className='Title'>React</text>
+          <text className='Subtitle'>on Lynx</text>
         </view>
+        <view className='Content'>
+          <image src={arrow} className='Arrow' />
+          <text className='text-red-500'>Tap the logo and have!</text>
+          <text className='Hint'>
+            Edit<text style={{ fontStyle: 'italic' }}>{' src/App.tsx '}</text>
+            to see updates!
+          </text>
+        </view>
+        <view style={{ flex: 1 }}></view>
       </view>
-    </page>
-  );
+    </view>
+  )
 }
