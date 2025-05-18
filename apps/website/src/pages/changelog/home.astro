@@ -1,0 +1,36 @@
+---
+import { getCollection } from "astro:content";
+const allPosts = await getCollection("changelog");
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Entries from "@/components/changelog/Entries.astro";
+---
+
+<BaseLayout>
+  <section>
+    <div
+      class="items-center w-full px-8 py-12 mx-auto md:px-12 lg:px-24 max-w-7xl lg:py-36">
+      <h1
+        class="text-4xl lg:text-6xl        font-medium text-black">
+        Changelog
+      </h1>
+      <p class="mt-4  text-lg text-black/80 font-medium">
+        Updates, additions and improvements
+      </p>
+
+      <div class="mt-24 space-y-24">
+        {
+          allPosts.slice().map((post) => (
+            <Entries
+              url={"/changelog/" + post.slug}
+              page={post.data.page}
+              description={post.data.description}
+              alt={post.data.page}
+              image={post.data.image.url}
+              pubDate={post.data.pubDate.toString().slice(4, 15)}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,127 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import BlogPost from "@/components/BlogPost.astro";
+import EntriesOne from "@/components/blog/EntriesOne.astro";
+import { getCollection } from "astro:content";
+export async function getStaticPaths() {
+  const allPosts = await getCollection("posts");
+  const uniqueTags = [
+    ...new Set(allPosts.map((post) => post.data.tags).flat()),
+  ];
+  return uniqueTags.map((tag) => {
+    const filteredPosts = allPosts.filter((post) =>
+      post.data.tags.includes(tag)
+    );
+    return {
+      params: { tag },
+      props: { posts: filteredPosts },
+    };
+  });
+}
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+<BaseLayout pageTitle={tag}>
+  <section  class="bg-regent-500">
+    <div
+      class="items-center w-full mx-auto lg:px-16 max-w-7xl md:px-12 px-8 py-12 lg:py-32">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-end">
+        <div>
+          <span
+            class="w-auto text-base items-center inline-flex uppercase tracking-wide font-medium text-white">
+            <svg
+              class="w-6 h-6"
+              viewBox="0 0 147 148"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M77.0546 0.147949H69.9463V147.148H77.0546V0.147949Z"
+                fill="currentColor"></path>
+              <path
+                d="M77.0546 0.147949H69.9463V147.148H77.0546V0.147949Z"
+                fill="currentColor"
+                fill-opacity="0.2"></path>
+              <path d="M147 70.0938H0V77.2021H147V70.0938Z" fill="currentColor"
+              ></path>
+              <path
+                d="M147 70.0938H0V77.2021H147V70.0938Z"
+                fill="currentColor"
+                fill-opacity="0.2"></path>
+              <path
+                d="M24.0282 19.1578L19.002 24.1841L122.946 128.128L127.972 123.101L24.0282 19.1578Z"
+                fill="currentColor"></path>
+              <path
+                d="M24.0282 19.1578L19.002 24.1841L122.946 128.128L127.972 123.101L24.0282 19.1578Z"
+                fill="currentColor"
+                fill-opacity="0.2"></path>
+              <path
+                d="M122.946 19.1564L19.002 123.1L24.0282 128.126L127.972 24.1827L122.946 19.1564Z"
+                fill="currentColor"></path>
+              <path
+                d="M122.946 19.1564L19.002 123.1L24.0282 128.126L127.972 24.1827L122.946 19.1564Z"
+                fill="currentColor"
+                fill-opacity="0.2"></path>
+              <path
+                d="M6.7933 42.6484L4.11133 49.2314L140.248 104.695L142.93 98.1115L6.7933 42.6484Z"
+                fill="currentColor"></path>
+              <path
+                d="M6.7933 42.6484L4.11133 49.2314L140.248 104.695L142.93 98.1115L6.7933 42.6484Z"
+                fill="currentColor"
+                fill-opacity="0.2"></path>
+              <path
+                d="M97.9631 4.26955L42.5 140.406L49.083 143.088L104.546 6.95152L97.9631 4.26955Z"
+                fill="currentColor"></path>
+              <path
+                d="M97.9631 4.26955L42.5 140.406L49.083 143.088L104.546 6.95152L97.9631 4.26955Z"
+                fill="currentColor"
+                fill-opacity="0.2"></path>
+              <path
+                d="M140.41 42.8958L4.03809 97.7856L6.69233 104.38L143.064 49.4902L140.41 42.8958Z"
+                fill="currentColor"></path>
+              <path
+                d="M140.41 42.8958L4.03809 97.7856L6.69233 104.38L143.064 49.4902L140.41 42.8958Z"
+                fill="currentColor"
+                fill-opacity="0.2"></path>
+              <path
+                d="M49.3122 4.18875L42.7178 6.84229L97.5928 143.214L104.187 140.561L49.3122 4.18875Z"
+                fill="currentColor"></path>
+              <path
+                d="M49.3122 4.18875L42.7178 6.84229L97.5928 143.214L104.187 140.561L49.3122 4.18875Z"
+                fill="currentColor"
+                fill-opacity="0.2"></path>
+            </svg><span class="ml-4">Tag category</span>
+          </span>
+          <p
+            class="text-4xl lg:text-7xl        font-medium text-black mt-12 capitalize">
+            {tag}
+          </p>
+        </div>
+        <div class="lg:ml-auto">
+          <a
+            class="inline-flex items-center lg:text-xl justify-center w-auto lg:px-12 px-6 py-4 text-center text-black duration-200 bg-white font-medium rounded-full text-base focus:outline-none focus:ring-2 focus:ring-offset-2 hover:text-white focus:ring-regent-900 ring-offset-2 hover:bg-regent-900"
+            href="/">See all posts</a
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="grid gap-12 lg:gap-0 lg:grid-cols-2 items-center">
+      {
+        posts
+          .slice()
+          .map((post) => (
+            <EntriesOne
+              url={"/posts/" + post.slug}
+              title={post.data.title}
+              description={post.data.description}
+              alt={post.data.title}
+              pubDate={post.data.pubDate.toString().slice(0, 10)}
+              author={post.data.author}
+              image={post.data.image.url}
+            />
+          ))
+      }
+    </div>
+  </section>
+</BaseLayout>

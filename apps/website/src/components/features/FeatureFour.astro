@@ -1,0 +1,53 @@
+---
+const images = [
+  {
+    src: "/images/ui7.png",
+    bgColor: "bg-regent-500",
+    alt: "Description for ui7",
+  },
+  {
+    src: "/images/ui8.png",
+    bgColor: "bg-yellow-500",
+    alt: "Description for ui8",
+  },
+];
+---
+
+<section>
+  <div
+    class="items-center w-full px-8 py-12 mx-auto md:px-12 lg:px-24 max-w-7xl lg:pt-32">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-24 items-end">
+      <div>
+        <span class="uppercase tracking-wide font-medium text-regent-600">
+          ⏤ No hidden fees
+        </span>
+        <p class="mt-16 text-2xl lg:text-4xl text-black">
+          That's why we've made our product available at a price that's
+          affordable for everyone.
+        </p>
+      </div>
+      <div>
+        <p class="text-gray-500 text-lg lg:text-xl tracking-wide">
+          With a range of flexible pricing options and no hidden fees, you can
+          get all the features and benefits of our product without breaking the
+          bank.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-cols-2 mt-24 ">
+    {
+      images.map(({ src, bgColor, alt }) => (
+        <section class={`relative ${bgColor}`}>
+          <div class="overflow-hidden h-full">
+            <img
+              alt={alt}
+              src={src}
+              class="w-full"
+            />
+          </div>
+        </section>
+      ))
+    }
+  </div>
+</section>

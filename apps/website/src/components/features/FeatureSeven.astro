@@ -1,0 +1,87 @@
+---
+const items = [
+  {
+    title: "Intelligent analytics",
+    description:
+      "Unlock the power of data: get real-time insights with our advanced intelligent analytics tools.",
+  },
+  {
+    title: "Enhanced ",
+    description:
+      "Seamlessly work together: boost productivity and teamwork through our enhanced collaboration features.",
+  },
+  {
+    title: "Quick onboarding",
+    description:
+      "Start smoothly: experience a hassle-free onboarding process with our streamlined and user-friendly tools.",
+  },
+];
+---
+
+<section>
+  <div class="px-8 pt-12 mx-auto md:px-12 lg:px-24 max-w-7xl lg:pt-32">
+    <div>
+      <span class="uppercase tracking-wide font-medium text-regent-600">
+        ⏤ included
+      </span>
+      <p class="mt-16 text-2xl lg:text-4xl text-black">
+        Discover what Snowpeak includes and what is made of, you will find a ton
+        of demo pages and components.
+      </p>
+    </div>
+  </div>
+  <div class="mt-24">
+    <div class="grid gap-12 lg:gap-0 lg:grid-cols-2 items-center">
+      <section class="md:px-12 lg:px-40 2xl:px-24 px-8">
+        <p
+          class="text-2xl        lg:text-4xl text-black mt-12 lg:mt-0">
+          We protect your data.
+        </p>
+        <p class="mt-4 text-lg text-black/80">
+          Whether you're a beginner or an experienced programmer, our SaaS
+          product offers the tools you need to be successful.
+        </p>
+
+        <div class="mt-10">
+          <a
+            href="/"
+            class="inline-flex items-center lg:text-xl justify-center w-auto lg:px-12 px-6 py-4 text-center text-black duration-200 bg-regent-500 font-medium rounded-full text-base focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-regent-500 ring-offset-2 hover:bg-regent-100">
+            See all pages</a
+          >
+        </div>
+      </section>
+      <section class="relative bg-regent-500 overflow-hidden">
+        <div class="overflow-hidden h-full">
+          <img
+            alt="#_"
+            src="/images/ui9.png"
+            class="w-full"
+          />
+        </div>
+      </section>
+    </div>
+    <div class="px-8 py-12 mx-auto md:px-12 lg:px-24 max-w-7xl">
+      <ul
+        class="grid grid-cols-1 lg:mt-24 mt-12 gap-6 lg:gap-12 lg:grid-cols-3"
+        role="list">
+        {
+          items.map((item, index) => (
+            <li>
+              <div>
+                <span class="text-lg text-medium text-regent-600 font-mono">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <p class="text-black mt-8 font-medium lg:text-3xl text-xl">
+                  {item.title}
+                </p>
+              </div>
+              <p class="text-gray-500 mt-6 text-lg lg:text-xl tracking-wide">
+                {item.description}
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

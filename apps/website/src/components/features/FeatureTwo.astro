@@ -1,0 +1,72 @@
+---
+const features = [
+  {
+    title: "Intelligent analytics",
+    description:
+      "Unlock the power of data: get real-time insights with our advanced intelligent analytics tools.",
+  },
+  {
+    title: "Enhanced collaboration",
+    description:
+      "Seamlessly work together: boost productivity and teamwork through our enhanced collaboration features.",
+  },
+  {
+    title: "Quick onboarding",
+    description:
+      "Start smoothly: experience a hassle-free onboarding process with our streamlined and user-friendly tools.",
+  },
+  {
+    title: "Custom tips",
+    description:
+      "Tailored for you: discover more opportunities with our personalized recommendations and content.",
+  },
+  {
+    title: "Mobile optimization",
+    description:
+      "Stay connected anywhere: enjoy seamless access and user-friendly interface with our mobile optimization.",
+  },
+  {
+    title: "Advanced security",
+    description:
+      "Your data, fortified: rest easy knowing your information is protected by our state-of-the-art advanced security features.",
+  },
+];
+---
+
+<section>
+  <div class="px-8 py-12 mx-auto md:px-12 lg:px-24 max-w-7xl lg:py-32">
+    <div>
+      <span
+        class="uppercase tracking-wide font-medium text-regent-600">
+        ⏤ Control tour business
+      </span>
+      <p class="mt-16 text-2xl    lg:text-4xl text-black">
+        See everything at a glance and take control of your business like never
+        before! With our cutting-edge intuitive dashboard, you can effortlessly
+        manage every aspect of your operations, empowering you to make informed
+        decisions and drive success.
+      </p>
+    </div>
+    <ul
+      class="grid md:grid-cols-2 lg:mt-24 mt-12 gap-6 lg:gap-12 lg:grid-cols-3"
+      role="list">
+      {
+        features.map((feature, index) => (
+          <li>
+            <div>
+              <span class="text-lg text-medium text-regent-600 font-mono">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <p class="text-black mt-8 font-medium lg:text-3xl text-xl">
+                {feature.title}
+              </p>
+            </div>
+            <p class="text-gray-500 mt-6 text-lg lg:text-xl tracking-wide">
+              {feature.description}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

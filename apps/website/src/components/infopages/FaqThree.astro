@@ -1,0 +1,87 @@
+---
+const faqs = [
+  {
+    category: "Miscelanea",
+    categoryClass: "bg-regent-100 text-regent-800",
+    focusClass: "focus:text-regent-600",
+    items: [
+      {
+        question: "How do I get started with your service?",
+        answer:
+          "To get started with our service, simply visit our website and sign up for an account. From there, you can explore our products and services and choose the ones that best meet your needs.",
+      },
+      {
+        question: "What types of payment do you accept?",
+        answer:
+          "We accept a variety of payment methods, including credit cards, PayPal, and bank transfers. You can choose the method that works best for you during the checkout process.",
+      },
+      {
+        question: "What is your refund policy?",
+        answer:
+          "We offer a 30-day money-back guarantee on most of our products and services. If you're not satisfied with your purchase, simply contact us within 30 days and we'll refund your money, no questions asked.",
+      },
+    ],
+  },
+  {
+    category: "Account",
+    categoryClass: "bg-lila-100 text-lila-800",
+    focusClass: "focus:text-lila-600",
+    items: [
+      {
+        question: "How long does it take to receive my order?",
+        answer:
+          "The time it takes to receive your order depends on the product or service you've purchased. Most orders are processed and delivered within a few business days, but some may take longer. You can check the estimated delivery time during the checkout process.",
+      },
+      {
+        question: "Do you offer customer support?",
+        answer:
+          "Yes, we offer customer support via email, phone, and live chat. Our team is available to answer any questions or concerns you may have and provide assistance whenever you need it.",
+      },
+      {
+        question: "Can I cancel my subscription at any time?",
+        answer:
+          "Yes, you can cancel your subscription at any time by logging into your account and following the cancellation process. Please note that some subscriptions may require a certain amount of notice before cancellation.",
+      },
+    ],
+  },
+];
+---
+
+<section>
+  <div class="px-8 py-12 mx-auto md:px-12 lg:px-24 max-w-7xl lg:py-32">
+    <div>
+      <span class="uppercase tracking-wide font-medium text-regent-600">
+        ⏤ frequently asked questions
+      </span>
+      <p class="mt-16 text-2xl lg:text-4xl text-black">FAQ</p>
+    </div>
+
+    <div class="col-span-2 space-y-24 mt-12 lg:mt-24">
+      {
+        faqs.map((faq) => (
+          <div>
+            <span
+              class={`inline-flex items-center rounded-full px-3 py-0.5 text-sm font-medium ${faq.categoryClass}`}
+            >
+              {faq.category}
+            </span>
+            <div class="mt-6 divide-y divide-gray-200 space-y-3">
+              {faq.items.map((item) => (
+                <details>
+                  <summary
+                    class={`text-black text-base lg:text-2xl cursor-pointer font-medium  ${faq.focusClass}      i py-3 text-left w-full`}
+                  >
+                    {item.question}
+                  </summary>
+                  <p class="text-gray-500 text-sm pt-5 lg:text-xl">
+                    {item.answer}
+                  </p>
+                </details>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

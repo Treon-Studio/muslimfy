@@ -1,0 +1,22 @@
+---
+const { customer, feedback, logo, url } = Astro.props;
+---
+<div class="grid md:grid-cols-2 lg:grid-cols-5 py-8 lg:py-12 items-start">
+  <img
+    class="invert"
+    src={logo}
+    alt={customer}
+  />
+  <div class="lg:col-span-3">
+    <p
+      class="text-black/80 text-lg lg:text-xl tracking-wid font-medium text-pretty">
+     "<em> {feedback}</em>"
+    </p>
+  </div>
+  <a
+    href={url}
+    title={customer}
+    class="inline-flex lg:ml-auto items-center font-medium text-lg justify-center overflow-hidden text-regent-600 hover:text-black duration-200">
+    Read story &nbsp; &nbsp; &rarr;
+  </a>
+</div>

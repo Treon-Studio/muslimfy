@@ -1,0 +1,68 @@
+/*
+// Copyright 2024 The Lynx Authors. All rights reserved.
+// Licensed under the Apache License Version 2.0 that can be found in the
+// LICENSE file in the root directory of this source tree.
+*/
+x-viewpager-ng, x-viewpager-item-ng {
+  display: none;
+}
+
+x-viewpager-ng:defined,
+x-viewpager-ng > x-viewpager-item-ng:defined,
+x-viewpager-ng > lynx-wrapper > x-viewpager-item-ng:defined {
+  display: flex;
+}
+
+x-viewpager-ng {
+  flex-direction: row;
+  contain: content;
+  width: 100%;
+  height: 100%;
+  overflow-x: scroll;
+  overflow-y: clip;
+  scrollbar-width: 0;
+  flex-direction: row;
+  --lynx-linear-orientation: horizontal;
+  scroll-snap-type: x mandatory;
+  scroll-snap-stop: always;
+}
+
+x-viewpager-ng[allow-horizontal-gesture="false"],
+x-viewpager-ng[enable-scroll="false"] {
+  overflow-x: hidden;
+}
+
+x-viewpager-ng::-webkit-scrollbar {
+  display: none;
+}
+
+x-viewpager-ng::part(content) {
+  scroll-snap-align: start;
+}
+
+x-viewpager-ng[bounces]::part(bounce-padding) {
+  display: flex;
+}
+
+@supports not (overflow: clip) {
+  x-viewpager-ng {
+    overflow-y: hidden;
+  }
+}
+
+x-viewpager-item-ng {
+  width: 100%;
+  height: 100%;
+  contain: content;
+  flex: 0 0 auto;
+  --flex-grow: 0;
+  --flex-shrink: 0;
+  --flex-basis: auto;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  position: relative !important;
+}
+
+x-viewpager-item-ng:nth-child(n+5) {
+  contain: strict;
+}

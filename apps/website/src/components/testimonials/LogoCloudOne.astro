@@ -1,0 +1,29 @@
+---
+const logos = [
+  { src: "/logos/basecamp.svg", alt: "Basecamp logo" },
+  { src: "/logos/dribbble.svg", alt: "Dribbble logo" },
+  { src: "/logos/stripe.svg", alt: "Stripe logo" },
+  { src: "/logos/pipe.svg", alt: "Pipe logo" },
+  { src: "/logos/github.svg", alt: "GitHub logo" },
+];
+---
+<section>
+  <div
+    class="max-w-7xl px-8 md:px-12 lg:px-24 mx-auto py-6 justify-center">
+
+    <div
+      class="mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5">
+      {
+        logos.map((logo, index) => (
+          <img
+            class={`col-span-2 max-h-12 invert w-full object-contain ${index === 3 ? "sm:col-start-2" : ""} ${index === 4 ? "col-start-2 sm:col-start-auto" : ""} lg:col-span-1`}
+            src={logo.src}
+            alt={logo.alt}
+            width="158"
+            height="48"
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>

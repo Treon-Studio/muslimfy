@@ -1,0 +1,128 @@
+---
+const introContent = {
+  paragraphs: [
+    "Welcome to Snowpeak! We are a company that specializes in providing high-quality products and services for outdoor enthusiasts. Whether you're an avid hiker, camper, or skier, we have everything you need to enjoy the great outdoors.",
+    "Our team of experienced professionals is dedicated to delivering exceptional customer service and ensuring that your experience with us is nothing short of amazing. At Snowpeak, we are committed to helping you make the most of your outdoor adventures, so join us today and let us help you discover the beauty of nature.",
+  ],
+};
+
+const statsItems = [
+  {
+    label: "Emails Dispatched",
+    value: "99 million",
+  },
+  {
+    label: "Popcorn Produced",
+    value: "$200 trillion",
+  },
+  {
+    label: "New Subscribers",
+    value: "214,365",
+  },
+];
+const ourValues = [
+  {
+    title: "Be exceptional",
+    description:
+      "Do your best to be the best. Strive for excellence in everything you do, and never settle for mediocrity.",
+  },
+  {
+    title: "Share your knowledge",
+    description:
+      "Share your knowledge and expertise with others. Collaboration and knowledge-sharing are key to personal and professional growth.",
+  },
+  {
+    title: "Continuously learn",
+    description:
+      "Keep learning and growing, both personally and professionally. Be curious and open-minded, and never stop seeking new knowledge.",
+  },
+  {
+    title: "Be supportive",
+    description:
+      "Support and uplift others, and create a positive and inclusive environment where everyone feels valued and respected.",
+  },
+  {
+    title: "Take ownership",
+    description:
+      "Take responsibility for your actions and their consequences. Be accountable and own up to your mistakes, and work towards finding solutions.",
+  },
+  {
+    title: "Find balance",
+    description:
+      "Make time for yourself and prioritize self-care. Take breaks and enjoy your downtime, and find a healthy balance between work and life.",
+  },
+];
+---
+
+<section>
+  <div
+    class="items-center w-full px-8 py-12 mx-auto md:px-12 lg:px-16 max-w-7xl lg:py-32">
+    <div>
+      <span class="uppercase tracking-wide font-medium text-regent-600">
+        ⏤ about
+      </span>
+      <div class="text-2xl lg:text-4xl mt-16 space-y-8 text-black">
+        {introContent.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </div>
+    <div class="bg-white py-12 w-full">
+      <dl class="grid grid-cols-1 gap-x-8 gap-y-16 text-center md:grid-cols-3">
+        {
+          statsItems.map((item) => (
+            <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+              <dd class="order-first text-regent-600 mt-8 font-medium lg:text-4xl text-xl font-mono">
+                {item.value}
+              </dd>
+              <dt class="text-base leading-7 text-black">{item.label}</dt>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </div>
+</section>
+<section class="relative overflow-hidden">
+  <div class="grid grid-cols-2">
+    <section class="relative">
+      <div class="overflow-hidden h-full">
+        <img
+          alt="#_"
+          src="https://images.unsplash.com/photo-1600275669439-14e40452d20b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8b2ZmaWNlfGVufDB8MXwwfHw%3D&auto=format&fit=crop&w=800&q=60"
+          class="w-full"
+        />
+      </div>
+    </section><section class="relative">
+      <div class="overflow-hidden h-full">
+        <img
+          alt="#_"
+          src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
+          class="w-full"
+        />
+      </div>
+    </section>
+  </div>
+  <div
+    class="items-center w-full px-8 py-12 mx-auto md:px-12 lg:px-16 max-w-7xl lg:py-32">
+    <span class="uppercase tracking-wide font-medium text-regent-600">
+      ⏤ our values
+    </span>
+    <ul
+      class="grid grid-cols-1 lg:mt-24 mt-12 gap-6 lg:gap-12 lg:grid-cols-3 list-none"
+      role="list">
+      {
+        ourValues.map((value) => (
+          <li>
+            <div>
+              <p class="text-black font-medium lg:text-3xl text-xl">
+                {value.title}
+              </p>
+            </div>
+            <p class="text-gray-500 mt-6 text-lg lg:text-xl tracking-wide">
+              {value.description}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

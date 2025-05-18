@@ -1,0 +1,48 @@
+---
+import { getCollection } from "astro:content";
+const allPosts = await getCollection("integrations");
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import CtaFour from "@/components/cta/CtaFour.astro";
+import Entries from "@/components/integrations/Entries.astro";
+---
+
+<BaseLayout>
+  <section>
+    <div class="px-8 py-12 mx-auto md:px-12 lg:px-24 max-w-7xl lg:py-32">
+      <span class="uppercase tracking-wide font-medium text-regent-600">
+        ⏤ Limitless apps, infinite possibilities
+      </span>
+      <p class="mt-16 text-2xl lg:text-4xl text-black text-balance">
+        Take your Snowpeak experience to the next level by incorporating a
+        diverse range of supplementary features and integrations. Whether you
+        require essential tools for everyday tasks or advanced functionalities
+        for professional workflows, we have got you covered.
+      </p>
+      <div class="p-4 lg:p-8 border-x mt-24 border-t border-gray-100">
+        <span class="text-black font-medium text-xl block">
+          Finance integrations
+        </span>
+        <span class="text-gray-500 mt-2 ttracking-wide block"
+          >Seamlessly integrate your engineering workflows</span
+        >
+      </div>
+      <ul
+        class="grid grid-cols-1 lg:grid-cols-3 list-none gap-px bg-gray-100 border border-gray-100"
+        role="list">
+        {
+          allPosts.slice().map((post) => (
+            <Entries
+              url={"/integrations/" + post.slug}
+              integration={post.data.integration}
+              description={post.data.description}
+              alt={post.data.integration}
+              permissions={post.data.permissions}
+              logo={post.data.logo.url}
+            />
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+  <CtaFour />
+</BaseLayout>

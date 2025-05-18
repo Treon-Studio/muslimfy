@@ -1,0 +1,134 @@
+---
+const pricingPlans = [
+  {
+    name: "Hobby",
+    audience: "For individuals",
+    price: "$49",
+    features: [
+      "Limited  users",
+      "Limited storage (1 GB)",
+      "Basic support ",
+      "Basic analytics",
+      "Limited integrations",
+      "Basic customization",
+      "No SLA",
+    ],
+    bgColor: "bg-white",
+    btnColor: "bg-regent-500 hover:bg-regent-100 text-black",
+  },
+  {
+    name: "Pro",
+    audience: "For medium businesses",
+    price: "$99",
+    features: [
+      "Up to 10 users",
+      "5 GB of storage",
+      "Priority support ",
+      "Enhanced analytics",
+      "Multiple integrations",
+      "Customization options",
+      "Basic SLA",
+    ],
+    bgColor: "bg-yellow-500",
+    btnColor: "bg-white hover:bg-regent-900 hover:text-white text-black",
+  },
+  {
+    name: "Enterprise",
+    audience: "For organizations",
+    price: "$129",
+    features: [
+      "Unlimited  users",
+      "Unlimited storage",
+      "24/7 support",
+      "Advanced analytics",
+      "API access",
+      "Advanced customization",
+      "99.9% uptime SLA",
+    ],
+    bgColor: "bg-regent-400",
+    btnColor: "bg-white hover:bg-regent-900 hover:text-white text-black",
+  },
+  {
+    name: "Unlimited",
+    audience: "Most advanced features.",
+    price: "$299",
+    features: [
+      "Unlimited  users",
+      "Unlimited storage",
+      "Dedicated support team",
+      "Comprehensive analytics ",
+      "Unlimited integrations",
+      "Full customization",
+      "99.99% uptime SLA",
+    ],
+    bgColor: "bg-lila-500",
+    btnColor: "bg-white hover:bg-regent-900 hover:text-white text-black",
+  },
+];
+---
+
+<section>
+  <div
+    class="items-center w-full px-8 py-12 mx-auto md:px-12 lg:px-16 max-w-7xl lg:py-32">
+    <div
+      class="items-center w-full px-8 py-12 mx-auto md:px-12 lg:px-24 max-w-7xl lg:pt-36 lg:pb-0">
+      <div class="max-w-6xl lg:mx-auto lg:text-center">
+        <span
+          class="text-base items-center inline-flex uppercase tracking-wide font-medium text-regent-600">
+          Accessible pricing
+        </span>
+        <p
+          class="text-2xl sm:text-3xl md:text-5xl lg:text-7xl        font-medium text-black">
+          Empowering your <span class="lg:block"> efficiency journey</span>
+        </p><p class="max-w-xl mt-4 text-lg text-black/80 mx-auto">
+          Choose the perfect plan tailored to meet your unique business needs
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="grid md:grid-cols-2 xl:grid-cols-4 mx-auto 2xl:max-w-7xl">
+    {
+      pricingPlans.map((plan) => (
+        <section class={`flex flex-col h-full justify-between p-8 ${plan.bgColor}`}>
+          <div>
+            <h3 class="mt-5 text-lg text-black lg:text-2xl font-medium">
+              {plan.name}
+            </h3>
+            <p class="text-sm text-black mt-2">{plan.audience}</p>
+            <p class="text-black font-medium text-5xl        order-first">
+              {plan.price}
+            </p>
+            <ul
+              class="text-lg flex flex-col gap-y-3 order-last mt-10 text-black"
+              role="list">
+              {plan.features.map((feature) => (
+                <li class="flex items-center">
+                  <svg
+                    class="size-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    stroke="currentColor"
+                    stroke-width="1.5">
+                    <path
+                      d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <span class="ml-4">{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="mt-8 w-full order-last">
+            <button
+              class={`inline-flex items-center lg:text-xl justify-center w-full px-6 py-4 text-center duration-200 font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-regent-900 ring-offset-2 ${plan.btnColor}`}>
+              Get started
+            </button>
+          </div>
+        </section>
+      ))
+    }
+  </div>
+</section>
