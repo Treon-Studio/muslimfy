@@ -1,0 +1,64 @@
+---
+const sections = [
+  {
+    src: "/images/ui9.png",
+    bgColor: "bg-regent-500",
+    alt: "Description for ui9",
+  },
+  {
+    src: "/images/ui10.png",
+    bgColor: "bg-red-300",
+    alt: "Description for ui10",
+  },
+  {
+    src: "/images/ui12.png",
+    bgColor: "bg-yellow-500",
+    alt: "Description for ui12",
+  },
+  {
+    src: "/images/ui11.png",
+    bgColor: "bg-lila-500",
+    alt: "Description for ui11",
+  },
+];
+---
+
+<section>
+  <div class="px-8 pt-12 mx-auto md:px-12 lg:px-24 max-w-7xl lg:pt-32">
+    <div
+      class="grid grid-cols-1 lg:grid-cols-2 items-start gap-24 lg:items-end">
+      <div>
+        <span class="uppercase tracking-wide font-medium text-regent-600">
+          ⏤ automation
+        </span>
+        <p class="mt-16 text-2xl lg:text-4xl text-black">
+          Simplify tasks with our automated workflows
+        </p>
+      </div>
+      <div>
+        <p class="text-gray-500 text-lg lg:text-xl tracking-wide">
+          In today's fast-paced world, maximizing efficiency is crucial to stay
+          competitive and achieve success. At Snow Peak, we understand the value
+          of your time and resources. That's why we are proud to introduce our
+          cutting-edge automated workflows, designed to streamline your
+          processes and boost productivity like never before.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="grid md:grid-cols-2 mt-24">
+    {
+      sections.map(({ src, bgColor, alt }) => (
+        <section class={`relative ${bgColor}`}>
+          <div class="overflow-hidden h-full">
+            <img
+              alt={alt}
+              src={src}
+              class="w-full"
+            />
+          </div>
+        </section>
+      ))
+    }
+  </div>
+</section>

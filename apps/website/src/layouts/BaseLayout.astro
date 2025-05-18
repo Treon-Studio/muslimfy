@@ -1,0 +1,18 @@
+---
+import BaseHead from "@/components/BaseHead.astro";
+import { Footer } from '@packages/ui/components/layouts/footers/footer-ketuju';
+import { Navigation } from '@packages/ui/components/layouts/headers/header-ketuju';
+import Config from "../../site.config.js";
+import "@packages/ui/globals.css"
+---
+
+<html lang="en">
+  <head>
+    <BaseHead />
+  </head>
+  <body class="mx-auto flex flex-col min-h-svh">
+    <Navigation client:visible/>
+    <main class="grow"><slot /></main>
+    <Footer productName={Config.title} description={Config.description} />
+  </body>
+</html>

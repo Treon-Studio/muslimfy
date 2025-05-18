@@ -1,0 +1,66 @@
+---
+import { getCollection } from "astro:content";
+const allPosts = await getCollection("posts");
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import EntriesOne from "@/components/blog/EntriesOne.astro";
+import CtaThree from "@/components/cta/CtaThree.astro";
+---
+
+<BaseLayout>
+  <section class="bg-regent-500">
+    <div
+      class="relative w-full mx-auto max-w-7xl items-center py-12 lg:px-24 lg:py-24 md:px-12 px-5">
+      <p class="text-2xl md:text-5xl lg:text-8xl font-medium text-black">
+        Short and entertaining <span class="lg:block">
+          writings from our tam</span
+        >
+      </p><p class="font-medium mt-4 text-lg text-black/80 text-balance w-1/2">
+        We help sales teams increase their outbound with scalable and high
+        quality customized emails for every prospect.
+      </p>
+      <form class="mt-10 flex w-full max-w-lg">
+        <div class="mt-3 flex w-full gap-1 text-center">
+          <label
+            for="email"
+            class="sr-only"
+            >Email Address</label
+          >
+          <input
+            id="email"
+            name="email"
+            type="email"
+            class="lg:px-12 px-6 py-4 bg-white text-center placeholder-gray-400 border border-gray-300 duration-200 focus:outline-none focus:ring focus:ring-regent-100 focus:border-regent-300 w-full rounded-full"
+            placeholder="Enter your email..."
+            required
+            aria-required="true"
+          />
+          <button
+            type="submit"
+            class="inline-flex items-center lg:text-xl justify-center w-auto lg:px-12 px-6 py-4 text-center text-black duration-200 bg-white font-medium rounded-full text-base focus:outline-none focus:ring-2 focus:ring-offset-2 hover:text-white focus:ring-regent-900 ring-offset-2 hover:bg-regent-900"
+            aria-label="Subscribe to newsletter">
+            Subscribe
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+  <section>
+    <div class="grid gap-12 lg:gap-0 lg:grid-cols-2 items-center">
+      {
+        allPosts.slice().map((post) => (
+          <EntriesOne
+            url={"/posts/" + post.slug}
+            title={post.data.title}
+            description={post.data.description}
+            alt={post.data.title}
+            pubDate={post.data.pubDate.toString().slice(0, 10)}
+            author={post.data.author}
+            image={post.data.image.url}
+            avatar={post.data.avatar.url}
+          />
+        ))
+      }
+    </div>
+  </section>
+  <CtaThree />
+</BaseLayout>

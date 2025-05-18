@@ -1,0 +1,319 @@
+/*
+// Copyright 2024 The Lynx Authors. All rights reserved.
+// Licensed under the Apache License Version 2.0 that can be found in the
+// LICENSE file in the root directory of this source tree.
+*/
+x-swiper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap !important;
+  overflow: hidden;
+  overflow-x: scroll;
+  overflow-y: clip;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  contain: content;
+  justify-content: flex-start;
+  timeline-scope:
+    --x-swiper-item-0,
+    --x-swiper-item-1,
+    --x-swiper-item-2,
+    --x-swiper-item-3,
+    --x-swiper-item-4;
+}
+
+x-swiper::part(content) {
+  --page-margin: 0px;
+  --next-margin: 0px;
+  --previous-margin: 0px;
+}
+
+x-swiper,
+x-swiper::part(content),
+x-swiper::part(slot),
+x-swiper::part(slot-start),
+x-swiper::part(slot-end) {
+  --lynx-display: linear;
+  --lynx-display-toggle: var(--lynx-display-linear);
+}
+
+/**
+ * The scroll-view would always be a linear container
+ * see linear.css
+ */
+x-swiper > *, x-swiper > lynx-wrapper > * {
+  flex-shrink: 0;
+  flex-grow: calc(var(--lynx-linear-weight) / var(--lynx-linear-weight-sum));
+  flex-basis: var(--lynx-linear-weight-basis);
+  align-self: var(--align-self-column);
+}
+
+x-swiper::-webkit-scrollbar {
+  display: none;
+}
+
+x-swiper[vertical] {
+  overflow-x: clip;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  flex-direction: column !important;
+  --lynx-linear-orientation: vertical;
+  --lynx-linear-orientation-toggle: var(--lynx-linear-orientation-vertical);
+}
+
+x-swiper[bounces]:not([circular])::part(bounce-padding) {
+  display: initial;
+}
+
+x-swiper-item {
+  scroll-snap-align: start;
+  animation-duration: 10ms;
+  flex-shrink: 0 !important;
+  flex-grow: calc(var(--lynx-linear-weight) / var(--lynx-linear-weight-sum))
+    !important;
+  flex-basis: var(--lynx-linear-weight-basis) !important;
+}
+
+x-swiper-item:nth-child(n+5) {
+  contain: strict;
+  content-visibility: auto;
+}
+
+x-swiper-item:nth-child(1) {
+  view-timeline-name: --x-swiper-item-0;
+}
+x-swiper-item:nth-child(2) {
+  view-timeline-name: --x-swiper-item-1;
+}
+x-swiper-item:nth-child(3) {
+  view-timeline-name: --x-swiper-item-2;
+}
+x-swiper-item:nth-child(4) {
+  view-timeline-name: --x-swiper-item-3;
+}
+x-swiper-item:nth-child(5) {
+  view-timeline-name: --x-swiper-item-4;
+}
+
+x-swiper > *:not(x-swiper-item) {
+  display: none;
+}
+
+x-swiper > x-swiper-item {
+  width: calc(
+    100% - 2 * var(--page-margin) - var(--previous-margin) - var(--next-margin)
+  ) !important;
+  height: 100%;
+  view-timeline-axis: inline;
+  animation-timeline: view(inline);
+}
+
+x-swiper[vertical] > x-swiper-item {
+  width: 100%;
+  height: calc(
+    100% - 2 * var(--page-margin) - var(--previous-margin) - var(--next-margin)
+  ) !important;
+  view-timeline-axis: block;
+  animation-timeline: view(block);
+}
+
+/* circular */
+
+x-swiper[circular] {
+  overflow-y: clip;
+  overflow-x: hidden;
+  scroll-snap-type: none;
+}
+
+x-swiper[circular][vertical] {
+  overflow-y: hidden;
+  overflow-x: clip;
+}
+/* indicator */
+x-swiper[indicator-dots]::part(indicator-container) {
+  display: none;
+}
+
+x-swiper::part(indicator-container) {
+  --indicator-size: 0.6rem;
+  --indicator-container-margin: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  overflow: clip;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  width: 100%;
+  height: var(--indicator-size);
+  contain: strict;
+  margin-bottom: var(--indicator-container-margin);
+  --indicator-color: #ffffff4d;
+  --indicator-active-color: white;
+}
+
+x-swiper[vertical]::part(indicator-container) {
+  flex-direction: column;
+  left: unset;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: var(--indicator-size);
+  margin-bottom: 0;
+  margin-right: var(--indicator-container-margin);
+}
+
+/* scroll driven animation, chromium 115, firefox positive, safari positive */
+x-swiper::part(indicator-item) {
+  background-color: var(--indicator-color);
+  flex: 0 0 var(--indicator-size);
+  margin: 0 calc(var(--indicator-size) / 5) 0 calc(var(--indicator-size) / 5);
+  border-radius: 100%;
+  animation-name: indicator-dot;
+  animation-duration: 100ms;
+}
+
+x-swiper[vertical]::part(indicator-item) {
+  margin: calc(var(--indicator-size) / 5) 0 calc(var(--indicator-size) / 5) 0;
+}
+
+/* mode carousel */
+x-swiper[mode="carousel"]:not([vertical]) > x-swiper-item {
+  width: calc(
+    80% - 2 * var(--page-margin) - var(--previous-margin) - var(--next-margin)
+  ) !important;
+}
+
+x-swiper[mode="carousel"][vertical] > x-swiper-item {
+  height: calc(
+    80% - 2 * var(--page-margin) - var(--previous-margin) - var(--next-margin)
+  ) !important;
+}
+
+x-swiper[mode="carousel"]:not([circular]) > x-swiper-item:last-child {
+  margin-right: 20%;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  /* webkit bug */
+  x-swiper[mode="carousel"]::part(content)::after {
+    content: "";
+    padding-right: 20%;
+  }
+}
+
+/* mode coverflow */
+x-swiper[mode="coverflow"]::part(content) {
+  perspective: 200px;
+}
+x-swiper[mode="coverflow"] > x-swiper-item {
+  scroll-snap-align: center;
+  animation-name: x-swiper-coverflow;
+  transform-style: preserve-3d;
+  z-index: 0;
+}
+x-swiper[mode="coverflow"]:not([vertical]) > x-swiper-item {
+  animation-name: x-swiper-coverflow-horizontal;
+  width: calc(
+    60% - 2 * var(--page-margin) - var(--previous-margin) - var(--next-margin)
+  ) !important;
+}
+x-swiper[mode="coverflow"][vertical] > x-swiper-item {
+  animation-name: x-swiper-coverflow-vertical;
+  height: calc(
+    60% - 2 * var(--page-margin) - var(--previous-margin) - var(--next-margin)
+  ) !important;
+}
+x-swiper[mode="coverflow"]:not([circular]):not([vertical])
+  > x-swiper-item:first-child {
+  margin-left: 20%;
+}
+x-swiper[mode="coverflow"]:not([circular]):not([vertical])
+  > x-swiper-item:last-child {
+  margin-right: 20%;
+}
+x-swiper[mode="coverflow"][vertical]:not([circular])
+  > x-swiper-item:first-child {
+  margin-top: 20%;
+}
+x-swiper[mode="coverflow"][vertical]:not([circular])
+  > x-swiper-item:last-child {
+  margin-bottom: 20%;
+}
+
+@keyframes x-swiper-coverflow-horizontal {
+  25% {
+    transform: rotateY(-50deg) scale(0.8);
+  }
+  45%, 55% {
+    transform: rotateY(0deg) scale(1);
+    z-index: 1;
+  }
+  100% {
+    transform: rotateY(40deg) scale(0.8);
+  }
+}
+@keyframes x-swiper-coverflow-vertical {
+  25% {
+    transform: rotateX(-50deg) scale(0.8);
+  }
+  45%, 55% {
+    transform: rotateX(0deg) scale(1);
+    z-index: 1;
+  }
+  100% {
+    transform: rotateX(40deg) scale(0.8);
+  }
+}
+
+/* mode flat-coverflow */
+
+x-swiper[mode="flat-coverflow"] > x-swiper-item {
+  scroll-snap-align: center;
+}
+
+x-swiper[mode="flat-coverflow"]:not([vertical]) > x-swiper-item {
+  width: 60% !important;
+}
+x-swiper[mode="flat-coverflow"]:not([circular]):not([vertical])
+  > x-swiper-item:first-child {
+  margin-left: 20%;
+}
+x-swiper[mode="flat-coverflow"]:not([circular]):not([vertical])
+  > x-swiper-item:last-child {
+  margin-right: 20%;
+}
+
+x-swiper[mode="flat-coverflow"][vertical] > x-swiper-item {
+  height: 60% !important;
+}
+x-swiper[mode="flat-coverflow"][vertical]:not([circular])
+  > x-swiper-item:first-child {
+  margin-top: 20%;
+}
+x-swiper[mode="flat-coverflow"][vertical]:not([circular])
+  > x-swiper-item:last-child {
+  margin-bottom: 20%;
+}
+
+/* mode carry */
+x-swiper[mode="carry"] > x-swiper-item {
+  scroll-snap-align: center;
+  width: 100% !important;
+  animation-name: x-swiper-carry;
+}
+
+@keyframes x-swiper-carry {
+  0% {
+    transform: scale(0.6);
+  }
+  45%, 55% {
+    transform: scale(1);
+    z-index: 1;
+  }
+  100% {
+    transform: scale(0.6);
+  }
+}

@@ -1,0 +1,62 @@
+---
+const features = [
+  {
+    title: "Advanced email analytics",
+    description:
+      "Gain deep insights into your email campaigns with our advanced analytics suite.",
+  },
+  {
+    title: "Personalized email automation",
+    description:
+      "Save time and boost engagement with our powerful personalized email automation feature.",
+  },
+  {
+    title: "Drag-and-drop email composer",
+    description:
+      "Create stunning email campaigns effortlessly using our intuitive drag-and-drop email composer.",
+  },
+];
+---
+
+<section>
+  <div class="px-8 py-12 mx-auto md:px-12 lg:px-24 max-w-7xl lg:py-32">
+    <span class="uppercase tracking-wide font-medium text-regent-600">
+      ⏤ Interface
+    </span>
+    <p class="mt-16 text-2xl lg:text-4xl text-black">
+      With our user-friendly interface, you can easily create and manage your
+      projects, collaborate with your team, and streamline your workflow. Sign
+      up today and experience the future of coding with our SaaS programming
+      product."
+    </p>
+  </div>
+  <div
+    class="flex flex-col -mb-px lg:grid-cols-2 justify-between lg:grid items-start mt-24">
+    <div
+      class="grid lg:grid-cols-1 gap-12 items-start md:px-12 lg:px-40 2xl:px-24 p-8">
+      {
+        features.map((feature, index) => (
+          <div>
+            <p class="text-regent-600 text-lg text-medium font-mono">
+              {String(index + 1).padStart(2, "0")}
+            </p>
+
+            <p class="text-black mt-8 font-medium text-xl">
+              {feature.title}
+            </p>
+            <p class="text-gray-500 mt-6 text-lg lg:text-xl tracking-wide">
+              {feature.description}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+    <div class="bg-regent-500 p-8 md:px-12 lg:px-32 h-full">
+      <img
+        alt="#_"
+        src="/images/ui1.png"
+        class="w-full h-full"
+      />
+    </div>
+  </div>
+</section>

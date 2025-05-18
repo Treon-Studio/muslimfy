@@ -1,0 +1,67 @@
+<section class="bg-regent-500 border-b border-white/10">
+  <div
+    x-data="{ open: false }"
+    class="relative flex flex-col w-full p-5 max-w-7xl mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-24">
+    <div
+      class="flex items-center justify-between text-black text-sm lg:justify-start">
+      <a
+        class="text-xl font-medium"
+        title="link to your page"
+        aria-label="your label"
+        href="/">
+        ✺ Snowpeak
+      </a>
+      <button
+        @click="open = !open"
+        class="inline-flex items-center justify-center p-2 text-regent-500 hover:text-black focus:outline-none focus:text-black md:hidden">
+        <svg
+          class="size-6"
+          stroke="currentColor"
+          fill="none"
+          viewBox="0 0 24 24">
+          <path
+            :class="{'hidden': open, 'inline-flex': !open }"
+            class="inline-flex"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          ></path>
+          <path
+            :class="{'hidden': !open, 'inline-flex': open }"
+            class="hidden"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          ></path>
+        </svg>
+      </button>
+    </div>
+    <nav
+      :class="{'flex': open, 'hidden': !open}"
+      class="flex-col items-center flex-grow hidden gap-6 text-sm text-black font-medium md:pb-0 md:flex md:justify-end md:flex-row">
+      <a
+        class="hover:text-black lg:ml-auto"
+        title="link to your page"
+        aria-label="your label"
+        href="/"
+        >Overview</a
+      >
+      <a
+        class="hover:text-black"
+        title="link to your page"
+        aria-label="your label"
+        href="/style-guide">
+        Style Guide</a
+      >
+      <a
+        title="link to your page"
+        aria-label="your label"
+        href="https://buy.polar.sh/polar_cl_Ud7LKuiTum4KOh18ACTaikj9T-YIeLBfyVqFQZ66Rt0"
+        class="inline-flex items-center justify-center px-4 py-2 text-sm text-black bg-regent-400 lg:ml-auto duration-200 rounded-full group focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 hover:bg-regent-300">
+        Buy Snowpeak
+      </a>
+    </nav>
+  </div>
+</section>
