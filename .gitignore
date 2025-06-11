@@ -1,1 +1,32 @@
 node_modules
+
+# Build output & Caches
+dist/
+build/
+.turbo/
+*.tsbuildinfo
+
+# Environment Files
+.env
+.env.*
+!/.env.example
+
+# Logs & Runtime Data
+*.log
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage Reports
+coverage/
+*.lcov
+.nyc_output/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE/Editor specific (optional, uncomment if needed)
+# .vscode/
+# .idea/

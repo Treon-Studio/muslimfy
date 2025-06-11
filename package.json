@@ -16,7 +16,7 @@
     "base-build": "pnpm clean:bundle && turbo build",
     "build": "pnpm set-global-env && pnpm base-build",
     "build:firefox": "pnpm set-global-env CLI_CEB_FIREFOX=true && pnpm base-build",
-    "base-dev": "pnpm clean:bundle && turbo ready && turbo watch dev",
+    "base-dev": "pnpm clean:bundle && turbo ready && turbo watch dev --concurrency=15",
     "dev": "pnpm set-global-env CLI_CEB_DEV=true && pnpm base-dev",
     "dev:firefox": "pnpm set-global-env CLI_CEB_DEV=true CLI_CEB_FIREFOX=true && pnpm base-dev",
     "zip": "pnpm build && pnpm -F zipper zip",
@@ -79,6 +79,11 @@
     "typescript-eslint": "^8.32.1",
     "vite": "^6.3.5",
     "vite-plugin-node-polyfills": "^0.23.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "19.1.4"
+    }
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json}": [
