@@ -172,12 +172,7 @@ export function Tasbih() {
                   {count}
                 </div>
                 
-                {/* Compact target indicator */}
-                {currentDhikr.count > 0 && (
-                  <div className="text-sm text-white/80 font-medium">
-                    of {currentDhikr.count}
-                  </div>
-                )}
+
               </div>
             </button>
             
@@ -189,9 +184,7 @@ export function Tasbih() {
               <p className="text-sm text-white/90 leading-relaxed">
                 {currentDhikr.meaning}
               </p>
-              <p className="text-xs text-white/70">
-                Tap the number to count
-              </p>
+
             </div>
           </div>
           

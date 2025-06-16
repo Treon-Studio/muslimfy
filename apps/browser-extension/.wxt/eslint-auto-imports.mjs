@@ -1,6 +1,8 @@
 const globals = {
+  "AudioPlayer": true,
   "AutoMount": true,
   "AutoMountOptions": true,
+  "Ayah": true,
   "Browser": true,
   "ContentScriptAnchoredOptions": true,
   "ContentScriptAppendMode": true,
@@ -26,6 +28,8 @@ const globals = {
   "MigrationError": true,
   "MosquesTasbih": true,
   "PrayerTimes": true,
+  "QuranReader": true,
+  "QuranReaderModal": true,
   "ScriptPublicPath": true,
   "ShadowRootContentScriptUi": true,
   "ShadowRootContentScriptUiOptions": true,
@@ -33,6 +37,7 @@ const globals = {
   "StorageArea": true,
   "StorageAreaChanges": true,
   "StorageItemKey": true,
+  "Surah": true,
   "Tasbih": true,
   "VerseOfTheDay": true,
   "WxtAppConfig": true,
@@ -56,6 +61,7 @@ const globals = {
   "useContext": true,
   "useEffect": true,
   "useMemo": true,
+  "useQuranData": true,
   "useReducer": true,
   "useRef": true,
   "useState": true
