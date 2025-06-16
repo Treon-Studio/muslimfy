@@ -14,6 +14,11 @@ interface ShootingStar {
 
 export function DynamicBackground({ isDaytime }: { isDaytime: boolean }) {
   const [shootingStars, setShootingStars] = useState<ShootingStar[]>([]);
+  
+  // Debug: Log when day/night status changes
+  useEffect(() => {
+    console.log(`🌅 Background mode changed: ${isDaytime ? 'Daytime' : 'Nighttime'}`);
+  }, [isDaytime]);
 
   // Algorithm to generate shooting stars with random intervals
   useEffect(() => {
@@ -116,30 +121,29 @@ export function DynamicBackground({ isDaytime }: { isDaytime: boolean }) {
 
   return (
     <div className="fixed inset-0 overflow-hidden z-0">
-      {/* Primary dramatic gradient background */}
-      <div className={`absolute inset-0 transition-all duration-2000 ${
+      {/* Primary dramatic gradient background with enhanced transitions */}
+      <div className={`absolute inset-0 transition-all duration-[3000ms] ease-in-out ${
         isDaytime 
           ? 'bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-600' 
           : 'bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900'
       }`} />
       
-      {/* Secondary gradient overlay for more depth */}
-      <div className={`absolute inset-0 transition-all duration-2000 ${
+      {/* Secondary gradient overlay for more depth with smooth transitions */}
+      <div className={`absolute inset-0 transition-all duration-[3000ms] ease-in-out ${
         isDaytime
           ? 'bg-gradient-to-t from-blue-600/60 via-sky-400/30 to-cyan-300/40'
           : 'bg-gradient-to-t from-slate-900/80 via-indigo-800/50 to-purple-700/60'
       }`} />
       
-      {/* Radial gradient from center for dramatic lighting */}
-      <div className={`absolute inset-0 transition-all duration-2000 ${
-        isDaytime
-          ? 'bg-gradient-radial from-yellow-200/40 via-sky-300/20 to-blue-600/30'
-          : 'bg-gradient-radial from-blue-400/30 via-indigo-700/40 to-slate-900/50'
-      }`} style={{
-        background: isDaytime 
-          ? 'radial-gradient(ellipse at center, rgba(254, 240, 138, 0.4) 0%, rgba(125, 211, 252, 0.2) 35%, rgba(37, 99, 235, 0.3) 100%)'
-          : 'radial-gradient(ellipse at center, rgba(96, 165, 250, 0.3) 0%, rgba(79, 70, 229, 0.4) 35%, rgba(15, 23, 42, 0.5) 100%)'
-      }} />
+      {/* Radial gradient from center for dramatic lighting with enhanced transitions */}
+      <div 
+        className="absolute inset-0 transition-all duration-[4000ms] ease-in-out"
+        style={{
+          background: isDaytime 
+            ? 'radial-gradient(ellipse at center, rgba(254, 240, 138, 0.4) 0%, rgba(125, 211, 252, 0.2) 35%, rgba(37, 99, 235, 0.3) 100%)'
+            : 'radial-gradient(ellipse at center, rgba(96, 165, 250, 0.3) 0%, rgba(79, 70, 229, 0.4) 35%, rgba(15, 23, 42, 0.5) 100%)'
+        }} 
+      />
       
       {/* Day time elements - Enhanced clouds and sun effects */}
       {isDaytime && (

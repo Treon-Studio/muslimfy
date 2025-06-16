@@ -19,11 +19,15 @@ declare module '#imports' {
   export { useState, useCallback, useMemo, useEffect, useRef, useContext, useReducer } from 'react';
   export { fakeBrowser } from 'wxt/testing';
   export { default as Counter } from '../components/Counter';
+  export { AudioPlayer } from '../components/audio-player';
   export { DailyCeramah } from '../components/daily-ceramah';
   export { DynamicBackground } from '../components/dynamic-background';
   export { IslamicCompanion } from '../components/islamic-companion';
   export { MosquesTasbih } from '../components/mosques-tasbih';
   export { PrayerTimes } from '../components/prayer-times';
+  export { QuranReaderModal } from '../components/quran-reader-modal';
+  export { QuranReader } from '../components/quran-reader';
   export { Tasbih } from '../components/tasbih';
   export { VerseOfTheDay } from '../components/verse-of-the-day';
+  export { useQuranData, Ayah, Surah } from '../hooks/use-quran-data';
 }
