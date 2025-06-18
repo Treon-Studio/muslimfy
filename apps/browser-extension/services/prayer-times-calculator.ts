@@ -8,6 +8,8 @@ export interface PrayerTimes {
     Isha: string;
     Imsak: string;
     Midnight: string;
+    // Add index signature to allow any string key
+    [key: string]: string;
   }
   
   export interface PrayerTimesData {

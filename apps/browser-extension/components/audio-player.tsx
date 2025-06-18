@@ -1,8 +1,18 @@
-import React, { useState, useRef, useEffect } from 'react';
-import ReactPlayer from 'react-player';
-import { Button } from './ui/button';
-import { Slider } from './ui/slider';
-import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Music, List, X } from 'lucide-react';
+import React, { useState, useRef, useEffect } from "react";
+import ReactPlayer from "react-player";
+import { Button } from "./ui/button";
+import { Slider } from "./ui/slider";
+import {
+  Play,
+  Pause,
+  SkipBack,
+  SkipForward,
+  Volume2,
+  VolumeX,
+  Music,
+  List,
+  X,
+} from "lucide-react";
 
 interface Track {
   id: number;
@@ -12,37 +22,55 @@ interface Track {
   duration?: number;
 }
 
-const ceramahTracks: Track[] = [
+const muratalTracks: Track[] = [
   {
     id: 1,
-    title: "Keikhlasan dalam Beribadah",
-    artist: "Ustadz Abdul Somad",
-    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+    title: "Surah Al-Fatihah",
+    artist: "Sheikh Abdur Rahman As-Sudais",
+    url: "https://download.quranicaudio.com/quran/dr.shawqy_7amed/murattal/012.mp3",
   },
   {
     id: 2,
-    title: "Hikmah Sabar dalam Ujian",
-    artist: "Ustadz Adi Hidayat",
-    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+    title: "Surah Al-Baqarah (Part 1)",
+    artist: "Sheikh Mishary Rashid Alafasy",
+    url: "https://download.quranicaudio.com/quran/dr.shawqy_7amed/murattal/013.mp3",
   },
   {
     id: 3,
-    title: "Menghidupkan Qiyamul Lail",
-    artist: "Ustadz Khalid Basalamah",
-    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+    title: "Surah Al-Ikhlas",
+    artist: "Sheikh Maher Al Muaiqly",
+    url: "https://download.quranicaudio.com/quran/dr.shawqy_7amed/murattal/014.mp3",
   },
   {
     id: 4,
-    title: "Berbakti kepada Orang Tua",
-    artist: "Ustadz Hanan Attaki",
-    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+    title: "Surah Al-Falaq",
+    artist: "Sheikh Saad Al Ghamdi",
+    url: "https://www.islamcan.com/audio/quran/saad_al_ghamdi/113.mp3",
   },
   {
     id: 5,
-    title: "Mendekatkan Diri kepada Allah",
-    artist: "Ustadz Felix Siauw",
-    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
-  }
+    title: "Surah An-Nas",
+    artist: "Sheikh Ahmed Al Ajmy",
+    url: "https://www.islamcan.com/audio/quran/ahmed_ibn_ali_al_ajamy/114.mp3",
+  },
+  {
+    id: 6,
+    title: "Surah Yasin",
+    artist: "Sheikh Abdul Rahman As-Sudais",
+    url: "https://www.islamcan.com/audio/quran/abdurrahman_as_sudais/036.mp3",
+  },
+  {
+    id: 7,
+    title: "Surah Al-Mulk",
+    artist: "Sheikh Mishary Rashid Alafasy",
+    url: "https://www.islamcan.com/audio/quran/mishari_rashid_al_afasy/067.mp3",
+  },
+  {
+    id: 8,
+    title: "Surah Ar-Rahman",
+    artist: "Sheikh Maher Al Muaiqly",
+    url: "https://www.islamcan.com/audio/quran/maher_al_muaiqly/055.mp3",
+  },
 ];
 
 export function AudioPlayer() {
@@ -54,21 +82,25 @@ export function AudioPlayer() {
   const [duration, setDuration] = useState(0);
   const [seeking, setSeeking] = useState(false);
   const [showPlaylist, setShowPlaylist] = useState(false);
-  
+
   const playerRef = useRef<ReactPlayer>(null);
 
-  const currentCeramah = ceramahTracks[currentTrack];
+  const currentCeramah = muratalTracks[currentTrack];
 
   const handlePlayPause = () => {
     setPlaying(!playing);
   };
 
   const handlePrevious = () => {
-    setCurrentTrack(prev => prev > 0 ? prev - 1 : ceramahTracks.length - 1);
+    setCurrentTrack((prev) =>
+      prev > 0 ? prev - 1 : muratalTracks.length - 1,
+    );
   };
 
   const handleNext = () => {
-    setCurrentTrack(prev => prev < ceramahTracks.length - 1 ? prev + 1 : 0);
+    setCurrentTrack((prev) =>
+      prev < muratalTracks.length - 1 ? prev + 1 : 0,
+    );
   };
 
   const handleSeekMouseDown = () => {
@@ -108,7 +140,7 @@ export function AudioPlayer() {
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
   // Auto-play functionality - when track ends, play next track automatically
@@ -141,28 +173,35 @@ export function AudioPlayer() {
           onEnded={handleEnded}
           width="0"
           height="0"
-          style={{ display: 'none' }}
+          style={{ display: "none" }}
         />
 
         <div className="relative p-6 h-full flex flex-col">
-          {/* Header - Updated for Daily Ceramah */}
+          {/* Header - Updated for Tilawah Al-Quran */}
           <div className="flex items-center justify-between mb-12">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 samsung-glass rounded-xl flex items-center justify-center">
                 <Music className="w-5 h-5 text-gray-300" />
               </div>
               <div>
-                <h2 className="text-white font-semibold">Daily Ceramah</h2>
-                <p className="text-white/70 text-sm">Dakwah &amp; Tausiyah</p>
+                <h2 className="text-white font-semibold">
+                  Tilawah Al-Quran
+                </h2>
+                <p className="text-white/70 text-sm">
+                  Bacaan Surah
+                </p>
               </div>
             </div>
-
           </div>
 
           {/* Track Info - Centered */}
           <div className="text-center mb-8 flex-1 flex flex-col justify-center">
-            <h3 className="text-white text-2xl font-semibold mb-2">{currentCeramah.title}</h3>
-            <p className="text-white/70">{currentCeramah.artist}</p>
+            <h3 className="text-white text-2xl font-semibold mb-2">
+              {currentCeramah.title}
+            </h3>
+            <p className="text-white/70">
+              {currentCeramah.artist}
+            </p>
           </div>
 
           {/* Time Display */}
@@ -177,31 +216,31 @@ export function AudioPlayer() {
               {/* Custom Track Background with Gradient */}
               <div className="w-full h-1.5 bg-gradient-to-r from-white/10 via-white/15 to-white/10 rounded-full relative overflow-hidden">
                 {/* Progress Fill with Gradient */}
-                <div 
+                <div
                   className="h-full bg-gradient-to-r from-white/90 via-white to-white/90 rounded-full transition-all duration-300 shadow-sm"
                   style={{ width: `${played * 100}%` }}
                 />
-                
+
                 {/* Glow Effect */}
-                <div 
+                <div
                   className="absolute top-0 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent rounded-full blur-sm opacity-60"
                   style={{ width: `${played * 100}%` }}
                 />
               </div>
-              
+
               {/* Custom Thumb */}
-              <div 
+              <div
                 className="absolute top-1/2 w-4 h-4 bg-gradient-to-br from-white via-gray-100 to-gray-200 rounded-full transform -translate-y-1/2 shadow-lg border border-white/20 cursor-pointer transition-all duration-200 group-hover:scale-110 group-hover:shadow-xl"
                 style={{ left: `calc(${played * 100}% - 8px)` }}
                 onMouseDown={handleSeekMouseDown}
               >
                 {/* Inner Shine */}
                 <div className="absolute inset-0.5 bg-gradient-to-br from-white/60 to-transparent rounded-full" />
-                
+
                 {/* Center Dot */}
                 <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-gray-400 rounded-full transform -translate-x-1/2 -translate-y-1/2" />
               </div>
-              
+
               {/* Hidden Slider for Functionality */}
               <Slider
                 value={[played * 100]}
@@ -209,7 +248,12 @@ export function AudioPlayer() {
                 step={0.1}
                 onValueChange={handleSeekChange}
                 onPointerDown={handleSeekMouseDown}
-                onPointerUp={(e) => handleSeekMouseUp([(e.target as HTMLInputElement).valueAsNumber || played * 100])}
+                onPointerUp={(e) =>
+                  handleSeekMouseUp([
+                    (e.target as HTMLInputElement)
+                      .valueAsNumber || played * 100,
+                  ])
+                }
                 className="absolute inset-0 opacity-0 cursor-pointer"
               />
             </div>
@@ -234,22 +278,24 @@ export function AudioPlayer() {
               onClick={toggleMute}
               className="w-10 h-10 hover:bg-white/10 text-white/80 hover:text-white transition-all duration-200 flex-shrink-0"
             >
-              {muted || volume === 0 ? 
-                <VolumeX className="w-4 h-4" /> : 
+              {muted || volume === 0 ? (
+                <VolumeX className="w-4 h-4" />
+              ) : (
                 <Volume2 className="w-4 h-4" />
-              }
+              )}
             </Button>
-            
+
             {/* Play/Pause - Center */}
             <Button
               size="icon"
               onClick={handlePlayPause}
               className="w-14 h-14 rounded-full bg-white hover:bg-white/90 text-slate-900 shadow-lg transition-all duration-300 hover:scale-105 flex-shrink-0"
             >
-              {playing ? 
-                <Pause className="w-6 h-6 fill-current" /> : 
+              {playing ? (
+                <Pause className="w-6 h-6 fill-current" />
+              ) : (
                 <Play className="w-6 h-6 ml-0.5 fill-current" />
-              }
+              )}
             </Button>
 
             {/* Playlist */}
@@ -261,7 +307,7 @@ export function AudioPlayer() {
             >
               <List className="w-4 h-4" />
             </Button>
-            
+
             {/* Next */}
             <Button
               variant="ghost"
@@ -279,11 +325,11 @@ export function AudioPlayer() {
       {showPlaylist && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           {/* Overlay */}
-          <div 
+          <div
             className="absolute inset-0 bg-black/80 backdrop-blur-sm"
             onClick={() => setShowPlaylist(false)}
           />
-          
+
           {/* Playlist Container */}
           <div className="relative w-full max-w-lg mx-4 samsung-glass-strong rounded-3xl shadow-2xl max-h-[80vh] overflow-hidden">
             {/* Header */}
@@ -293,8 +339,12 @@ export function AudioPlayer() {
                   <List className="w-5 h-5 text-gray-300" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white">Ceramah Playlist</h3>
-                  <p className="text-sm text-white/60">Pilih ceramah yang ingin didengar</p>
+                  <h3 className="text-xl font-bold text-white">
+                    Daftar Surah
+                  </h3>
+                  <p className="text-sm text-white/60">
+                    Pilih surah yang ingin didengar
+                  </p>
                 </div>
               </div>
               <button
@@ -304,15 +354,15 @@ export function AudioPlayer() {
                 <X className="w-5 h-5 text-white/80" />
               </button>
             </div>
-            
+
             {/* Track List */}
             <div className="overflow-y-auto max-h-96">
-              {ceramahTracks.map((ceramah, index) => (
+              {muratalTracks.map((ceramah, index) => (
                 <button
                   key={ceramah.id}
                   onClick={() => handleTrackSelect(index)}
                   className={`w-full text-left px-6 py-4 hover:bg-white/5 transition-all duration-200 border-b border-white/5 last:border-b-0 group ${
-                    index === currentTrack ? 'bg-white/10' : ''
+                    index === currentTrack ? "bg-white/10" : ""
                   }`}
                 >
                   <div className="flex items-center gap-4">
@@ -330,18 +380,20 @@ export function AudioPlayer() {
                     {index === currentTrack && (
                       <div className="flex items-center gap-2">
                         <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                        <span className="text-xs text-white/80 font-medium">Playing</span>
+                        <span className="text-xs text-white/80 font-medium">
+                          Playing
+                        </span>
                       </div>
                     )}
                   </div>
                 </button>
               ))}
             </div>
-            
+
             {/* Footer */}
             <div className="p-4 bg-white/5 border-t border-white/10">
               <p className="text-xs text-white/50 text-center">
-                Ketuk ceramah mana pun untuk mulai mendengarkan
+                Ketuk surah mana pun untuk mulai mendengarkan
               </p>
             </div>
           </div>

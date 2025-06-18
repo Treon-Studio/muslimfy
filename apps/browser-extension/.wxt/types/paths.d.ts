@@ -5,7 +5,11 @@ declare module "wxt/browser" {
   export type PublicPath =
     | ""
     | "/"
-    | "/background.js"
+    | "/icon-12.png"
+    | "/icon-128.png"
+    | "/icon-24.png"
+    | "/icon-48.png"
+    | "/icon-96.png"
     | "/newtab.html"
   type HtmlPublicPath = Extract<PublicPath, `${string}.html`>
   export interface WxtRuntime {
