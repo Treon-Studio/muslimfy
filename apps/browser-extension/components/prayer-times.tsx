@@ -140,7 +140,6 @@ export function PrayerTimes() {
             }
           );
           setPrayerData(data);
-          toast.success(`Waktu sholat berhasil dimuat untuk ${city.name}, ${city.province}`);
           return;
         }
       }
@@ -155,7 +154,6 @@ export function PrayerTimes() {
           calculationMethod
         );
         setPrayerData(data);
-        toast.success(`Waktu sholat berhasil dimuat untuk ${manualCity}, ${manualCountry}`);
         return;
       }
       
@@ -180,12 +178,6 @@ export function PrayerTimes() {
         } : { country: 'Indonesia' }
       );
       setPrayerData(data);
-      
-      if (nearbyCity) {
-        toast.success(`Waktu sholat berhasil dimuat untuk ${nearbyCity.name}, ${nearbyCity.province}`);
-      } else {
-        toast.success('Waktu sholat berhasil dimuat berdasarkan lokasi GPS');
-      }
       
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to calculate prayer times';

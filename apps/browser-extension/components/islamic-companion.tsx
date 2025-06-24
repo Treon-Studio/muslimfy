@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { PrayerTimes } from './prayer-times';
 import { VerseOfTheDay } from './verse-of-the-day';
 import { Tasbih } from './tasbih';
-import { AudioPlayer } from './audio-player';
+import { TodoList } from './todolist';
 import { DynamicBackground } from './dynamic-background';
 import { QuranReader } from './quran-reader';
 import { Toaster } from './ui/sonner';
@@ -168,7 +168,7 @@ export function IslamicCompanion() {
                 
                 {/* Audio Player */}
                 <div className="h-[320px]">
-                  <AudioPlayer />
+                  <TodoList />
                 </div>
               </div>
 
@@ -184,18 +184,7 @@ export function IslamicCompanion() {
                   <Tasbih />
                 </div>
                 <div className="h-[320px]">
-                  <AudioPlayer 
-                    tracks={audioTracks}
-                    onTrackChange={(track) => {
-                      console.log('Now playing:', track.title);
-                      console.log('URL:', track.url);
-                      console.log('Type:', track.type);
-                      
-                      if (track.url === 'https://www.youtube.com/watch?v=O9jAkKrZD6E') {
-                        console.log('✅ Playing your requested YouTube URL!');
-                      }
-                    }}
-                  />
+                  <TodoList />
                 </div>
                 
                 {/* Bottom Row - Verse of the Day */}
@@ -228,7 +217,7 @@ export function IslamicCompanion() {
                   
                   {/* Audio Player */}
                   <div className="h-[320px]">
-                    <AudioPlayer />
+                    <TodoList />
                   </div>
                 </div>
               </div>

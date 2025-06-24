@@ -18,7 +18,6 @@ declare module '#imports' {
   export { InvalidMatchPattern, MatchPattern } from 'wxt/utils/match-patterns';
   export { useState, useCallback, useMemo, useEffect, useRef, useContext, useReducer } from 'react';
   export { fakeBrowser } from 'wxt/testing';
-  export { default as Counter } from '../components/Counter';
   export { AudioPlayer } from '../components/audio-player';
   export { DailyCeramah } from '../components/daily-ceramah';
   export { DynamicBackground } from '../components/dynamic-background';
@@ -28,6 +27,7 @@ declare module '#imports' {
   export { QuranReaderModal } from '../components/quran-reader-modal';
   export { QuranReader } from '../components/quran-reader';
   export { Tasbih } from '../components/tasbih';
+  export { TodoList } from '../components/todolist';
   export { VerseOfTheDay } from '../components/verse-of-the-day';
   export { useQuranData, Ayah, Surah } from '../hooks/use-quran-data';
 }

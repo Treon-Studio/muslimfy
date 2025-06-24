@@ -3,7 +3,6 @@ export {}
 declare global {
   const AudioPlayer: typeof import('/Users/ridho/Documents/go/github.com/raizora/muslimfy/apps/browser-extension/components/audio-player')['AudioPlayer']
   const ContentScriptContext: typeof import('wxt/utils/content-script-context')['ContentScriptContext']
-  const Counter: typeof import('/Users/ridho/Documents/go/github.com/raizora/muslimfy/apps/browser-extension/components/Counter')['default']
   const DailyCeramah: typeof import('/Users/ridho/Documents/go/github.com/raizora/muslimfy/apps/browser-extension/components/daily-ceramah')['DailyCeramah']
   const DynamicBackground: typeof import('/Users/ridho/Documents/go/github.com/raizora/muslimfy/apps/browser-extension/components/dynamic-background')['DynamicBackground']
   const InvalidMatchPattern: typeof import('wxt/utils/match-patterns')['InvalidMatchPattern']
@@ -14,6 +13,7 @@ declare global {
   const QuranReader: typeof import('/Users/ridho/Documents/go/github.com/raizora/muslimfy/apps/browser-extension/components/quran-reader')['QuranReader']
   const QuranReaderModal: typeof import('/Users/ridho/Documents/go/github.com/raizora/muslimfy/apps/browser-extension/components/quran-reader-modal')['QuranReaderModal']
   const Tasbih: typeof import('/Users/ridho/Documents/go/github.com/raizora/muslimfy/apps/browser-extension/components/tasbih')['Tasbih']
+  const TodoList: typeof import('/Users/ridho/Documents/go/github.com/raizora/muslimfy/apps/browser-extension/components/todolist')['TodoList']
   const VerseOfTheDay: typeof import('/Users/ridho/Documents/go/github.com/raizora/muslimfy/apps/browser-extension/components/verse-of-the-day')['VerseOfTheDay']
   const browser: typeof import('wxt/browser')['browser']
   const createIframeUi: typeof import('wxt/utils/content-script-ui/iframe')['createIframeUi']

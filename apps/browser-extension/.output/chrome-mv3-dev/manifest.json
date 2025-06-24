@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "@muslimfy/browser-extension",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "icons": {
     "12": "icon-12.png",
     "24": "icon-24.png",
