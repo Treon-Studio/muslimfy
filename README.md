@@ -1,5 +1,4 @@
 <div align="center"><a name="readme-top"></a>
- />
 
 <a href="https://github.com/Treon-Studio/muslimfy">
   <img src="https://github.com/user-attachments/assets/d0f8b63b-6f48-4318-a584-5c145a04d003" width="120" alt="Muslimfy Banner">
