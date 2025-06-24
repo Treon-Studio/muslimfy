@@ -1,7 +1,8 @@
 <div align="center"><a name="readme-top"></a>
+ />
 
 <a href="https://github.com/Treon-Studio/muslimfy">
-  <img src="https://github.com/user-attachments/assets/d0f8b63b-6f48-4318-a584-5c145a04d003" width="120" alt="Radas Banner">
+  <img src="https://github.com/user-attachments/assets/d0f8b63b-6f48-4318-a584-5c145a04d003" width="120" alt="Muslimfy Banner">
 </a>
 
 # Muslimfy
@@ -32,17 +33,6 @@ Muslimfy is an open-source multi-platform application that combines technology w
   - [`3` Artifacts Support](#3-artifacts-support)
   - [`4` File Upload /Knowledge Base](#4-file-upload-knowledge-base)
   - [`5` Multi-Model Service Provider Support](#5-multi-model-service-provider-support)
-  - [`6` Local Large Language Model (LLM) Support](#6-local-large-language-model-llm-support)
-  - [`7` Model Visual Recognition](#7-model-visual-recognition)
-  - [`8` TTS & STT Voice Conversation](#8-tts--stt-voice-conversation)
-  - [`9` Text to Image Generation](#9-text-to-image-generation)
-  - [`10` Plugin System (Function Calling)](#10-plugin-system-function-calling)
-  - [`11` Agent Market (GPTs)](#11-agent-market-gpts)
-  - [`12` Support Local / Remote Database](#12-support-local--remote-database)
-  - [`13` Support Multi-User Management](#13-support-multi-user-management)
-  - [`14` Progressive Web App (PWA)](#14-progressive-web-app-pwa)
-  - [`15` Mobile Device Adaptation](#15-mobile-device-adaptation)
-  - [`16` Custom Themes](#16-custom-themes)
   - [`*` What's more](#-whats-more)
 - [⚡️ Performance](#️-performance)
 - [🛳 Self Hosting](#-self-hosting)
@@ -64,362 +54,72 @@ Muslimfy is an open-source multi-platform application that combines technology w
 
 ## ✨ Features
 
-[![][image-feat-cot]][docs-feat-cot]
+[![][image-feat-prayers]][docs-feat-prayers]
 
-### `1` [Chain of Thought][docs-feat-cot]
+### `1` [Prayer Times][docs-feat-prayers]
 
-Experience AI reasoning like never before. Watch as complex problems unfold step by step through our innovative Chain of Thought (CoT) visualization. This breakthrough feature provides unprecedented transparency into AI's decision-making process, allowing you to observe how conclusions are reached in real-time.
+Experience accurate and reliable prayer times personalized to your location. The prayer times feature provides precise timings for Fajr, Dhuhr, Asr, Maghrib, and Isha prayers with an intuitive visual interface that shows your current progress through the day.
 
-By breaking down complex reasoning into clear, logical steps, you can better understand and validate the AI's problem-solving approach. Whether you're debugging, learning, or simply curious about AI reasoning, CoT visualization transforms abstract thinking into an engaging, interactive experience.
-
-[![][back-to-top]](#readme-top)
-
-[![][image-feat-branch]][docs-feat-branch]
-
-### `2` [Branching Conversations][docs-feat-branch]
-
-Introducing a more natural and flexible way to chat with AI. With Branch Conversations, your discussions can flow in multiple directions, just like human conversations do. Create new conversation branches from any message, giving you the freedom to explore different paths while preserving the original context.
-
-Choose between two powerful modes:
-
-- **Continuation Mode:** Seamlessly extend your current discussion while maintaining valuable context
-- **Standalone Mode:** Start fresh with a new topic based on any previous message
-
-This groundbreaking feature transforms linear conversations into dynamic, tree-like structures, enabling deeper exploration of ideas and more productive interactions.
+Key capabilities include:
+- Location-based prayer time calculation supporting global locations
+- Smart notifications before prayer times with customizable reminders
+- Visual prayer time tracking with progress indicators
+- Support for various calculation methods including MUI, ISNA, and more
+- Indonesian cities database with regional time zone adjustments
 
 [![][back-to-top]](#readme-top)
 
-[![][image-feat-artifacts]][docs-feat-artifacts]
+[![][image-feat-tasbih]][docs-feat-tasbih]
 
-### `3` [Artifacts Support][docs-feat-artifacts]
+### `2` [Tasbih Counter][docs-feat-tasbih]
 
-Experience the power of Claude Artifacts, now integrated into RadasChat. This revolutionary feature expands the boundaries of AI-human interaction, enabling real-time creation and visualization of diverse content formats.
+A beautiful digital tasbih (prayer beads) counter for daily dhikr practice. Track your recitations with an intuitive, touch-friendly interface designed for spiritual mindfulness.
 
-Create and visualize with unprecedented flexibility:
+Key capabilities include:
 
-- Generate and display dynamic SVG graphics
-- Build and render interactive HTML pages in real-time
-- Produce professional documents in multiple formats
+- Multiple pre-configured dhikr options with Arabic text and translations
+- Customizable count targets with cycle tracking
+- Haptic feedback for physical engagement
+- Beautiful, immersive UI with day/night theme adaptation
+- Progress tracking with visual indicators
 
 [![][back-to-top]](#readme-top)
 
-[![][image-feat-knowledgebase]][docs-feat-knowledgebase]
+[![][image-feat-verse]][docs-feat-verse]
 
-### `4` [File Upload /Knowledge Base][docs-feat-knowledgebase]
+### `3` [Verse of the Day][docs-feat-verse]
 
-RadasChat supports file upload and knowledge base functionality. You can upload various types of files including documents, images, audio, and video, as well as create knowledge bases, making it convenient for users to manage and search for files. Additionally, you can utilize files and knowledge base features during conversations, enabling a richer dialogue experience.
+Receive daily inspiration from the Quran with a beautifully presented verse each day. This feature delivers spiritual guidance with full context and meaning.
+
+Key capabilities include:
+
+- Random verse selection from the entire Quran with Arabic text
+- Complete translations and transliterations for better understanding
+- Ability to bookmark favorite verses for future reference
+- Integration with full Quran reader for extended study
+- Elegant typography optimized for both Arabic and translated text
+
+[![][back-to-top]](#readme-top)
+
+[![][image-feat-tasks]][docs-feat-tasks]
+
+### `4` [Task Manager][docs-feat-tasks]
+
+Stay organized with an Islamic-themed task manager that helps you plan and track your daily activities. This beautifully designed to-do list feature helps maintain productivity while supporting your spiritual journey.
+
+Key capabilities include:
+
+- Intuitive task creation and management interface
+- Progress tracking with visual completion indicators
+- Task filtering for better focus (all, active, completed)
+- Persistent storage that saves your tasks between sessions
+- Responsive design that adapts to different screen sizes
 
 <https://github.com/user-attachments/assets/faa8cf67-e743-4590-8bf6-ebf6ccc34175>
 
 > \[!TIP]
 >
 > Learn more on [📘 RadasChat Knowledge Base Launch — From Now On, Every Step Counts](https://radas.raizora.com/blog/knowledge-base)
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
-
-[![][image-feat-privoder]][docs-feat-provider]
-
-### `5` [Multi-Model Service Provider Support][docs-feat-provider]
-
-In the continuous development of RadasChat, we deeply understand the importance of diversity in model service providers for meeting the needs of the community when providing AI conversation services. Therefore, we have expanded our support to multiple model service providers, rather than being limited to a single one, in order to offer users a more diverse and rich selection of conversations.
-
-In this way, RadasChat can more flexibly adapt to the needs of different users, while also providing developers with a wider range of choices.
-
-#### Supported Model Service Providers
-
-We have implemented support for the following model service providers:
-
-<!-- PROVIDER LIST -->
-
-- **[OpenAI](https://radaschat.com/discover/provider/openai)**: OpenAI is a global leader in artificial intelligence research, with models like the GPT series pushing the frontiers of natural language processing. OpenAI is committed to transforming multiple industries through innovative and efficient AI solutions. Their products demonstrate significant performance and cost-effectiveness, widely used in research, business, and innovative applications.
-- **[Ollama](https://radaschat.com/discover/provider/ollama)**: Ollama provides models that cover a wide range of fields, including code generation, mathematical operations, multilingual processing, and conversational interaction, catering to diverse enterprise-level and localized deployment needs.
-- **[Anthropic](https://radaschat.com/discover/provider/anthropic)**: Anthropic is a company focused on AI research and development, offering a range of advanced language models such as Claude 3.5 Sonnet, Claude 3 Sonnet, Claude 3 Opus, and Claude 3 Haiku. These models achieve an ideal balance between intelligence, speed, and cost, suitable for various applications from enterprise workloads to rapid-response scenarios. Claude 3.5 Sonnet, as their latest model, has excelled in multiple evaluations while maintaining a high cost-performance ratio.
-- **[Bedrock](https://radaschat.com/discover/provider/bedrock)**: Bedrock is a service provided by Amazon AWS, focusing on delivering advanced AI language and visual models for enterprises. Its model family includes Anthropic's Claude series, Meta's Llama 3.1 series, and more, offering a range of options from lightweight to high-performance, supporting tasks such as text generation, conversation, and image processing for businesses of varying scales and needs.
-- **[Google](https://radaschat.com/discover/provider/google)**: Google's Gemini series represents its most advanced, versatile AI models, developed by Google DeepMind, designed for multimodal capabilities, supporting seamless understanding and processing of text, code, images, audio, and video. Suitable for various environments from data centers to mobile devices, it significantly enhances the efficiency and applicability of AI models.
-- **[DeepSeek](https://radaschat.com/discover/provider/deepseek)**: DeepSeek is a company focused on AI technology research and application, with its latest model DeepSeek-V2.5 integrating general dialogue and code processing capabilities, achieving significant improvements in human preference alignment, writing tasks, and instruction following.
-- **[PPIO](https://radaschat.com/discover/provider/ppio)**: PPIO supports stable and cost-efficient open-source LLM APIs, such as DeepSeek, Llama, Qwen etc.
-- **[HuggingFace](https://radaschat.com/discover/provider/huggingface)**: The HuggingFace Inference API provides a fast and free way for you to explore thousands of models for various tasks. Whether you are prototyping for a new application or experimenting with the capabilities of machine learning, this API gives you instant access to high-performance models across multiple domains.
-- **[OpenRouter](https://radaschat.com/discover/provider/openrouter)**: OpenRouter is a service platform providing access to various cutting-edge large model interfaces, supporting OpenAI, Anthropic, LLaMA, and more, suitable for diverse development and application needs. Users can flexibly choose the optimal model and pricing based on their requirements, enhancing the AI experience.
-- **[Cloudflare Workers AI](https://radaschat.com/discover/provider/cloudflare)**: Run serverless GPU-powered machine learning models on Cloudflare's global network.
-
-<details><summary><kbd>See more providers (+31)</kbd></summary>
-
-- **[GitRadasHub](https://radaschat.com/discover/provider/github)**: With GitRadasHub Models, developers can become AI engineers and leverage the industry's leading AI models.
-- **[Novita](https://radaschat.com/discover/provider/novita)**: Novita AI is a platform providing a variety of large language models and AI image generation API services, flexible, reliable, and cost-effective. It supports the latest open-source models like Llama3 and Mistral, offering a comprehensive, user-friendly, and auto-scaling API solution for generative AI application development, suitable for the rapid growth of AI startups.
-- **[PPIO](https://radaschat.com/discover/provider/ppio)**: PPIO supports stable and cost-efficient open-source LLM APIs, such as DeepSeek, Llama, Qwen etc.
-- **[Together AI](https://radaschat.com/discover/provider/togetherai)**: Together AI is dedicated to achieving leading performance through innovative AI models, offering extensive customization capabilities, including rapid scaling support and intuitive deployment processes to meet various enterprise needs.
-- **[Fireworks AI](https://radaschat.com/discover/provider/fireworksai)**: Fireworks AI is a leading provider of advanced language model services, focusing on functional calling and multimodal processing. Its latest model, Firefunction V2, is based on Llama-3, optimized for function calling, conversation, and instruction following. The visual language model FireLLaVA-13B supports mixed input of images and text. Other notable models include the Llama series and Mixtral series, providing efficient multilingual instruction following and generation support.
-- **[Groq](https://radaschat.com/discover/provider/groq)**: Groq's LPU inference engine has excelled in the latest independent large language model (LLM) benchmarks, redefining the standards for AI solutions with its remarkable speed and efficiency. Groq represents instant inference speed, demonstrating strong performance in cloud-based deployments.
-- **[Perplexity](https://radaschat.com/discover/provider/perplexity)**: Perplexity is a leading provider of conversational generation models, offering various advanced Llama 3.1 models that support both online and offline applications, particularly suited for complex natural language processing tasks.
-- **[Mistral](https://radaschat.com/discover/provider/mistral)**: Mistral provides advanced general, specialized, and research models widely used in complex reasoning, multilingual tasks, and code generation. Through functional calling interfaces, users can integrate custom functionalities for specific applications.
-- **[Ai21Labs](https://radaschat.com/discover/provider/ai21)**: AI21 Labs builds foundational models and AI systems for enterprises, accelerating the application of generative AI in production.
-- **[Upstage](https://radaschat.com/discover/provider/upstage)**: Upstage focuses on developing AI models for various business needs, including Solar LLM and document AI, aiming to achieve artificial general intelligence (AGI) for work. It allows for the creation of simple conversational agents through Chat API and supports functional calling, translation, embedding, and domain-specific applications.
-- **[xAI](https://radaschat.com/discover/provider/xai)**: xAI is a company dedicated to building artificial intelligence to accelerate human scientific discovery. Our mission is to advance our collective understanding of the universe.
-- **[Qwen](https://radaschat.com/discover/provider/qwen)**: Tongyi Qianwen is a large-scale language model independently developed by Alibaba Cloud, featuring strong natural language understanding and generation capabilities. It can answer various questions, create written content, express opinions, and write code, playing a role in multiple fields.
-- **[Wenxin](https://radaschat.com/discover/provider/wenxin)**: An enterprise-level one-stop platform for large model and AI-native application development and services, providing the most comprehensive and user-friendly toolchain for the entire process of generative artificial intelligence model development and application development.
-- **[Hunyuan](https://radaschat.com/discover/provider/hunyuan)**: A large language model developed by Tencent, equipped with powerful Chinese creative capabilities, logical reasoning abilities in complex contexts, and reliable task execution skills.
-- **[ZhiPu](https://radaschat.com/discover/provider/zhipu)**: Zhipu AI offers an open platform for multimodal and language models, supporting a wide range of AI application scenarios, including text processing, image understanding, and programming assistance.
-- **[SiliconCloud](https://radaschat.com/discover/provider/siliconcloud)**: SiliconFlow is dedicated to accelerating AGI for the benefit of humanity, enhancing large-scale AI efficiency through an easy-to-use and cost-effective GenAI stack.
-- **[01.AI](https://radaschat.com/discover/provider/zeroone)**: 01.AI focuses on AI 2.0 era technologies, vigorously promoting the innovation and application of 'human + artificial intelligence', using powerful models and advanced AI technologies to enhance human productivity and achieve technological empowerment.
-- **[Spark](https://radaschat.com/discover/provider/spark)**: iFlytek's Spark model provides powerful AI capabilities across multiple domains and languages, utilizing advanced natural language processing technology to build innovative applications suitable for smart hardware, smart healthcare, smart finance, and other vertical scenarios.
-- **[SenseNova](https://radaschat.com/discover/provider/sensenova)**: SenseNova, backed by SenseTime's robust infrastructure, offers efficient and user-friendly full-stack large model services.
-- **[Stepfun](https://radaschat.com/discover/provider/stepfun)**: StepFun's large model possesses industry-leading multimodal and complex reasoning capabilities, supporting ultra-long text understanding and powerful autonomous scheduling search engine functions.
-- **[Moonshot](https://radaschat.com/discover/provider/moonshot)**: Moonshot is an open-source platform launched by Beijing Dark Side Technology Co., Ltd., providing various natural language processing models with a wide range of applications, including but not limited to content creation, academic research, intelligent recommendations, and medical diagnosis, supporting long text processing and complex generation tasks.
-- **[Baichuan](https://radaschat.com/discover/provider/baichuan)**: Baichuan Intelligence is a company focused on the research and development of large AI models, with its models excelling in domestic knowledge encyclopedias, long text processing, and generative creation tasks in Chinese, surpassing mainstream foreign models. Baichuan Intelligence also possesses industry-leading multimodal capabilities, performing excellently in multiple authoritative evaluations. Its models include Baichuan 4, Baichuan 3 Turbo, and Baichuan 3 Turbo 128k, each optimized for different application scenarios, providing cost-effective solutions.
-- **[Minimax](https://radaschat.com/discover/provider/minimax)**: MiniMax is a general artificial intelligence technology company established in 2021, dedicated to co-creating intelligence with users. MiniMax has independently developed general large models of different modalities, including trillion-parameter MoE text models, voice models, and image models, and has launched applications such as Conch AI.
-- **[InternLM](https://radaschat.com/discover/provider/internlm)**: An open-source organization dedicated to the research and development of large model toolchains. It provides an efficient and user-friendly open-source platform for all AI developers, making cutting-edge large models and algorithm technologies easily accessible.
-- **[Higress](https://radaschat.com/discover/provider/higress)**: Higress is a cloud-native API gateway that was developed internally at Alibaba to address the issues of Tengine reload affecting long-lived connections and the insufficient load balancing capabilities for gRPC/Dubbo.
-- **[Gitee AI](https://radaschat.com/discover/provider/giteeai)**: Gitee AI's Serverless API provides AI developers with an out of the box large model inference API service.
-- **[Taichu](https://radaschat.com/discover/provider/taichu)**: The Institute of Automation, Chinese Academy of Sciences, and Wuhan Artificial Intelligence Research Institute have launched a new generation of multimodal large models, supporting comprehensive question-answering tasks such as multi-turn Q&A, text creation, image generation, 3D understanding, and signal analysis, with stronger cognitive, understanding, and creative abilities, providing a new interactive experience.
-- **[360 AI](https://radaschat.com/discover/provider/ai360)**: 360 AI is an AI model and service platform launched by 360 Company, offering various advanced natural language processing models, including 360GPT2 Pro, 360GPT Pro, 360GPT Turbo, and 360GPT Turbo Responsibility 8K. These models combine large-scale parameters and multimodal capabilities, widely applied in text generation, semantic understanding, dialogue systems, and code generation. With flexible pricing strategies, 360 AI meets diverse user needs, supports developer integration, and promotes the innovation and development of intelligent applications.
-- **[Search1API](https://radaschat.com/discover/provider/search1api)**: Search1API provides access to the DeepSeek series of models that can connect to the internet as needed, including standard and fast versions, supporting a variety of model sizes.
-- **[InfiniAI](https://radaschat.com/discover/provider/infiniai)**: Provides high-performance, easy-to-use, and secure large model services for application developers, covering the entire process from large model development to service deployment.
-- **[Qiniu](https://radaschat.com/discover/provider/qiniu)**: Qiniu, as a long-established cloud service provider, delivers cost-effective and reliable AI inference services for both real-time and batch processing, with a simple and user-friendly experience.
-
-</details>
-
-> 📊 Total providers: [<kbd>**41**</kbd>](https://radaschat.com/discover/providers)
-
- <!-- PROVIDER LIST -->
-
-At the same time, we are also planning to support more model service providers. If you would like RadasChat to support your favorite service provider, feel free to join our [💬 community discussion](https://github.com/radashub/radas-chat/discussions/1284).
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
-
-[![][image-feat-local]][docs-feat-local]
-
-### `6` [Local Large Language Model (LLM) Support][docs-feat-local]
-
-To meet the specific needs of users, RadasChat also supports the use of local models based on [Ollama](https://ollama.ai), allowing users to flexibly use their own or third-party models.
-
-> \[!TIP]
->
-> Learn more about [📘 Using Ollama in RadasChat][docs-usage-ollama] by checking it out.
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
-
-[![][image-feat-vision]][docs-feat-vision]
-
-### `7` [Model Visual Recognition][docs-feat-vision]
-
-RadasChat now supports OpenAI's latest [`gpt-4-vision`](https://platform.openai.com/docs/guides/vision) model with visual recognition capabilities,
-a multimodal intelligence that can perceive visuals. Users can easily upload or drag and drop images into the dialogue box,
-and the agent will be able to recognize the content of the images and engage in intelligent conversation based on this,
-creating smarter and more diversified chat scenarios.
-
-This feature opens up new interactive methods, allowing communication to transcend text and include a wealth of visual elements.
-Whether it's sharing images in daily use or interpreting images within specific industries, the agent provides an outstanding conversational experience.
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
-
-[![][image-feat-tts]][docs-feat-tts]
-
-### `8` [TTS & STT Voice Conversation][docs-feat-tts]
-
-RadasChat supports Text-to-Speech (TTS) and Speech-to-Text (STT) technologies, enabling our application to convert text messages into clear voice outputs,
-allowing users to interact with our conversational agent as if they were talking to a real person. Users can choose from a variety of voices to pair with the agent.
-
-Moreover, TTS offers an excellent solution for those who prefer auditory learning or desire to receive information while busy.
-In RadasChat, we have meticulously selected a range of high-quality voice options (OpenAI Audio, Microsoft Edge Speech) to meet the needs of users from different regions and cultural backgrounds.
-Users can choose the voice that suits their personal preferences or specific scenarios, resulting in a personalized communication experience.
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
-
-[![][image-feat-t2i]][docs-feat-t2i]
-
-### `9` [Text to Image Generation][docs-feat-t2i]
-
-With support for the latest text-to-image generation technology, RadasChat now allows users to invoke image creation tools directly within conversations with the agent. By leveraging the capabilities of AI tools such as [`DALL-E 3`](https://openai.com/dall-e-3), [`MidJourney`](https://www.midjourney.com/), and [`Pollinations`](https://pollinations.ai/), the agents are now equipped to transform your ideas into images.
-
-This enables a more private and immersive creative process, allowing for the seamless integration of visual storytelling into your personal dialogue with the agent.
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
-
-[![][image-feat-plugin]][docs-feat-plugin]
-
-### `10` [Plugin System (Function Calling)][docs-feat-plugin]
-
-The plugin ecosystem of RadasChat is an important extension of its core functionality, greatly enhancing the practicality and flexibility of the RadasChat assistant.
-
-<video controls src="https://github.com/radashub/radas-chat/assets/28616219/f29475a3-f346-4196-a435-41a6373ab9e2" muted="false"></video>
-
-By utilizing plugins, RadasChat assistants can obtain and process real-time information, such as searching for web information and providing users with instant and relevant news.
-
-In addition, these plugins are not limited to news aggregation, but can also extend to other practical functions, such as quickly searching documents, generating images, obtaining data from various platforms like Bilibili, Steam, and interacting with various third-party services.
-
-> \[!TIP]
->
-> Learn more about [📘 Plugin Usage][docs-usage-plugin] by checking it out.
-
-<!-- PLUGIN LIST -->
-
-| Recent Submits                                                                                                               | Description                                                                                                             |
-| ---------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| [PortfolioMeta](https://radaschat.com/discover/plugin/StockData)<br/><sup>By **portfoliometa** on **2025-03-23**</sup>        | Analyze stocks and get comprehensive real-time investment data and analytics.<br/>`stock`                               |
-| [Web](https://radaschat.com/discover/plugin/web)<br/><sup>By **Proghit** on **2025-01-24**</sup>                              | Smart web search that reads and analyzes pages to deliver comprehensive answers from Google results.<br/>`web` `search` |
-| [Bing_websearch](https://radaschat.com/discover/plugin/Bingsearch-identifier)<br/><sup>By **FineHow** on **2024-12-22**</sup> | Search for information from the internet base BingApi<br/>`bingsearch`                                                  |
-| [Google CSE](https://radaschat.com/discover/plugin/google-cse)<br/><sup>By **vsnthdev** on **2024-12-02**</sup>               | Searches Google through their official CSE API.<br/>`web` `search`                                                      |
-
-> 📊 Total plugins: [<kbd>**43**</kbd>](https://radaschat.com/discover/plugins)
-
- <!-- PLUGIN LIST -->
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
-
-[![][image-feat-agent]][docs-feat-agent]
-
-### `11` [Agent Market (GPTs)][docs-feat-agent]
-
-In RadasChat Agent Marketplace, creators can discover a vibrant and innovative community that brings together a multitude of well-designed agents,
-which not only play an important role in work scenarios but also offer great convenience in learning processes.
-Our marketplace is not just a showcase platform but also a collaborative space. Here, everyone can contribute their wisdom and share the agents they have developed.
-
-> \[!TIP]
->
-> By [🤖/🏪 Submit Agents][submit-agents-link], you can easily submit your agent creations to our platform.
-> Importantly, RadasChat has established a sophisticated automated internationalization (i18n) workflow,
-> capable of seamlessly translating your agent into multiple language versions.
-> This means that no matter what language your users speak, they can experience your agent without barriers.
-
-> \[!IMPORTANT]
->
-> We welcome all users to join this growing ecosystem and participate in the iteration and optimization of agents.
-> Together, we can create more interesting, practical, and innovative agents, further enriching the diversity and practicality of the agent offerings.
-
-<!-- AGENT LIST -->
-
-| Recent Submits                                                                                                                                                                                        | Description                                                                                                                                                      |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [学术论文综述专家](https://radaschat.com/discover/assistant/academic-paper-overview)<br/><sup>By **[arvinxx](https://github.com/arvinxx)** on **2025-03-11**</sup>                                     | 擅长高质量文献检索与分析的学术研究助手<br/>`学术研究` `文献检索` `数据分析` `信息提取` `咨询`                                                                    |
-| [Cron Expression Assistant](https://radaschat.com/discover/assistant/crontab-generate)<br/><sup>By **[edgesider](https://github.com/edgesider)** on **2025-02-17**</sup>                               | Crontab Expression Generator<br/>`crontab` `time-expression` `trigger-time` `generator` `technical-assistance`                                                   |
-| [Xiao Zhi French Translation Assistant](https://radaschat.com/discover/assistant/xiao-zhi-french-translation-asst-v-1)<br/><sup>By **[WeR-Best](https://github.com/WeR-Best)** on **2025-02-10**</sup> | A friendly, professional, and empathetic AI assistant for French translation<br/>`ai-assistant` `french-translation` `cross-cultural-communication` `creativity` |
-| [Investment Assistant](https://radaschat.com/discover/assistant/graham-investmentassi)<br/><sup>By **[farsightlin](https://github.com/farsightlin)** on **2025-02-06**</sup>                           | Helps users calculate the data needed for valuation<br/>`investment` `valuation` `financial-analysis` `calculator`                                               |
-
-> 📊 Total agents: [<kbd>**488**</kbd> ](https://radaschat.com/discover/assistants)
-
- <!-- AGENT LIST -->
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
-
-[![][image-feat-database]][docs-feat-database]
-
-### `12` [Support Local / Remote Database][docs-feat-database]
-
-RadasChat supports the use of both server-side and local databases. Depending on your needs, you can choose the appropriate deployment solution:
-
-- **Local database**: suitable for users who want more control over their data and privacy protection. RadasChat uses CRDT (Conflict-Free Replicated Data Type) technology to achieve multi-device synchronization. This is an experimental feature aimed at providing a seamless data synchronization experience.
-- **Server-side database**: suitable for users who want a more convenient user experience. RadasChat supports PostgreSQL as a server-side database. For detailed documentation on how to configure the server-side database, please visit [Configure Server-side Database](https://radas.raizora.com/docs/self-hosting/advanced/server-database).
-
-Regardless of which database you choose, RadasChat can provide you with an excellent user experience.
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
-
-[![][image-feat-auth]][docs-feat-auth]
-
-### `13` [Support Multi-User Management][docs-feat-auth]
-
-RadasChat supports multi-user management and provides two main user authentication and management solutions to meet different needs:
-
-- **next-auth**: RadasChat integrates `next-auth`, a flexible and powerful identity verification library that supports multiple authentication methods, including OAuth, email login, credential login, etc. With `next-auth`, you can easily implement user registration, login, session management, social login, and other functions to ensure the security and privacy of user data.
-
-- [**Clerk**](https://go.clerk.com/exgqLG0): For users who need more advanced user management features, RadasChat also supports `Clerk`, a modern user management platform. `Clerk` provides richer functions, such as multi-factor authentication (MFA), user profile management, login activity monitoring, etc. With `Clerk`, you can get higher security and flexibility, and easily cope with complex user management needs.
-
-Regardless of which user management solution you choose, RadasChat can provide you with an excellent user experience and powerful functional support.
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
-
-[![][image-feat-pwa]][docs-feat-pwa]
-
-### `14` [Progressive Web App (PWA)][docs-feat-pwa]
-
-We deeply understand the importance of providing a seamless experience for users in today's multi-device environment.
-Therefore, we have adopted Progressive Web Application ([PWA](https://support.google.com/chrome/answer/9658361)) technology,
-a modern web technology that elevates web applications to an experience close to that of native apps.
-
-Through PWA, RadasChat can offer a highly optimized user experience on both desktop and mobile devices while maintaining its lightweight and high-performance characteristics.
-Visually and in terms of feel, we have also meticulously designed the interface to ensure it is indistinguishable from native apps,
-providing smooth animations, responsive layouts, and adapting to different device screen resolutions.
-
-> \[!NOTE]
->
-> If you are unfamiliar with the installation process of PWA, you can add RadasChat as your desktop application (also applicable to mobile devices) by following these steps:
->
-> - Launch the Chrome or Edge browser on your computer.
-> - Visit the RadasChat webpage.
-> - In the upper right corner of the address bar, click on the <kbd>Install</kbd> icon.
-> - Follow the instructions on the screen to complete the PWA Installation.
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
-
-[![][image-feat-mobile]][docs-feat-mobile]
-
-### `15` [Mobile Device Adaptation][docs-feat-mobile]
-
-We have carried out a series of optimization designs for mobile devices to enhance the user's mobile experience. Currently, we are iterating on the mobile user experience to achieve smoother and more intuitive interactions. If you have any suggestions or ideas, we welcome you to provide feedback through GitRadasHub Issues or Pull Requests.
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
-
-[![][image-feat-theme]][docs-feat-theme]
-
-### `16` [Custom Themes][docs-feat-theme]
-
-As a design-engineering-oriented application, RadasChat places great emphasis on users' personalized experiences,
-hence introducing flexible and diverse theme modes, including a light mode for daytime and a dark mode for nighttime.
-Beyond switching theme modes, a range of color customization options allow users to adjust the application's theme colors according to their preferences.
-Whether it's a desire for a sober dark blue, a lively peach pink, or a professional gray-white, users can find their style of color choices in RadasChat.
-
-> \[!TIP]
->
-> The default configuration can intelligently recognize the user's system color mode and automatically switch themes to ensure a consistent visual experience with the operating system.
-> For users who like to manually control details, RadasChat also offers intuitive setting options and a choice between chat bubble mode and document mode for conversation scenarios.
 
 <div align="right">
 
@@ -743,10 +443,13 @@ This project is [Apache 2.0](./LICENSE) licensed.
 [docs-docker]: https://radas.raizora.com/docs/self-hosting/server-database/docker-compose
 [docs-env-var]: https://radas.raizora.com/docs/self-hosting/environment-variables
 [docs-feat-agent]: https://radas.raizora.com/docs/usage/features/agent-market
-[docs-feat-artifacts]: https://radas.raizora.com/docs/usage/features/artifacts
-[docs-feat-auth]: https://radas.raizora.com/docs/usage/features/auth
-[docs-feat-branch]: https://radas.raizora.com/docs/usage/features/branching-conversations
-[docs-feat-cot]: https://radas.raizora.com/docs/usage/features/cot
+[docs-feat-artifacts]: https://radas.raizora.com/docs/features/artifacts
+[docs-feat-branch]: https://radas.raizora.com/docs/features/branch
+[docs-feat-cot]: https://radas.raizora.com/docs/features/chain-of-thought
+[docs-feat-prayers]: https://muslimfy.treonstudio.com/docs/features/prayer-times
+[docs-feat-tasbih]: https://muslimfy.treonstudio.com/docs/features/tasbih
+[docs-feat-verse]: https://muslimfy.treonstudio.com/docs/features/verse-of-the-day
+[docs-feat-tasks]: https://muslimfy.treonstudio.com/docs/features/task-manager
 [docs-feat-database]: https://radas.raizora.com/docs/usage/features/database
 [docs-feat-knowledgebase]: https://radas.raizora.com/blog/knowledge-base
 [docs-feat-local]: https://radas.raizora.com/docs/usage/features/local-llm
@@ -791,9 +494,13 @@ This project is [Apache 2.0](./LICENSE) licensed.
 [image-banner]: https://github.com/user-attachments/assets/27070ab9-be52-4e0b-b1d6-3149e9826a70
 
 [image-feat-agent]: https://github.com/user-attachments/assets/b3ab6e35-4fbc-468d-af10-e3e0c687350f
-[image-feat-artifacts]: https://github.com/user-attachments/assets/7f95fad6-b210-4e6e-84a0-7f39e96f3a00
+[image-feat-artifacts]: https://github.com/user-attachments/assets/92f72082-02bd-4835-9c54-b089aad7fd41
 [image-feat-auth]: https://github.com/user-attachments/assets/80bb232e-19d1-4f97-98d6-e291f3585e6d
 [image-feat-branch]: https://github.com/user-attachments/assets/92f72082-02bd-4835-9c54-b089aad7fd41
+[image-feat-prayers]: https://github.com/user-attachments/assets/bd3c6ea0-6500-4f6d-a957-7642b0ae3ce9
+[image-feat-tasbih]: https://github.com/user-attachments/assets/5746b712-3083-4a0d-9344-888708fcd808
+[image-feat-verse]: https://github.com/user-attachments/assets/ec008712-1a57-49fb-94b0-67dc7fa9a222
+[image-feat-tasks]: https://github.com/user-attachments/assets/8fb7ca78-4d86-4c10-8e66-23a9f2c0154c
 [image-feat-cot]: https://github.com/user-attachments/assets/f74f1139-d115-4e9c-8c43-040a53797a5e
 [image-feat-database]: https://github.com/user-attachments/assets/f1697c8b-d1fb-4dac-ba05-153c6295d91d
 [image-feat-knowledgebase]: https://github.com/user-attachments/assets/7da7a3b2-92fd-4630-9f4e-8560c74955ae
@@ -806,7 +513,7 @@ This project is [Apache 2.0](./LICENSE) licensed.
 [image-feat-theme]: https://github.com/user-attachments/assets/b47c39f1-806f-492b-8fcb-b0fa973937c1
 [image-feat-tts]: https://github.com/user-attachments/assets/50189597-2cc3-4002-b4c8-756a52ad5c0a
 [image-feat-vision]: https://github.com/user-attachments/assets/18574a1f-46c2-4cbc-af2c-35a86e128a07
-[image-overview]: https://github.com/user-attachments/assets/dbfaa84a-2c82-4dd9-815c-5be616f264a4
+[image-overview]: https://github.com/user-attachments/assets/6ae2d0b5-1026-4de6-9f62-97462bc884bd
 [image-star]: https://github.com/user-attachments/assets/c3b482e7-cef5-4e94-bef9-226900ecfaab
 [issues-link]: https://img.shields.io/github/issues/radashub/radas-chat.svg?style=flat
 [radas-chat-plugins]: https://github.com/radashub/radas-chat-plugins
