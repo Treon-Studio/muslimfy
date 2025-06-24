@@ -1,15 +1,1 @@
-{
-    "manifest_version": 3,
-    "name": "muslimfy",
-    "version": "0.1.0",
-    "icons": {
-        "12": "icon-12.png",
-        "24": "icon-24.png",
-        "48": "icon-48.png",
-        "96": "icon-96.png",
-        "128": "icon-128.png"
-    },
-    "chrome_url_overrides": {
-        "newtab": "newtab.html"
-    }
-}
+{"manifest_version":3,"name":"muslimfy","version":"0.5.0","icons":{"12":"icon-12.png","24":"icon-24.png","48":"icon-48.png","96":"icon-96.png","128":"icon-128.png"},"chrome_url_overrides":{"newtab":"newtab.html"}}
