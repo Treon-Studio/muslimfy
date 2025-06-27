@@ -18,7 +18,6 @@ declare module '#imports' {
   export { InvalidMatchPattern, MatchPattern } from 'wxt/utils/match-patterns';
   export { useState, useCallback, useMemo, useEffect, useRef, useContext, useReducer } from 'react';
   export { fakeBrowser } from 'wxt/testing';
-  export { AudioPlayer } from '../components/audio-player';
   export { DailyCeramah } from '../components/daily-ceramah';
   export { DynamicBackground } from '../components/dynamic-background';
   export { IslamicCompanion } from '../components/islamic-companion';

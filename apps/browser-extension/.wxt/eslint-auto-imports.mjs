@@ -1,5 +1,4 @@
 const globals = {
-  "AudioPlayer": true,
   "AutoMount": true,
   "AutoMountOptions": true,
   "Ayah": true,
