@@ -1,36 +1,147 @@
 <section class="pt-24 pb-12">
   <div class="px-8 mx-auto md:px-12 lg:px-24 max-w-7xl">
-    <div
-      class="p-8 md:p-12 bg-base-900 rounded-3xl border border-base-800 text-center"
-    >
-      <div class="max-w-3xl mx-auto">
-        <h2 class="text-3xl md:text-4xl lg:text-5xl font-semibold text-white">
-          Start Your Journey with Muslimfy Today
-        </h2>
-        <p class="text-base-300 mt-6 text-lg">
-          Access prayer times, daily verses, and our suite of tools on any
-          device. Join thousands of users in strengthening your faith with a
-          modern, open-source companion.
-        </p>
-        <div
-          class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8"
-        >
-          <a
-            href="https://app.muslimfy.com" 
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex items-center justify-center transition-all duration-200 focus:ring-2 focus:outline-none text-white bg-accent-600 hover:bg-accent-700 focus:ring-accent-500/50 h-12 px-8 py-3 text-base font-medium rounded-md"
+    <div class="relative rounded-3xl overflow-hidden text-center">
+      <div class="sky-bg absolute inset-0 pointer-events-none">
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+        <div class="cloud cloud-4"></div>
+      </div>
+      <div class="relative z-10 p-8 md:p-12">
+        <div class="max-w-3xl mx-auto">
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-semibold text-white">
+            Start Using Muslimfy Today
+          </h2>
+          <p class="text-white/90 mt-6 text-lg">
+            Access prayer times, daily verses, and our suite of tools on any
+            device. Join thousands of users in strengthening your faith with a
+            modern, open-source companion.
+          </p>
+          <div
+            class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8"
           >
-            Launch Web App
-          </a>
-          <a
-            href="#"
-            class="flex items-center justify-center transition-all duration-200 focus:ring-2 focus:outline-none text-base-300 bg-base-800 hover:text-white ring-1 ring-base-700 focus:ring-accent-500 h-12 px-8 py-3 text-base font-medium rounded-md opacity-60 cursor-not-allowed"
-          >
-            Get on Google Play (Soon)
-          </a>
+            <a
+              href="https://chromewebstore.google.com/detail/muslimfy/ambjcakkmpnbphpcbefiieakidfbhmcc"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center justify-center transition-all duration-300 focus:ring-2 focus:outline-none text-white bg-gradient-to-br from-green-500 to-emerald-600 hover:shadow-lg hover:shadow-emerald-500/40 hover:-translate-y-0.5 focus:ring-green-500/50 h-12 px-8 py-3 text-base font-medium rounded-md"
+            >
+              Try it out
+            </a>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  .sky-bg {
+    background: linear-gradient(to top, #3a7bd5 0%, #3a6073 100%);
+  }
+
+  .cloud {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    filter: blur(10px);
+    opacity: 0.6;
+    animation: move-clouds linear infinite;
+  }
+
+  .cloud::before,
+  .cloud::after {
+    content: "";
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+  }
+
+  .cloud-1 {
+    width: 200px;
+    height: 60px;
+    top: 15%;
+    animation-duration: 80s;
+  }
+  .cloud-1::before {
+    width: 100px;
+    height: 100px;
+    top: -40px;
+    left: 20px;
+  }
+  .cloud-1::after {
+    width: 120px;
+    height: 80px;
+    top: -20px;
+    right: 10px;
+  }
+
+  .cloud-2 {
+    width: 300px;
+    height: 80px;
+    top: 30%;
+    animation-duration: 120s;
+    animation-delay: -20s;
+  }
+  .cloud-2::before {
+    width: 150px;
+    height: 120px;
+    top: -60px;
+    left: 30px;
+  }
+  .cloud-2::after {
+    width: 180px;
+    height: 100px;
+    top: -40px;
+    right: 20px;
+  }
+
+  .cloud-3 {
+    width: 250px;
+    height: 70px;
+    top: 60%;
+    animation-duration: 100s;
+    animation-delay: -40s;
+  }
+  .cloud-3::before {
+    width: 130px;
+    height: 110px;
+    top: -50px;
+    left: 25px;
+  }
+  .cloud-3::after {
+    width: 150px;
+    height: 90px;
+    top: -30px;
+    right: 15px;
+  }
+
+  .cloud-4 {
+    width: 150px;
+    height: 50px;
+    top: 80%;
+    animation-duration: 150s;
+    animation-delay: -60s;
+  }
+  .cloud-4::before {
+    width: 80px;
+    height: 80px;
+    top: -30px;
+    left: 15px;
+  }
+  .cloud-4::after {
+    width: 100px;
+    height: 60px;
+    top: -20px;
+    right: 10px;
+  }
+
+  @keyframes move-clouds {
+    0% {
+      transform: translateX(-250px);
+    }
+    100% {
+      transform: translateX(100vw);
+    }
+  }
+</style>
