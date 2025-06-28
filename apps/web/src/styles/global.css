@@ -1,10 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 @plugin "@tailwindcss/forms";
 
 @theme {
-  --font-sans: "Inter", sans-serif;
-  --font-display: "InterVariable", sans-serif;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-display: "Plus Jakarta Sans", sans-serif;
   --color-black: #121212;
   /* Accent  */
 --color-accent-25: #f7fbf6;
@@ -35,11 +36,11 @@
 }
 /* CSS */
 :root {
-  font-family: Inter, sans-serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
 }
 @supports (font-variation-settings: normal) {
   /* Use variable font if supported */
   :root {
-    font-family: InterVariable, sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif;
   }
 }
