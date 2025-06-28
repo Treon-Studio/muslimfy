@@ -1,4 +1,5 @@
 ---
+import { AuroraBackground } from "../ui/aurora-background.tsx";
 const featuresList = [
   {
     title: "Accurate Prayer Times",
@@ -16,6 +17,9 @@ const featuresList = [
 ---
 
 <section class="overflow-hidden">
+  <div class="absolute inset-0">
+    <AuroraBackground />
+  </div>
   <div class="px-8 pt-32 mx-auto md:px-12 lg:px-24 max-w-7xl relative">
     <div class="max-w-3xl text-center mx-auto lg:text-balance">
       <img src="/favicon.svg" alt="Muslimfy Logo" class="h-12 w-auto mx-auto mb-4" />
@@ -48,6 +52,7 @@ const featuresList = [
         </a>
       </div>
     </div>
+
     <div class="relative w-full mx-auto max-w-7xl items-center py-12 pb-12">
       <img
         alt="Muslimfy App Screenshot"
@@ -59,4 +64,5 @@ const featuresList = [
       </p>
     </div>
   </div>
+    </AuroraBackground>
 </section>
