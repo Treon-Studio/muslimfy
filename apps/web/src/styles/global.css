@@ -1,24 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 @plugin "@tailwindcss/forms";
 
 @theme {
-  --font-sans: "Inter", sans-serif;
-  --font-display: "InterVariable", sans-serif;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-display: "Plus Jakarta Sans", sans-serif;
   --color-black: #121212;
   /* Accent  */
---color-accent-25: #f5fbff;
---color-accent-50: #ebf7ff;
---color-accent-100: #d2edff;
---color-accent-200: #afdfff;
---color-accent-300: #78ceff;
---color-accent-400: #38b1ff;
---color-accent-500: #0b8aff;
---color-accent-600: #0065ff;
---color-accent-700: #004cff;
---color-accent-800: #003dd4;
---color-accent-900: #02379e;
---color-accent-950: #072364;
+--color-accent-25: #f7fbf6;
+--color-accent-50: #eef7ea;
+--color-accent-100: #d8edd1;
+--color-accent-200: #c0e3b5;
+--color-accent-300: #a5d896;
+--color-accent-400: #89cc75;
+--color-accent-500: #6abf53;
+--color-accent-600: #488132;
+--color-accent-700: #3a6928;
+--color-accent-800: #2e5220;
+--color-accent-900: #223d18;
+--color-accent-950: #172910;
 /* Base */
 --color-base-25: #fafafa;
 --color-base-50: #f9fafb;
@@ -35,11 +36,11 @@
 }
 /* CSS */
 :root {
-  font-family: Inter, sans-serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
 }
 @supports (font-variation-settings: normal) {
   /* Use variable font if supported */
   :root {
-    font-family: InterVariable, sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif;
   }
 }

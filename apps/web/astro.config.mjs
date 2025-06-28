@@ -6,6 +6,6 @@ vite: {
     plugins: [tailwindcss()],
   },
     // add yur domain name here
-   site: 'https://yoursite.com',
+   site: 'https://muslimfy.treonstudio.com',
   integrations: [sitemap()]
 });
