@@ -1,9 +1,5 @@
 packages:
   - "apps/*"
-  - chrome-extension
-  - pages/*
-  - packages/*
-  - tests/*
 
 catalog:
   react: ^19.0.0
