@@ -25,6 +25,7 @@ const globals = {
   "MatchPattern": true,
   "MigrationError": true,
   "MosquesTasbih": true,
+  "PlaceholdersAndVanishInput": true,
   "PrayerTimes": true,
   "QuranReader": true,
   "QuranReaderModal": true,

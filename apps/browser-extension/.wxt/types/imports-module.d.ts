@@ -20,6 +20,7 @@ declare module '#imports' {
   export { fakeBrowser } from 'wxt/testing';
   export { DailyCeramah } from '../components/daily-ceramah';
   export { DynamicBackground } from '../components/dynamic-background';
+  export { PlaceholdersAndVanishInput } from '../components/google-search';
   export { IslamicCompanion } from '../components/islamic-companion';
   export { MosquesTasbih } from '../components/mosques-tasbih';
   export { PrayerTimes } from '../components/prayer-times';

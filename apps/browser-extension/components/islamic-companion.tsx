@@ -5,12 +5,25 @@ import { Tasbih } from './tasbih';
 import { TodoList } from './todolist';
 import { DynamicBackground } from './dynamic-background';
 import { QuranReader } from './quran-reader';
+import { PlaceholdersAndVanishInput } from './google-search';
 import { Toaster } from './ui/sonner';
+
+const searchPlaceholders = [
+  "Cari ayat Al-Quran...",
+  "Temukan surat favorit...",
+  "Cari doa harian...",
+  "Jelajahi nama-nama Allah...",
+  "Cari masjid terdekat...",
+  "Temukan ceramah inspiratif...",
+  "Cari jadwal sholat...",
+  "Jelajahi kalender Islam..."
+];
 
 export function IslamicCompanion() {
   const [showQuranReader, setShowQuranReader] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isDaytime, setIsDaytime] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Enhanced function to determine if it's daytime based on current user's local time
   const checkDaytime = (time: Date) => {
@@ -33,6 +46,26 @@ export function IslamicCompanion() {
     // Consider dawn and dusk as part of daytime for a more natural feel
     // This gives a 13-hour daytime window (5:30 AM - 6:30 PM)
     return timeInMinutes >= dawnStart && timeInMinutes < nightStart;
+  };
+
+  // Handle search functionality
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+    
+    // TODO: Implement search functionality
+    console.log('Search query:', searchQuery);
+    
+    // For now, just open Quran Reader if searching for Quran-related terms
+    if (searchQuery.toLowerCase().includes('quran') || 
+        searchQuery.toLowerCase().includes('ayat') || 
+        searchQuery.toLowerCase().includes('surat')) {
+      setShowQuranReader(true);
+    }
   };
 
   useEffect(() => {
@@ -61,81 +94,7 @@ export function IslamicCompanion() {
     return () => clearInterval(timer);
   }, [isDaytime]);
 
-  // Enhanced audio playlist with your requested YouTube URL as the default/first track
-  const audioTracks = [
-    {
-      id: '1',
-      title: 'Tabligh Akbar: Kenikmatan Surga',
-      artist: 'Ustadz Khalid Basalamah',
-      url: 'https://www.youtube.com/watch?v=O9jAkKrZD6E',
-      type: 'youtube' as const,
-      thumbnail: 'https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400&h=400&fit=crop',
-      description: 'Tabligh Akbar: Kenikmatan Surga'
-    },
-    {
-      id: '2',
-      title: 'Solusi Cara Untuk Mendapat Pertolongan Allah',
-      artist: 'Ustadz Adi Hidayat',
-      url: 'https://www.youtube.com/watch?v=zUkLO85HZ-k',
-      type: 'youtube' as const,
-      thumbnail: 'https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=400&h=400&fit=crop',
-      description: 'Solusi Cara Untuk Mendapat Pertolongan Allah'
-    },
-    {
-      id: '3',
-      title: 'Mengenal Rasulullah Secara Detail',
-      artist: 'Ustadz Khalid Basalamah',
-      url: 'https://www.youtube.com/watch?v=ufuj0Iu2OPQ',
-      type: 'youtube' as const,
-      thumbnail: 'https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400&h=400&fit=crop',
-      description: 'Mengenal Rasulullah Secara Detail'
-    },
-    {
-      id: '4',
-      title: 'Setinggi Apa Iman Kita, Disitulah Kebahagiaan Kita Berada',
-      artist: 'Ustadz Adi Hidayat',
-      url: 'https://www.youtube.com/watch?v=IiXOKNNvMYs',
-      type: 'youtube' as const,
-      thumbnail: 'https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=400&h=400&fit=crop',
-      description: 'Setinggi Apa Iman Kita, Disitulah Kebahagiaan Kita Berada'
-    },
-    {
-      id: '5',
-      title: 'KALO LAGI MENTOK, HARUS GIMANA?',
-      artist: 'Ustadz Hanan Attaki',
-      url: 'https://www.youtube.com/watch?v=PSIychdfFVs',
-      type: 'youtube' as const,
-      thumbnail: 'https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400&h=400&fit=crop',
-      description: 'KALO LAGI MENTOK, HARUS GIMANA?'
-    },
-    {
-      id: '6',
-      title: 'KUNCI KETENANGAN HATI',
-      artist: 'Ustadz Khalid Basalamah',
-      url: 'https://www.youtube.com/watch?v=DMpkV5ptPOo',
-      type: 'youtube' as const,
-      thumbnail: 'https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400&h=400&fit=crop',
-      description: 'KUNCI KETENANGAN HATI'
-    },
-    {
-      id: '                           7',
-      title: 'Hadiah Allah Ketika Mengalami Kesulitan',
-      artist: 'Ustadz Hanan Attaki',
-      url: 'https://www.youtube.com/watch?v=izYUMrsvVDQ&t=4s',
-      type: 'youtube' as const,
-      thumbnail: 'https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400&h=400&fit=crop',
-      description: 'Hadiah Allah Ketika Mengalami Kesulitan'
-    },
-    {
-      id: '8',
-      title: 'Hadiah Allah Ketika Mengalami Kesulitan',
-      artist: 'Ustadz Adi Hidayat',
-      url: 'https://www.youtube.com/watch?v=izYUMrsvVDQ',
-      type: 'youtube' as const,
-      thumbnail: 'https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=400&h=400&fit=crop',
-      description: 'Hadiah Allah Ketika Mengalami Kesulitan'
-    }
-  ];
+
 
   return (
     <div className="min-h-screen relative overflow-hidden">
@@ -146,6 +105,16 @@ export function IslamicCompanion() {
       <div className="relative z-10 min-h-screen overflow-y-auto">
         <div className="flex items-center justify-center min-h-screen py-4 px-3 sm:py-6 sm:px-4 lg:py-8 lg:px-6">
           <div className="w-full max-w-[400px] sm:max-w-[640px] lg:max-w-[780px] mx-auto">
+            
+            {/* Search Input - Added above the grid */}
+            <div className="mb-6 sm:mb-8">
+              <PlaceholdersAndVanishInput
+                placeholders={searchPlaceholders}
+                onChange={handleSearchChange}
+                onSubmit={handleSearchSubmit}
+              />
+            </div>
+            
             {/* Clean Responsive Grid Layout */}
             <div className="grid gap-3 sm:gap-4 lg:gap-[6px]">
               
@@ -163,10 +132,10 @@ export function IslamicCompanion() {
                 
                 {/* Verse of the Day */}
                 <div className="h-[280px]">
-                  <VerseOfTheDay />
+                  <VerseOfTheDay/>
                 </div>
                 
-                {/* Audio Player */}
+                {/* Todo List */}
                 <div className="h-[320px]">
                   <TodoList />
                 </div>
@@ -189,7 +158,7 @@ export function IslamicCompanion() {
                 
                 {/* Bottom Row - Verse of the Day */}
                 <div className="col-span-2 h-[360px]">
-                  <VerseOfTheDay onOpenQuranReader={() => setShowQuranReader(true)} />
+                  <VerseOfTheDay/>
                 </div>
               </div>
 
@@ -204,7 +173,7 @@ export function IslamicCompanion() {
                   
                   {/* Verse of the Day */}
                   <div className="h-[371px]">
-                    <VerseOfTheDay onOpenQuranReader={() => setShowQuranReader(true)} />
+                    <VerseOfTheDay/>
                   </div>
                 </div>
                 
@@ -215,7 +184,7 @@ export function IslamicCompanion() {
                     <Tasbih />
                   </div>
                   
-                  {/* Audio Player */}
+                  {/* Todo List */}
                   <div className="h-[320px]">
                     <TodoList />
                   </div>
@@ -233,7 +202,7 @@ export function IslamicCompanion() {
                   <span>v1.0.0</span>
                 </div>
                 <div className="text-white/70 text-[10px]">
-                © 2025{' '}
+                  © 2025{' '}
                   <button
                     onClick={() => window.open('https://treonstudio.com', '_blank')}
                     className="text-white/80 hover:text-white/95 transition-colors duration-200 cursor-pointer underline decoration-white/60 hover:decoration-white/80 underline-offset-2 text-[10px]"
