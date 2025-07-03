@@ -90,10 +90,5 @@
       "prettier --write",
       "eslint --fix"
     ]
-  },
-  "engines": {
-    "node": "20.12.2",
-    "pnpm": "10.11.0"
-  },
-  "packageManager": "pnpm@10.11.0"
+  }
 }
