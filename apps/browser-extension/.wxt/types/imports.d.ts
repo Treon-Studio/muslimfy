@@ -8,6 +8,7 @@ declare global {
   const IslamicCompanion: typeof import('/Users/ridho/Documents/go/github.com/raizora/muslimfy/apps/browser-extension/components/islamic-companion')['IslamicCompanion']
   const MatchPattern: typeof import('wxt/utils/match-patterns')['MatchPattern']
   const MosquesTasbih: typeof import('/Users/ridho/Documents/go/github.com/raizora/muslimfy/apps/browser-extension/components/mosques-tasbih')['MosquesTasbih']
+  const PlaceholdersAndVanishInput: typeof import('/Users/ridho/Documents/go/github.com/raizora/muslimfy/apps/browser-extension/components/google-search')['PlaceholdersAndVanishInput']
   const PrayerTimes: typeof import('/Users/ridho/Documents/go/github.com/raizora/muslimfy/apps/browser-extension/components/prayer-times')['PrayerTimes']
   const QuranReader: typeof import('/Users/ridho/Documents/go/github.com/raizora/muslimfy/apps/browser-extension/components/quran-reader')['QuranReader']
   const QuranReaderModal: typeof import('/Users/ridho/Documents/go/github.com/raizora/muslimfy/apps/browser-extension/components/quran-reader-modal')['QuranReaderModal']
