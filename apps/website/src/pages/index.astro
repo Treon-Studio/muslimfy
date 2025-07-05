@@ -1,17 +1,18 @@
 ---
-import Example from '@monorepo/components/src/Example.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Cta from "../components/global/cta.astro";
+import Testimonial from "../components/global/testimonial.astro";
+import Community from "../components/landing/community.astro";
+import Hero from "../components/landing/hero.astro";
+import SectionOne from "../components/landing/section-one.astro";
+import SectionTwo from "../components/landing/section-two.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro + Tailwind monorepo template</title>
-	</head>
-	<body>
-		<h1 class="font-bold">Hello, world!</h1>
-		<Example />
-	</body>
-</html>
+<BaseLayout>
+  <Hero />
+  <SectionOne />
+  <SectionTwo />
+  <Community />
+  <Testimonial />
+  <Cta />
+</BaseLayout>

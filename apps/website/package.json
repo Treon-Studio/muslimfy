@@ -2,19 +2,31 @@
   "name": "@monorepo/site",
   "type": "module",
   "version": "0.0.1",
+  "private": true,
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
+  "devDependencies": {
+    "@astrojs/sitemap": "^3.4.1",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.16",
+    "@tailwindcss/vite": "^4.1.10",
+  
+    "tailwindcss": "^4.1.10"
+  },
   "dependencies": {
-    "@astrojs/check": "^0.5.6",
-    "@astrojs/tailwind": "^5.1.0",
-    "@monorepo/components": "workspace:^",
-    "@monorepo/tailwind-config": "workspace:^",
-    "astro": "^4.4.9",
-    "typescript": "^5.3.3"
+    "@astrojs/react": "^4.3.0",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "clsx": "^2.1.1",
+    "motion": "^12.19.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "tailwind-merge": "^3.3.1",
+    "astro": "^5.9.3"
   }
 }

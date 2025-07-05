@@ -1,0 +1,68 @@
+---
+import { AuroraBackground } from "../ui/aurora-background.tsx";
+const featuresList = [
+  {
+    title: "Accurate Prayer Times",
+    description: "Location-based calculations with customizable reminders.",
+  },
+  {
+    title: "Digital Tasbih Counter",
+    description: "A beautiful and intuitive counter for your daily dhikr.",
+  },
+  {
+    title: "Verse of the Day",
+    description: "Daily inspiration from the Quran with full translations.",
+  },
+];
+---
+
+<section class="overflow-hidden">
+  <div class="absolute inset-0">
+    <AuroraBackground />
+  </div>
+  <div class="px-8 pt-32 mx-auto md:px-12 lg:px-24 max-w-7xl relative">
+    <div class="max-w-3xl text-center mx-auto lg:text-balance">
+      <img src="/favicon.svg" alt="Muslimfy Logo" class="h-12 w-auto mx-auto mb-4" />
+      <h1
+        class="text-4xl leading-tight tracking-tight sm:text-5xl md:text-6xl lg:text-7xl mt-4 font-semibold text-base-900"
+      >
+        Faith and Technology in Harmony
+      </h1>
+      <p class="text-lg leading-normal mt-6 text-base-500 font-medium max-w-2xl mx-auto">
+        An open-source application that combines Islamic values with modern
+        technology. Get accurate prayer times, track your dhikr, receive daily
+        verses, and organize your tasks—all in one place.
+      </p>
+      <div
+        class="flex flex-wrap items-center gap-4 justify-center mx-auto mt-12"
+      >
+        <a
+          href="#features"
+          class="flex items-center justify-center transition-all duration-200 focus:ring-2 focus:outline-none text-white bg-accent-600 hover:bg-accent-700 focus:ring-accent-500/50 h-11 px-6 py-2 text-base font-medium rounded-md"
+        >
+          Explore Features
+        </a>
+        <a
+          href="https://github.com/treon-studio/muslimfy"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center justify-center transition-all duration-200 focus:ring-2 focus:outline-none text-base-500 bg-white hover:text-accent-500 ring-1 ring-base-200 focus:ring-accent-500 h-11 px-6 py-2 text-base font-medium rounded-md"
+        >
+          View on GitHub
+        </a>
+      </div>
+    </div>
+
+    <div class="relative w-full mx-auto max-w-7xl items-center py-12 pb-12">
+      <img
+        alt="Muslimfy App Screenshot"
+        class="relative w-full ring-4 ring-base-50 border border-base-200 lg:rounded-2xl object-cover rounded"
+        src="/app-preview.png"
+      />
+      <p class="text-center text-sm text-base-400 mt-4">
+        *App interface placeholder.
+      </p>
+    </div>
+  </div>
+    </AuroraBackground>
+</section>
