@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Clock, Sunrise, Sun, Star, Sunset, Moon, Bell, BellOff, MapPin, Settings, Loader2, RefreshCw, TestTube, Globe } from 'lucide-react';
-import { localPrayerTimesCalculator, PrayerTimesData, LocationCoords } from '../services/prayer-times-calculator';
+import { Clock, Sunrise, Sun, Star, Sunset, Moon, Bell, BellOff, MapPin, Settings, Loader2, RefreshCw, TestTube, Globe, Navigation, AlertCircle, CheckCircle, XCircle, Target, Shield, ExternalLink, Map, Info, Zap } from 'lucide-react';
+import { myQuranPrayerTimesService, MyQuranPrayerTimesData as PrayerTimesData, LocationCoords, LOCATION_PRESETS } from '../services/my-quran-api';
+import { localPrayerTimesCalculator } from '../services/prayer-times-calculator';
 import { notificationService, NotificationSettings } from '../services/notification-service';
 import { indonesianCitiesService, IndonesianCity } from '../services/indonesia-cities-database';
 import { Button } from './ui/button';
@@ -13,6 +14,7 @@ import { Slider } from './ui/slider';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Combobox } from './ui/combobox';
 import { toast } from 'sonner';
+import { Alert, AlertDescription } from './ui/alert';
 
 export function PrayerTimes() {
   const [prayerData, setPrayerData] = useState<PrayerTimesData | null>(null);
@@ -35,6 +37,17 @@ export function PrayerTimes() {
   const [useIndonesianCity, setUseIndonesianCity] = useState(true);
   const [manualCity, setManualCity] = useState('');
   const [manualCountry, setManualCountry] = useState('');
+  
+  // GPS Debug states
+  const [gpsStatus, setGpsStatus] = useState<{
+    hasManualOverride: boolean;
+    lastKnown: LocationCoords | null;
+    gpsSupported: boolean;
+    currentMethod: string;
+    permissionStatus: any;
+  } | null>(null);
+  const [showGpsDebug, setShowGpsDebug] = useState(false);
+  const [showLocationHelper, setShowLocationHelper] = useState(false);
   
   // Notification settings
   const [notificationSettings, setNotificationSettings] = useState<NotificationSettings>(
@@ -61,12 +74,24 @@ export function PrayerTimes() {
     }
   }, []);
 
+  // Update GPS status
+  const updateGpsStatus = useCallback(() => {
+    const status = myQuranPrayerTimesService.getLocationStatus();
+    setGpsStatus(status);
+    
+    // Show location helper if GPS is blocked
+    if (status.permissionStatus?.blocked) {
+      setShowLocationHelper(true);
+    }
+  }, []);
+
   // Load prayer times and initialize
   useEffect(() => {
     loadInitialCityOptions();
+    updateGpsStatus();
     loadPrayerTimes();
     initializeNotifications();
-  }, [loadInitialCityOptions]);
+  }, [loadInitialCityOptions, updateGpsStatus]);
 
   // Handle city search with debouncing
   useEffect(() => {
@@ -123,23 +148,19 @@ export function PrayerTimes() {
       setLoading(true);
       setError(null);
       
-      if (useIndonesianCity && selectedCity && !prayerData) {
+      if (useIndonesianCity && selectedCity) {
         // Use selected Indonesian city
         const city = indonesianCitiesService.getCityById(selectedCity);
         if (city) {
           console.log('Loading prayer times for selected city:', city.name);
-          const data = await localPrayerTimesCalculator.getPrayerTimes(
+          const data = await myQuranPrayerTimesService.getPrayerTimes(
             city.latitude,
             city.longitude,
             undefined,
-            calculationMethod,
-            {
-              city: city.name,
-              province: city.province,
-              country: 'Indonesia'
-            }
+            calculationMethod
           );
           setPrayerData(data);
+          updateGpsStatus();
           return;
         }
       }
@@ -147,37 +168,35 @@ export function PrayerTimes() {
       if (!useIndonesianCity && manualCity && manualCountry) {
         // Use manual city input
         console.log('Loading prayer times for manual city:', manualCity, manualCountry);
-        const data = await localPrayerTimesCalculator.getPrayerTimesByCity(
+        const data = await myQuranPrayerTimesService.getPrayerTimesByCity(
           manualCity, 
           manualCountry, 
           undefined, 
           calculationMethod
         );
         setPrayerData(data);
+        updateGpsStatus();
         return;
       }
       
-      // Fallback to GPS location
+      // Fallback to GPS location (will use fallback if GPS blocked)
       console.log('Using GPS location as fallback');
-      const coords = await localPrayerTimesCalculator.getCurrentLocation();
+      const coords = await myQuranPrayerTimesService.getCurrentLocation();
       setLocation(coords);
       
       // Try to find nearby Indonesian city
       const nearbyCities = indonesianCitiesService.getNearbyCities(coords.latitude, coords.longitude, 50);
       const nearbyCity = nearbyCities[0];
       
-      const data = await localPrayerTimesCalculator.getPrayerTimes(
+      const data = await myQuranPrayerTimesService.getPrayerTimes(
         coords.latitude, 
         coords.longitude, 
         undefined, 
-        calculationMethod,
-        nearbyCity ? {
-          city: nearbyCity.name,
-          province: nearbyCity.province,
-          country: 'Indonesia'
-        } : { country: 'Indonesia' }
+        calculationMethod
       );
       setPrayerData(data);
+      updateGpsStatus();
+
       
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to calculate prayer times';
@@ -191,7 +210,7 @@ export function PrayerTimes() {
 
   const updateCurrentPrayerInfo = () => {
     if (prayerData) {
-      const info = localPrayerTimesCalculator.getCurrentPrayer(prayerData.timings);
+      const info = myQuranPrayerTimesService.getCurrentPrayer(prayerData.timings);
       setCurrentPrayerInfo(info);
     }
   };
@@ -281,6 +300,54 @@ export function PrayerTimes() {
     setCitySearch(search);
   };
 
+  // Location preset handlers
+  const handleLocationPreset = (presetKey: keyof typeof LOCATION_PRESETS) => {
+    myQuranPrayerTimesService.setLocationPreset(presetKey);
+    const preset = LOCATION_PRESETS[presetKey];
+    toast.success(`Lokasi diatur ke ${preset.city}! Memuat ulang waktu sholat...`);
+    setShowLocationHelper(false); // Hide helper after successful preset
+    setTimeout(() => loadPrayerTimes(), 1000);
+  };
+
+  // Manual GPS location override
+  const handleManualLocationOverride = () => {
+    if (!prayerData?.meta?.latitude || !prayerData?.meta?.longitude) return;
+    
+    // Prompt user for manual coordinates
+    const latInput = prompt('Enter latitude (e.g., -7.7956 for Yogyakarta):', prayerData.meta.latitude.toString());
+    const lngInput = prompt('Enter longitude (e.g., 110.3695 for Yogyakarta):', prayerData.meta.longitude.toString());
+    
+    if (latInput && lngInput) {
+      const lat = parseFloat(latInput);
+      const lng = parseFloat(lngInput);
+      
+      if (!isNaN(lat) && !isNaN(lng)) {
+        myQuranPrayerTimesService.setManualLocation(lat, lng);
+        toast.success('Manual location override set! Reloading prayer times...');
+        setTimeout(() => loadPrayerTimes(), 1000);
+      } else {
+        toast.error('Invalid coordinates');
+      }
+    }
+  };
+
+  const clearManualLocationOverride = () => {
+    myQuranPrayerTimesService.clearManualLocation();
+    toast.success('Manual location override cleared! Reloading prayer times...');
+    setTimeout(() => loadPrayerTimes(), 1000);
+  };
+
+  const handleRequestPermission = async () => {
+    const success = await myQuranPrayerTimesService.requestLocationPermission();
+    updateGpsStatus();
+    if (success) {
+      toast.success('GPS permission granted! Reloading prayer times...');
+      setTimeout(() => loadPrayerTimes(), 1000);
+    } else {
+      toast.error('GPS permission denied or blocked.');
+    }
+  };
+
   const prayers = [
     { 
       name: 'Fajr', 
@@ -340,6 +407,9 @@ export function PrayerTimes() {
         <div className="relative p-6 h-full flex flex-col items-center justify-center">
           <Loader2 className="w-8 h-8 text-blue-400 animate-spin mb-4" />
           <p className="text-white/70">Menghitung waktu sholat...</p>
+          {gpsStatus && (
+            <p className="text-white/50 text-sm mt-2">Method: {gpsStatus.currentMethod}</p>
+          )}
         </div>
       </div>
     );
@@ -371,6 +441,80 @@ export function PrayerTimes() {
     `${prayerData.meta.location.city || 'Unknown'}, ${prayerData.meta.location.province || prayerData.meta.location.country}` :
     'Location Unknown';
 
+  // Enhanced method display text based on current location and coordinates
+  const getMethodDisplayText = () => {
+    if (!prayerData?.meta.method.name) return 'Kemenag Indonesia';
+    
+    const methodName = prayerData.meta.method.name;
+    const locationCity = prayerData.meta.location?.city;
+    const locationProvince = prayerData.meta.location?.province;
+    const coordinates = {
+      lat: prayerData.meta.latitude,
+      lng: prayerData.meta.longitude
+    };
+    
+    // If using Indonesia method, show location-specific reference
+    if (methodName.includes('Indonesia') || methodName.includes('Kementerian Agama')) {
+      // Find nearest city based on coordinates for more accurate reference
+      let referenceCity = locationCity;
+      
+      // Use coordinate-based city detection for better accuracy
+      if (coordinates.lat && coordinates.lng) {
+        // Check for major Indonesian cities with specific coordinate ranges
+        if (Math.abs(coordinates.lat - (-7.7956)) < 0.3 && Math.abs(coordinates.lng - 110.3695) < 0.5) {
+          referenceCity = 'Yogyakarta';
+        } else if (Math.abs(coordinates.lat - (-6.2088)) < 0.3 && Math.abs(coordinates.lng - 106.8456) < 0.5) {
+          referenceCity = 'Jakarta';
+        } else if (Math.abs(coordinates.lat - (-7.2459)) < 0.3 && Math.abs(coordinates.lng - 112.7378) < 0.5) {
+          referenceCity = 'Surabaya';
+        } else if (Math.abs(coordinates.lat - (-6.9175)) < 0.3 && Math.abs(coordinates.lng - 107.6191) < 0.5) {
+          referenceCity = 'Bandung';
+        } else if (Math.abs(coordinates.lat - (-6.9667)) < 0.3 && Math.abs(coordinates.lng - 110.4167) < 0.5) {
+          referenceCity = 'Semarang';
+        }
+      }
+      
+      // Special handling for Yogyakarta region (including surrounding areas like Bantul)
+      if (locationProvince && locationProvince.toLowerCase().includes('yogyakarta')) {
+        referenceCity = 'Yogyakarta';
+      }
+      
+      // If we have a specific city, use it
+      if (referenceCity && referenceCity !== 'Unknown') {
+        return `Kemenag ${referenceCity}`;
+      }
+      
+      // Fallback to province if available
+      if (locationProvince && locationProvince !== 'Unknown') {
+        return `Kemenag ${locationProvince}`;
+      }
+    }
+    
+    return methodName;
+  };
+
+  const getGpsStatusIcon = () => {
+    if (!gpsStatus) return Navigation;
+    
+    if (gpsStatus.hasManualOverride) return Target;
+    if (gpsStatus.permissionStatus?.blocked) return Shield;
+    if (gpsStatus.permissionStatus?.denied) return XCircle;
+    if (gpsStatus.permissionStatus?.granted) return CheckCircle;
+    return AlertCircle;
+  };
+
+  const getGpsStatusColor = () => {
+    if (!gpsStatus) return 'text-gray-300';
+    
+    if (gpsStatus.hasManualOverride) return 'text-orange-300';
+    if (gpsStatus.permissionStatus?.blocked) return 'text-red-300';
+    if (gpsStatus.permissionStatus?.denied) return 'text-red-300';
+    if (gpsStatus.permissionStatus?.granted) return 'text-green-300';
+    return 'text-yellow-300';
+  };
+
+  const StatusIcon = getGpsStatusIcon();
+
   return (
     <div className="relative rounded-3xl overflow-hidden h-full bg-gray-900/90 backdrop-blur-xl border border-gray-700/50 shadow-lg">
       {/* Subtle gradient overlay */}
@@ -392,6 +536,22 @@ export function PrayerTimes() {
           </div>
           
           <div className="flex items-center gap-2">
+            {/* GPS Status Toggle */}
+            <button
+              onClick={() => setShowGpsDebug(!showGpsDebug)}
+              className={`w-10 h-10 backdrop-blur-sm rounded-xl border transition-all duration-200 hover:scale-105 flex items-center justify-center ${
+                gpsStatus?.hasManualOverride 
+                  ? 'bg-orange-500/20 border-orange-400/30'
+                  : gpsStatus?.permissionStatus?.granted
+                  ? 'bg-green-500/20 border-green-400/30'
+                  : gpsStatus?.permissionStatus?.denied || gpsStatus?.permissionStatus?.blocked
+                  ? 'bg-red-500/20 border-red-400/30'
+                  : 'bg-gray-800/60 border-gray-600/30'
+              }`}
+            >
+              <StatusIcon className={`w-4 h-4 ${getGpsStatusColor()}`} />
+            </button>
+            
             {/* Settings button */}
             <Dialog open={showSettings} onOpenChange={setShowSettings}>
               <DialogTrigger asChild>
@@ -399,22 +559,43 @@ export function PrayerTimes() {
                   <Settings className="w-4 h-4 text-gray-300" />
                 </button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-2xl bg-gray-900/95 border-gray-700 max-h-[80vh] overflow-y-auto">
-                <DialogHeader>
+              <DialogContent className="sm:max-w-2xl bg-gray-900/95 border-gray-700 max-h-[80vh] overflow-hidden flex flex-col">
+                <DialogHeader className="flex-shrink-0">
                   <DialogTitle className="text-white">Pengaturan Waktu Sholat</DialogTitle>
                   <DialogDescription className="text-gray-400">
                     Atur lokasi, metode perhitungan, dan notifikasi untuk waktu sholat Anda.
                   </DialogDescription>
                 </DialogHeader>
                 
-                <Tabs defaultValue="location" className="w-full">
-                  <TabsList className="grid w-full grid-cols-3 bg-gray-800">
-                    <TabsTrigger value="location" className="text-white">Lokasi</TabsTrigger>
-                    <TabsTrigger value="method" className="text-white">Metode</TabsTrigger>
-                    <TabsTrigger value="notifications" className="text-white">Notifikasi</TabsTrigger>
+                <Tabs defaultValue="location" className="w-full flex flex-col min-h-0 flex-1">
+                  <TabsList className="grid w-full grid-cols-4 bg-gray-800/80 backdrop-blur-sm border border-gray-600/30 p-1 flex-shrink-0">
+                    <TabsTrigger 
+                      value="location" 
+                      className="text-gray-300 hover:text-white hover:bg-gray-700/50 data-[state=active]:bg-white/20 data-[state=active]:text-white data-[state=active]:border-white/30 data-[state=active]:shadow-lg transition-all duration-200 font-medium"
+                    >
+                      Lokasi
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="gps" 
+                      className="text-gray-300 hover:text-white hover:bg-gray-700/50 data-[state=active]:bg-white/20 data-[state=active]:text-white data-[state=active]:border-white/30 data-[state=active]:shadow-lg transition-all duration-200 font-medium"
+                    >
+                      GPS Fix
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="method" 
+                      className="text-gray-300 hover:text-white hover:bg-gray-700/50 data-[state=active]:bg-white/20 data-[state=active]:text-white data-[state=active]:border-white/30 data-[state=active]:shadow-lg transition-all duration-200 font-medium"
+                    >
+                      Metode
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="notifications" 
+                      className="text-gray-300 hover:text-white hover:bg-gray-700/50 data-[state=active]:bg-white/20 data-[state=active]:text-white data-[state=active]:border-white/30 data-[state=active]:shadow-lg transition-all duration-200 font-medium"
+                    >
+                      Notifikasi
+                    </TabsTrigger>
                   </TabsList>
                   
-                  <TabsContent value="location" className="space-y-6 mt-6">
+                  <TabsContent value="location" className="space-y-6 mt-8 overflow-y-auto mobile-scroll scrollbar-thin flex-1 min-h-0">
                     {/* Current location display */}
                     <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
                       <div className="flex items-center gap-2 mb-2">
@@ -425,6 +606,30 @@ export function PrayerTimes() {
                       {prayerData?.meta.timezone && (
                         <p className="text-gray-400 text-sm">Zona Waktu: {prayerData.meta.timezone}</p>
                       )}
+                      {prayerData?.meta.latitude && prayerData?.meta.longitude && (
+                        <p className="text-gray-500 text-xs mt-1">
+                          {prayerData.meta.latitude.toFixed(4)}, {prayerData.meta.longitude.toFixed(4)}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Quick Location Presets */}
+                    <div className="space-y-3">
+                      <Label className="text-white">Quick Location Presets</Label>
+                      <div className="grid grid-cols-2 gap-2">
+                        {Object.entries(LOCATION_PRESETS).map(([key, preset]) => (
+                          <Button
+                            key={key}
+                            onClick={() => handleLocationPreset(key as keyof typeof LOCATION_PRESETS)}
+                            variant="outline"
+                            size="sm"
+                            className="bg-gray-800/40 border-gray-600/50 text-white hover:bg-gray-700/60 hover:border-gray-500/60 justify-start"
+                          >
+                            <MapPin className="w-3 h-3 mr-2" />
+                            {preset.city}
+                          </Button>
+                        ))}
+                      </div>
                     </div>
 
                     {/* Location type selector */}
@@ -450,16 +655,18 @@ export function PrayerTimes() {
                               'Memuat daftar kota...'
                             }
                           </div>
-                          <Combobox
-                            value={selectedCity}
-                            onValueChange={handleCitySelect}
-                            onSearchChange={handleCitySearchChange}
-                            placeholder="Cari kota Indonesia..."
-                            searchPlaceholder="Ketik nama kota..."
-                            emptyText="Kota tidak ditemukan"
-                            options={cityOptions}
-                            className="bg-gray-800 border-gray-600 text-white"
-                          />
+                          <div className="relative">
+                            <Combobox
+                              value={selectedCity}
+                              onValueChange={handleCitySelect}
+                              onSearchChange={handleCitySearchChange}
+                              placeholder="Cari kota Indonesia..."
+                              searchPlaceholder="Ketik nama kota..."
+                              emptyText="Kota tidak ditemukan"
+                              options={cityOptions}
+                              className="bg-gray-800/80 backdrop-blur-sm border-gray-600/50 text-white hover:border-gray-500/60 focus:border-blue-400/60 transition-colors"
+                            />
+                          </div>
                           {selectedCityInfo && (
                             <div className="text-sm text-gray-400 mt-2 p-3 bg-gray-800/50 rounded-lg">
                               <div className="grid grid-cols-2 gap-2">
@@ -491,7 +698,7 @@ export function PrayerTimes() {
                               value={manualCity}
                               onChange={(e) => setManualCity(e.target.value)}
                               placeholder="Jakarta"
-                              className="bg-gray-800 border-gray-600 text-white"
+                              className="bg-gray-800/80 backdrop-blur-sm border-gray-600/50 text-white placeholder:text-gray-400 hover:border-gray-500/60 focus:border-blue-400/60 transition-colors"
                             />
                           </div>
                           <div className="space-y-2">
@@ -501,7 +708,7 @@ export function PrayerTimes() {
                               value={manualCountry}
                               onChange={(e) => setManualCountry(e.target.value)}
                               placeholder="Indonesia"
-                              className="bg-gray-800 border-gray-600 text-white"
+                              className="bg-gray-800/80 backdrop-blur-sm border-gray-600/50 text-white placeholder:text-gray-400 hover:border-gray-500/60 focus:border-blue-400/60 transition-colors"
                             />
                           </div>
                         </div>
@@ -510,11 +717,15 @@ export function PrayerTimes() {
 
                     {/* Action buttons */}
                     <div className="flex gap-2">
-                      <Button onClick={handleLocationUpdate} className="flex-1">
+                      <Button 
+                        onClick={handleLocationUpdate} 
+                        className="flex-1 bg-blue-600/80 hover:bg-blue-600/90 text-white"
+                      >
                         Perbarui Lokasi
                       </Button>
                       <Button
                         variant="outline"
+                        className="bg-gray-800/40 border-gray-600/50 text-white hover:bg-gray-700/60 hover:border-gray-500/60"
                         onClick={() => {
                           setSelectedCity('');
                           setManualCity('');
@@ -530,16 +741,182 @@ export function PrayerTimes() {
                     </div>
                   </TabsContent>
                   
-                  <TabsContent value="method" className="space-y-4 mt-6">
+                  <TabsContent value="gps" className="space-y-4 mt-8 overflow-y-auto mobile-scroll scrollbar-thin flex-1 min-h-0">
+                    <div className="space-y-4">
+                      <div>
+                        <h3 className="text-white font-medium mb-3">GPS Troubleshooting & Solutions</h3>
+                        
+                        {gpsStatus && (
+                          <div className="space-y-3">
+                            <Alert className="bg-gray-800/60 border-gray-600/50">
+                              <StatusIcon className="h-4 w-4" />
+                              <AlertDescription className="text-gray-300">
+                                <div className="space-y-2">
+                                  <div className="flex items-center gap-2">
+                                    {gpsStatus.gpsSupported ? (
+                                      <CheckCircle className="w-4 h-4 text-green-400" />
+                                    ) : (
+                                      <XCircle className="w-4 h-4 text-red-400" />
+                                    )}
+                                    <span>GPS Support: {gpsStatus.gpsSupported ? 'Available' : 'Not Available'}</span>
+                                  </div>
+                                  
+                                  <div className="flex items-center gap-2">
+                                    {gpsStatus.permissionStatus?.granted ? (
+                                      <CheckCircle className="w-4 h-4 text-green-400" />
+                                    ) : gpsStatus.permissionStatus?.blocked ? (
+                                      <Shield className="w-4 h-4 text-red-400" />
+                                    ) : gpsStatus.permissionStatus?.denied ? (
+                                      <XCircle className="w-4 h-4 text-red-400" />
+                                    ) : (
+                                      <AlertCircle className="w-4 h-4 text-yellow-400" />
+                                    )}
+                                    <span>
+                                      Permission: {
+                                        gpsStatus.permissionStatus?.granted ? 'Granted' :
+                                        gpsStatus.permissionStatus?.blocked ? 'Blocked by Policy' :
+                                        gpsStatus.permissionStatus?.denied ? 'Denied' :
+                                        'Not Requested'
+                                      }
+                                    </span>
+                                  </div>
+                                  
+                                  <div className="flex items-center gap-2">
+                                    {gpsStatus.hasManualOverride ? (
+                                      <Target className="w-4 h-4 text-orange-400" />
+                                    ) : gpsStatus.lastKnown ? (
+                                      <CheckCircle className="w-4 h-4 text-green-400" />
+                                    ) : (
+                                      <AlertCircle className="w-4 h-4 text-yellow-400" />
+                                    )}
+                                    <span>Method: {gpsStatus.currentMethod}</span>
+                                  </div>
+                                  
+                                  {gpsStatus.lastKnown && (
+                                    <div className="text-sm text-gray-400 mt-2">
+                                      Last Known: {gpsStatus.lastKnown.latitude.toFixed(4)}, {gpsStatus.lastKnown.longitude.toFixed(4)}
+                                    </div>
+                                  )}
+                                  
+                                  {gpsStatus.permissionStatus?.errorMessage && (
+                                    <div className="text-sm text-red-400 mt-2">
+                                      Error: {gpsStatus.permissionStatus.errorMessage}
+                                    </div>
+                                  )}
+                                </div>
+                              </AlertDescription>
+                            </Alert>
+
+                            {/* Comprehensive GPS Permission Guide */}
+                            {(gpsStatus.permissionStatus?.blocked || gpsStatus.permissionStatus?.denied) && (
+                              <Alert className="bg-blue-500/10 border-blue-500/20">
+                                <Info className="h-4 w-4" />
+                                <AlertDescription className="text-blue-300">
+                                  <div className="space-y-3">
+                                    <p className="font-medium">How to Enable Location Access:</p>
+                                    
+                                    <div className="text-sm space-y-2">
+                                      <div>
+                                        <p className="font-medium text-blue-200">Chrome/Edge:</p>
+                                        <ul className="list-disc list-inside space-y-1 text-blue-300/80 ml-2">
+                                          <li>Click the 🔒 lock icon in address bar</li>
+                                          <li>Set Location to "Allow"</li>
+                                          <li>Refresh the page</li>
+                                        </ul>
+                                      </div>
+                                      
+                                      <div>
+                                        <p className="font-medium text-blue-200">Firefox:</p>
+                                        <ul className="list-disc list-inside space-y-1 text-blue-300/80 ml-2">
+                                          <li>Click the shield icon in address bar</li>
+                                          <li>Select "Allow Location Access"</li>
+                                          <li>Reload the page</li>
+                                        </ul>
+                                      </div>
+                                      
+                                      <div>
+                                        <p className="font-medium text-blue-200">Safari:</p>
+                                        <ul className="list-disc list-inside space-y-1 text-blue-300/80 ml-2">
+                                          <li>Go to Safari → Settings → Websites → Location</li>
+                                          <li>Set this website to "Allow"</li>
+                                          <li>Refresh the page</li>
+                                        </ul>
+                                      </div>
+                                      
+                                      <div>
+                                        <p className="font-medium text-blue-200">Alternative Solution:</p>
+                                        <p className="text-blue-300/80">Use the location presets above - no GPS required!</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </AlertDescription>
+                              </Alert>
+                            )}
+
+                            {/* Action buttons */}
+                            <div className="space-y-2">
+                              {!gpsStatus.permissionStatus?.granted && (
+                                <Button
+                                  onClick={handleRequestPermission}
+                                  className="w-full bg-blue-600/80 hover:bg-blue-600/90 text-white"
+                                >
+                                  <Shield className="w-4 h-4 mr-2" />
+                                  Request GPS Permission
+                                </Button>
+                              )}
+                              
+                              {gpsStatus.hasManualOverride ? (
+                                <Button
+                                  onClick={clearManualLocationOverride}
+                                  variant="outline"
+                                  className="w-full bg-orange-600/20 border-orange-500/40 text-orange-300 hover:bg-orange-600/30"
+                                >
+                                  <XCircle className="w-4 h-4 mr-2" />
+                                  Clear Manual Override
+                                </Button>
+                              ) : (
+                                <Button
+                                  onClick={handleManualLocationOverride}
+                                  variant="outline"
+                                  className="w-full bg-gray-800/40 border-gray-600/50 text-white hover:bg-gray-700/60"
+                                >
+                                  <Target className="w-4 h-4 mr-2" />
+                                  Set Manual Coordinates
+                                </Button>
+                              )}
+                              
+                              <Button
+                                onClick={() => {
+                                  myQuranPrayerTimesService.clearManualLocation();
+                                  loadPrayerTimes();
+                                }}
+                                variant="outline"
+                                className="w-full bg-gray-800/40 border-gray-600/50 text-white hover:bg-gray-700/60"
+                              >
+                                <RefreshCw className="w-4 h-4 mr-2" />
+                                Force GPS Refresh
+                              </Button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </TabsContent>
+                  
+                  <TabsContent value="method" className="space-y-4 mt-8 overflow-y-auto mobile-scroll scrollbar-thin flex-1 min-h-0">
                     <div className="space-y-2">
                       <Label htmlFor="method" className="text-white">Metode Perhitungan</Label>
                       <Select value={calculationMethod.toString()} onValueChange={(value) => setCalculationMethod(parseInt(value))}>
-                        <SelectTrigger className="bg-gray-800 border-gray-600 text-white">
+                        <SelectTrigger className="bg-gray-800/80 backdrop-blur-sm border-gray-600/50 text-white hover:border-gray-500/60 focus:border-blue-400/60 transition-colors">
                           <SelectValue />
                         </SelectTrigger>
-                        <SelectContent className="bg-gray-800 border-gray-600">
-                          {localPrayerTimesCalculator.getCalculationMethods().map((method) => (
-                            <SelectItem key={method.id} value={method.id.toString()} className="text-white">
+                        <SelectContent className="bg-gray-800/95 backdrop-blur-md border-gray-600/50 shadow-xl">
+                          {myQuranPrayerTimesService.getCalculationMethods().map((method) => (
+                            <SelectItem 
+                              key={method.id} 
+                              value={method.id.toString()} 
+                              className="text-white hover:bg-gray-700/50 focus:bg-gray-700/50 cursor-pointer"
+                            >
                               {method.name}
                             </SelectItem>
                           ))}
@@ -548,7 +925,7 @@ export function PrayerTimes() {
                     </div>
                   </TabsContent>
                   
-                  <TabsContent value="notifications" className="space-y-4 mt-6">
+                  <TabsContent value="notifications" className="space-y-4 mt-8 overflow-y-auto mobile-scroll scrollbar-thin flex-1 min-h-0">
                     {/* Global notification settings */}
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
@@ -565,7 +942,7 @@ export function PrayerTimes() {
                       </div>
                       
                       {!notificationPermission.granted && (
-                        <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
+                        <div className="bg-yellow-500/10 backdrop-blur-sm border border-yellow-500/30 rounded-lg p-4">
                           <div className="flex items-center gap-2">
                             <Bell className="w-4 h-4 text-yellow-400" />
                             <p className="text-yellow-400 text-sm">
@@ -574,7 +951,7 @@ export function PrayerTimes() {
                           </div>
                           <Button
                             onClick={handleNotificationPermission}
-                            className="mt-2 w-full"
+                            className="mt-2 w-full bg-yellow-600/80 hover:bg-yellow-600/90 text-white border-yellow-500/30"
                             size="sm"
                           >
                             Minta Izin Notifikasi
@@ -586,7 +963,7 @@ export function PrayerTimes() {
                       <Button
                         onClick={testNotification}
                         variant="outline"
-                        className="w-full"
+                        className="w-full bg-gray-800/40 border-gray-600/50 text-white hover:bg-gray-700/60 hover:border-gray-500/60 disabled:opacity-50 disabled:cursor-not-allowed"
                         disabled={!notificationPermission.granted}
                       >
                         <TestTube className="w-4 h-4 mr-2" />
@@ -602,7 +979,7 @@ export function PrayerTimes() {
                             const prayerSettings = notificationSettings[prayerKey];
                             
                             return (
-                              <div key={prayer.id} className="space-y-3 bg-gray-800/50 rounded-lg p-4">
+                              <div key={prayer.id} className="space-y-3 bg-gray-800/60 backdrop-blur-sm border border-gray-700/30 rounded-lg p-4 hover:bg-gray-800/70 transition-colors">
                                 <div className="flex items-center justify-between">
                                   <div className="flex items-center gap-2">
                                     <prayer.icon className="w-4 h-4 text-gray-300" />
@@ -630,7 +1007,7 @@ export function PrayerTimes() {
                                     <div className="flex justify-between text-xs text-gray-500">
                                       <span>1 menit</span>
                                       <span>30 menit</span>
-                                    </div>
+                    </div>
                                   </div>
                                 )}
                               </div>
@@ -660,6 +1037,80 @@ export function PrayerTimes() {
             </button>
           </div>
         </div>
+        
+        {/* Location Helper Banner */}
+        {showLocationHelper && gpsStatus?.permissionStatus?.blocked && (
+          <div className="mb-4 p-4 bg-orange-500/10 backdrop-blur-sm border border-orange-500/20 rounded-lg">
+            <div className="flex items-start justify-between">
+              <div className="flex items-start gap-3">
+                <Shield className="w-5 h-5 text-orange-400 mt-0.5" />
+                <div>
+                  <h3 className="text-orange-300 font-medium text-sm">GPS Blocked - Quick Solution</h3>
+                  <p className="text-orange-400/80 text-xs mt-1">
+                    Click the <strong>"Jogja"</strong> button above for instant Yogyakarta prayer times, or use Settings → GPS Fix for detailed help.
+                  </p>
+                </div>
+              </div>
+              <button 
+                onClick={() => setShowLocationHelper(false)}
+                className="text-orange-400 hover:text-orange-300"
+              >
+                <XCircle className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        )}
+        
+        {/* GPS Debug Panel */}
+        {showGpsDebug && gpsStatus && (
+          <div className="mb-4 p-3 bg-gray-800/60 backdrop-blur-sm border border-gray-600/30 rounded-lg">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-white font-medium text-sm">GPS Debug Info</span>
+              <button 
+                onClick={() => setShowGpsDebug(false)}
+                className="text-gray-400 hover:text-white"
+              >
+                <XCircle className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="text-xs text-gray-400 space-y-1">
+              <div>Support: {gpsStatus.gpsSupported ? '✅' : '❌'}</div>
+              <div>Permission: {
+                gpsStatus.permissionStatus?.granted ? '✅ Granted' :
+                gpsStatus.permissionStatus?.blocked ? '🚫 Blocked' :
+                gpsStatus.permissionStatus?.denied ? '❌ Denied' :
+                '⏳ Unknown'
+              }</div>
+              <div>Method: {gpsStatus.currentMethod}</div>
+              <div>Override: {gpsStatus.hasManualOverride ? '🎯' : '❌'}</div>
+              {gpsStatus.lastKnown && (
+                <div>Last: {gpsStatus.lastKnown.latitude.toFixed(4)}, {gpsStatus.lastKnown.longitude.toFixed(4)}</div>
+              )}
+              {gpsStatus.permissionStatus?.errorMessage && (
+                <div className="text-red-400">Error: {gpsStatus.permissionStatus.errorMessage}</div>
+              )}
+            </div>
+            <div className="mt-2 flex gap-2">
+              {gpsStatus.permissionStatus?.blocked && (
+                <Button
+                  onClick={handleRequestPermission}
+                  size="sm"
+                  className="bg-blue-600/80 hover:bg-blue-600/90 text-white text-xs"
+                >
+                  Fix Permission
+                </Button>
+              )}
+              <Button
+                onClick={() => handleLocationPreset('yogyakarta')}
+                size="sm"
+                variant="outline"
+                className="bg-orange-600/20 border-orange-500/40 text-orange-300 hover:bg-orange-600/30 text-xs"
+              >
+                Use Jogja
+              </Button>
+            </div>
+          </div>
+        )}
         
         {/* Prayer times grid */}
         <div className="flex-1 flex items-center">
@@ -703,7 +1154,7 @@ export function PrayerTimes() {
                   <div className={`text-sm font-semibold mb-1 transition-colors duration-300 ${
                     isNext ? 'text-white' : 'text-gray-200 group-hover:text-white'
                   }`}>
-                    {localPrayerTimesCalculator.formatTime(prayer.time)}
+                    {myQuranPrayerTimesService.formatTime(prayer.time)}
                   </div>
                   
                   {/* Prayer name */}
@@ -718,7 +1169,6 @@ export function PrayerTimes() {
                   {/* Notification indicator */}
                   {hasNotification && (
                     <div className="absolute -top-1 -left-1 w-3 h-3 bg-green-400 rounded-full border-2 border-gray-900">
-                      <Bell className="w-1.5 h-1.5 text-white absolute top-0.5 left-0.5" />
                     </div>
                   )}
                 </button>
@@ -732,7 +1182,7 @@ export function PrayerTimes() {
           {/* Next prayer info */}
           <div className="flex items-center justify-between text-xs text-gray-400">
             <span>
-              Sholat selanjutnya: {currentPrayerInfo?.next} dalam {currentPrayerInfo ? localPrayerTimesCalculator.formatTimeToNext(currentPrayerInfo.timeToNext) : 'Loading...'}
+              Sholat selanjutnya: {currentPrayerInfo?.next} dalam {currentPrayerInfo ? myQuranPrayerTimesService.formatTimeToNext(currentPrayerInfo.timeToNext) : 'Loading...'}
             </span>
             <span>{Math.round(currentPrayerInfo?.progress || 0)}% selesai</span>
           </div>
@@ -750,30 +1200,26 @@ export function PrayerTimes() {
             </div>
           </div>
           
-          {/* Location and notification status */}
-          {prayerData && (
-            <div className="text-xs text-gray-500 text-center space-y-1">
-              <div>
-                <MapPin className="w-3 h-3 inline mr-1" />
-                {currentLocationText} • {prayerData.meta.method.name}
-              </div>
-              <div className="flex items-center justify-center gap-4">
-                <div className="text-blue-400">
-                  {new Date().toLocaleTimeString('id-ID', { 
-                    hour: '2-digit', 
-                    minute: '2-digit',
-                    timeZone: prayerData.meta.timezone
-                  })} {prayerData.meta.timezone.includes('Jakarta') ? 'WIB' : prayerData.meta.timezone.includes('Makassar') ? 'WITA' : 'WIT'}
-                </div>
-                {notificationSettings.globalEnabled && notificationPermission.granted && (
-                  <div className="text-green-400 flex items-center gap-1">
-                    <Bell className="w-3 h-3" />
-                    Notifikasi aktif
-                  </div>
-                )}
-              </div>
+          {/* Footer - Based on information */}
+          <div className="flex items-center justify-between text-xs text-gray-400">
+            <div className="flex items-center gap-1">
+              <span>Based on: {getMethodDisplayText()}</span>
+              <span className="text-blue-400">•</span>
+              <button 
+                onClick={() => setShowSettings(true)}
+                className="text-blue-400 hover:text-blue-300 transition-colors underline decoration-dotted"
+              >
+                Change
+              </button>
             </div>
-          )}
+            <span>Times may vary</span>
+          </div>
+          <div className="flex items-center justify-center text-xs text-gray-500 mt-1">
+            <span>GMT+07:00 
+              {gpsStatus?.hasManualOverride && <span className="text-orange-400 ml-1">• Manual Override</span>}
+              {gpsStatus?.permissionStatus?.blocked && <span className="text-red-400 ml-1">• GPS Blocked</span>}
+            </span>
+          </div>
         </div>
       </div>
     </div>
