@@ -3,30 +3,29 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "npx astro dev",
-    "start": "npx astro dev",
-    "build": "npx astro build",
-    "preview": "npx astro preview",
-    "astro": "npx astro"
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "devDependencies": {
     "@astrojs/sitemap": "^3.4.1",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.10",
-    "astro": "^5.9.3",
+  
     "tailwindcss": "^4.1.10"
   },
   "dependencies": {
     "@astrojs/react": "^4.3.0",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
-    "@types/react-dom": "^19.1.6",
     "clsx": "^2.1.1",
     "motion": "^12.19.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "tailwind-merge": "^3.3.1"
+    "tailwind-merge": "^3.3.1",
+    "astro": "^5.9.3"
   }
 }
