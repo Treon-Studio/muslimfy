@@ -1,6 +1,6 @@
 {
-  "name": "@monorepo/template",
-  "description": "Astro + TailwindCSS based monorepo template with PNPM workspaces",
+  "name": "@treonstudio/muslimfy",
+  "description": "Muslimfy Monorepo",
   "version": "0.0.1",
   "private": true,
   "license": "MIT",
