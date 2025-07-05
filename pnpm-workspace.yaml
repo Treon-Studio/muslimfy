@@ -1,14 +1,3 @@
 packages:
   - "apps/*"
-
-catalog:
-  react: ^19.0.0
-  react-dom: ^19.0.0
-
-onlyBuiltDependencies:
-  - '@parcel/watcher'
-  - '@swc/core'
-  - edgedriver
-  - esbuild
-  - geckodriver
-  - unrs-resolver
+  - "packages/*"
