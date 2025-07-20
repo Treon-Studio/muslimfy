@@ -199,7 +199,7 @@ export function IslamicCompanion() {
                 <div className="flex items-center justify-center gap-2 text-[rgba(255,255,255,0.72)]">
                   <span className="font-medium">Muslimfy</span>
                   <span className="text-white/30">•</span>
-                  <span>v1.0.0</span>
+                  <span>v1.4.1</span>
                 </div>
                 <div className="text-white/70 text-[10px]">
                   © 2025{' '}
