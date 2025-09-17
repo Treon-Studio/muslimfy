@@ -40,18 +40,15 @@ jobs:
       with:
         node-version: '18'
         cache: 'pnpm'
-        cache-dependency-path: 'apps/browser-extension/pnpm-lock.yaml'
+        cache-dependency-path: 'pnpm-lock.yaml'
 
     - name: Install dependencies
-      run: |
-        cd apps/browser-extension
-        pnpm install
+      run: pnpm install
 
     - name: Build Chrome extension
       run: |
-        cd apps/browser-extension
-        pnpm run build
-        pnpm run zip
+        pnpm --filter @muslimfy/browser-extension run build
+        pnpm --filter @muslimfy/browser-extension run zip
 
     - name: Get package version
       id: package-version
@@ -88,7 +85,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: apps/browser-extension/.output/muslimfy-browser-extension-${{ steps.package-version.outputs.version }}-chrome.zip
+        asset_path: apps/browser-extension/.output/muslimfybrowser-extension-${{ steps.package-version.outputs.version }}-chrome.zip
         asset_name: muslimfy-browser-extension-chrome.zip
         asset_content_type: application/zip
 
