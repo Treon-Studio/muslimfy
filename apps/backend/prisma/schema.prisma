@@ -1,0 +1,693 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ==================== AUTH & USERS ====================
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String?  @map("password_hash")
+  name         String?
+  avatarUrl    String?  @map("avatar_url")
+  isVerified   Boolean  @default(false) @map("is_verified")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  // Gamification
+  gamification UserGamification?
+
+  // Preferences & Data Sources
+  preferences  UserPreferences?
+
+  // Relations
+  settings            UserSettings?
+  missions            Mission[]
+  missionCompletions  MissionCompletion[]
+  prayerCompletions   PrayerCompletion[]
+  bookmarks           Bookmark[]
+  readingHistories    ReadingHistory[]
+  readingProgress     ReadingProgress?
+  dailyVerseFavorites DailyVerseFavorite[]
+  donations           Donation[]
+  donationStats       DonationStats?
+  achievements        UserAchievement[]
+  notifications       Notification[]
+  refreshTokens       RefreshToken[]
+
+  @@map("users")
+}
+
+// ==================== GAMIFICATION ====================
+
+model UserGamification {
+  id              String   @id @default(cuid())
+  userId          String   @unique @map("user_id")
+
+  // Points & Level
+  totalPoints     Int      @default(0) @map("total_points")
+  level           Int      @default(1)
+  currentXp       Int      @default(0) @map("current_xp")
+  xpToNextLevel   Int      @default(100) @map("xp_to_next_level")
+
+  // Streaks
+  currentStreak   Int      @default(0) @map("current_streak")
+  longestStreak   Int      @default(0) @map("longest_streak")
+  lastActiveDate  DateTime? @map("last_active_date") @db.Date
+
+  // Statistics
+  totalPrayersCompleted   Int @default(0) @map("total_prayers_completed")
+  totalMissionsCompleted  Int @default(0) @map("total_missions_completed")
+  totalAyahsRead          Int @default(0) @map("total_ayahs_read")
+  totalDonationsCount     Int @default(0) @map("total_donations_count")
+
+  // Rank
+  rank            String   @default("Pemula")
+
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_gamification")
+}
+
+// ==================== USER PREFERENCES (Data Sources) ====================
+
+model UserPreferences {
+  id              String   @id @default(cuid())
+  userId          String   @unique @map("user_id")
+
+  // Quran Audio Preferences
+  preferredQariId     String?  @map("preferred_qari_id")
+  audioQuality        String   @default("high") @map("audio_quality") // low, medium, high
+  autoPlayAudio       Boolean  @default(false) @map("auto_play_audio")
+
+  // Translation Preferences
+  preferredTranslationId  String?  @map("preferred_translation_id")
+  preferredTafsirId       String?  @map("preferred_tafsir_id")
+
+  // Prayer Calculation Preferences
+  preferredMadhab         String   @default("SHAFI") @map("preferred_madhab") // SHAFI, HANAFI, MALIKI, HANBALI
+  asrCalculation          String   @default("STANDARD") @map("asr_calculation") // STANDARD, HANAFI
+
+  // Display Preferences
+  arabicFontFamily        String   @default("KFGQPC Uthmanic Script HAFS") @map("arabic_font_family")
+  mushafStyle             String   @default("MADINAH") @map("mushaf_style") // MADINAH, INDO_PAK
+
+  // Followed Data Sources
+  followedQaris           String[] @map("followed_qaris")
+  followedTranslators     String[] @map("followed_translators")
+  followedCharities       String[] @map("followed_charities")
+
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  preferredQari   Qari?    @relation(fields: [preferredQariId], references: [id])
+  preferredTranslation TranslationSource? @relation("PreferredTranslation", fields: [preferredTranslationId], references: [id])
+  preferredTafsir TafsirSource? @relation(fields: [preferredTafsirId], references: [id])
+
+  @@map("user_preferences")
+}
+
+// ==================== DATA SOURCES ====================
+
+model Qari {
+  id              String   @id @default(cuid())
+  name            String
+  nameArabic      String?  @map("name_arabic")
+  country         String?
+  style           String?  // Murattal, Mujawwad, etc.
+  photoUrl        String?  @map("photo_url")
+  audioBaseUrl    String?  @map("audio_base_url")
+  isPopular       Boolean  @default(false) @map("is_popular")
+
+  userPreferences UserPreferences[]
+
+  @@map("qaris")
+}
+
+model TranslationSource {
+  id              String   @id @default(cuid())
+  name            String
+  language        String
+  authorName      String   @map("author_name")
+  type            String   @default("TRANSLATION") // TRANSLATION, TRANSLITERATION
+  isDefault       Boolean  @default(false) @map("is_default")
+
+  userPreferences UserPreferences[] @relation("PreferredTranslation")
+
+  @@map("translation_sources")
+}
+
+model TafsirSource {
+  id              String   @id @default(cuid())
+  name            String
+  language        String
+  authorName      String   @map("author_name")
+  isDefault       Boolean  @default(false) @map("is_default")
+
+  userPreferences UserPreferences[]
+
+  @@map("tafsir_sources")
+}
+
+// ==================== REFRESH TOKENS ====================
+
+model RefreshToken {
+  id          String   @id @default(cuid())
+  userId      String   @map("user_id")
+  token       String   @unique
+  expiresAt   DateTime @map("expires_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+  revokedAt   DateTime? @map("revoked_at")
+  deviceInfo  String?  @map("device_info")
+  ipAddress   String?  @map("ip_address")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("refresh_tokens")
+}
+
+model UserSettings {
+  id                      String  @id @default(cuid())
+  userId                  String  @unique @map("user_id")
+
+  // Location
+  latitude                Float?
+  longitude               Float?
+  city                    String?
+  country                 String?
+  timezone                String  @default("Asia/Jakarta")
+
+  // Prayer Settings
+  calculationMethod       String  @default("KEMENAG") @map("calculation_method")
+  prayerNotification      Boolean @default(true) @map("prayer_notification")
+  prayerSound             String  @default("madinah") @map("prayer_sound")
+  prayerReminderMinutes   Int     @default(10) @map("prayer_reminder_minutes")
+
+  // Quran Settings
+  quranFontSize           Int     @default(24) @map("quran_font_size")
+  quranTheme              String  @default("light") @map("quran_theme")
+  showTranslation         Boolean @default(true) @map("show_translation")
+  showTransliteration     Boolean @default(false) @map("show_transliteration")
+
+  // Notification Settings
+  dailyVerseNotification  Boolean @default(true) @map("daily_verse_notification")
+  dailyVerseTime          String  @default("06:00") @map("daily_verse_time")
+  missionReminder         Boolean @default(true) @map("mission_reminder")
+  donationReminder        Boolean @default(true) @map("donation_reminder")
+
+  // App Settings
+  language                String  @default("id")
+  theme                   String  @default("light")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_settings")
+}
+
+// ==================== MISSIONS & STATS ====================
+
+enum MissionCategory {
+  PRAYER
+  FASTING
+  QURAN
+  CHARITY
+  DZIKIR
+  CUSTOM
+}
+
+enum MissionPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum MissionFrequency {
+  DAILY
+  WEEKLY
+  MONTHLY
+}
+
+model MissionTemplate {
+  id          String          @id @default(cuid())
+  name        String
+  nameAr      String?         @map("name_ar")
+  category    MissionCategory
+  icon        String
+  description String?
+  isDefault   Boolean         @default(false) @map("is_default")
+
+  @@map("mission_templates")
+}
+
+model Mission {
+  id              String           @id @default(cuid())
+  userId          String           @map("user_id")
+  name            String
+  category        MissionCategory
+  icon            String
+  description     String?
+  isActive        Boolean          @default(true) @map("is_active")
+  priority        MissionPriority  @default(MEDIUM)
+  targetFrequency MissionFrequency @default(DAILY) @map("target_frequency")
+  targetCount     Int              @default(1) @map("target_count")
+  createdAt       DateTime         @default(now()) @map("created_at")
+  updatedAt       DateTime         @updatedAt @map("updated_at")
+
+  user        User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  completions MissionCompletion[]
+
+  @@map("missions")
+}
+
+model MissionCompletion {
+  id             String   @id @default(cuid())
+  missionId      String   @map("mission_id")
+  userId         String   @map("user_id")
+  completionDate DateTime @map("completion_date") @db.Date
+  completedAt    DateTime @default(now()) @map("completed_at")
+  notes          String?
+
+  mission Mission @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([missionId, completionDate])
+  @@map("mission_completions")
+}
+
+// ==================== PRAYER TIMES ====================
+
+enum CalculationMethod {
+  KEMENAG
+  MWL
+  ISNA
+  EGYPT
+  MAKKAH
+  KARACHI
+}
+
+model City {
+  id        String @id @default(cuid())
+  name      String
+  country   String
+  latitude  Float
+  longitude Float
+  timezone  String
+
+  @@unique([name, country])
+  @@index([latitude, longitude])
+  @@map("cities")
+}
+
+model PrayerTime {
+  id               String   @id @default(cuid())
+  date             DateTime @db.Date
+  latitude         Float
+  longitude        Float
+  city             String?
+  country          String?
+  timezone         String
+  calculationMethod CalculationMethod @map("calculation_method")
+
+  fajr     String
+  sunrise  String
+  dhuhr    String
+  asr      String
+  maghrib  String
+  isha     String
+  imsak    String?
+  midnight String?
+
+  calculatedAt DateTime @default(now()) @map("calculated_at")
+
+  @@unique([date, latitude, longitude, calculationMethod])
+  @@map("prayer_times")
+}
+
+enum PrayerName {
+  FAJR
+  DHUHR
+  ASR
+  MAGHRIB
+  ISHA
+  TAHAJUD
+  DHUHA
+}
+
+model PrayerCompletion {
+  id          String     @id @default(cuid())
+  userId      String     @map("user_id")
+  prayerName  PrayerName @map("prayer_name")
+  prayerDate  DateTime   @map("prayer_date") @db.Date
+  completedAt DateTime   @default(now()) @map("completed_at")
+  onTime      Boolean    @default(true) @map("on_time")
+  isJamaah    Boolean    @default(false) @map("is_jamaah")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, prayerName, prayerDate])
+  @@map("prayer_completions")
+}
+
+// ==================== QURAN ====================
+
+enum RevelationType {
+  MAKKI
+  MADANI
+}
+
+model Surah {
+  id                  Int            @id
+  number              Int            @unique
+  nameArabic          String         @map("name_arabic")
+  nameIndonesian      String         @map("name_indonesian")
+  nameTransliteration String         @map("name_transliteration")
+  revelationType      RevelationType @map("revelation_type")
+  totalVerses         Int            @map("total_verses")
+  orderRevelation     Int            @map("order_revelation")
+
+  ayahs Ayah[]
+
+  @@map("surahs")
+}
+
+model Ayah {
+  id                  String @id @default(cuid())
+  surahNumber         Int    @map("surah_number")
+  ayahNumber          Int    @map("ayah_number")
+  textArabic          String @map("text_arabic")
+  textTransliteration String @map("text_transliteration")
+  juzNumber           Int    @map("juz_number")
+  pageMushaf          Int    @map("page_mushaf")
+  hizbQuarter         Int?   @map("hizb_quarter")
+
+  surah        Surah         @relation(fields: [surahNumber], references: [number])
+  translations Translation[]
+  bookmarks    Bookmark[]
+  dailyVerses  DailyVerse[]
+
+  @@unique([surahNumber, ayahNumber])
+  @@index([juzNumber])
+  @@index([pageMushaf])
+  @@map("ayahs")
+}
+
+model Translation {
+  id             String @id @default(cuid())
+  ayahId         String @map("ayah_id")
+  language       String
+  text           String
+  translatorName String @map("translator_name")
+
+  ayah Ayah @relation(fields: [ayahId], references: [id], onDelete: Cascade)
+
+  @@unique([ayahId, language, translatorName])
+  @@map("translations")
+}
+
+model Bookmark {
+  id         String   @id @default(cuid())
+  userId     String   @map("user_id")
+  ayahId     String   @map("ayah_id")
+  folderName String   @default("Favorites") @map("folder_name")
+  note       String?
+  color      String?
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ayah Ayah @relation(fields: [ayahId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, ayahId])
+  @@map("bookmarks")
+}
+
+model ReadingHistory {
+  id          String   @id @default(cuid())
+  userId      String   @map("user_id")
+  surahNumber Int      @map("surah_number")
+  ayahNumber  Int      @map("ayah_number")
+  readAt      DateTime @default(now()) @map("read_at")
+  durationSec Int?     @map("duration_sec")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, readAt])
+  @@map("reading_histories")
+}
+
+model ReadingProgress {
+  id                    String   @id @default(cuid())
+  userId                String   @unique @map("user_id")
+  totalAyahsRead        Int      @default(0) @map("total_ayahs_read")
+  surahsCompleted       Int[]    @map("surahs_completed")
+  juzCompleted          Int[]    @map("juz_completed")
+  lastSurahNumber       Int?     @map("last_surah_number")
+  lastAyahNumber        Int?     @map("last_ayah_number")
+  currentKhatamProgress Float    @default(0) @map("current_khatam_progress")
+  khatamCount           Int      @default(0) @map("khatam_count")
+  updatedAt             DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("reading_progress")
+}
+
+// ==================== DAILY VERSE ====================
+
+enum DailyVerseTheme {
+  PATIENCE
+  GRATITUDE
+  HOPE
+  GUIDANCE
+  MERCY
+  LOVE
+  KNOWLEDGE
+  RIGHTEOUSNESS
+  MOTIVATION
+  REFLECTION
+}
+
+model DailyVerse {
+  id           String          @id @default(cuid())
+  ayahId       String          @map("ayah_id")
+  displayDate  DateTime        @unique @map("display_date") @db.Date
+  theme        DailyVerseTheme
+  briefTafsir  String?         @map("brief_tafsir")
+  shareCount   Int             @default(0) @map("share_count")
+  favoriteCount Int            @default(0) @map("favorite_count")
+
+  ayah      Ayah                 @relation(fields: [ayahId], references: [id])
+  favorites DailyVerseFavorite[]
+
+  @@map("daily_verses")
+}
+
+model DailyVerseFavorite {
+  id           String   @id @default(cuid())
+  userId       String   @map("user_id")
+  dailyVerseId String   @map("daily_verse_id")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dailyVerse DailyVerse @relation(fields: [dailyVerseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, dailyVerseId])
+  @@map("daily_verse_favorites")
+}
+
+// ==================== DONATIONS ====================
+
+enum DonationCategory {
+  ZAKAT
+  INFAQ
+  SEDEKAH
+  WAKAF
+  EMERGENCY
+  EDUCATION
+  HEALTH
+  FOOD
+  WATER
+}
+
+enum VerificationStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  EXPIRED
+  REFUNDED
+}
+
+enum PaymentMethod {
+  GOPAY
+  OVO
+  DANA
+  SHOPEEPAY
+  BANK_TRANSFER
+  CREDIT_CARD
+  QRIS
+}
+
+model Charity {
+  id                 String             @id @default(cuid())
+  name               String
+  description        String
+  logoUrl            String?            @map("logo_url")
+  category           DonationCategory
+  verificationStatus VerificationStatus @default(PENDING) @map("verification_status")
+  registrationNumber String?            @map("registration_number")
+  website            String?
+  email              String?
+  phone              String?
+  trustScore         Float              @default(0) @map("trust_score")
+  totalRaised        Float              @default(0) @map("total_raised")
+  isActive           Boolean            @default(true) @map("is_active")
+  createdAt          DateTime           @default(now()) @map("created_at")
+  updatedAt          DateTime           @updatedAt @map("updated_at")
+
+  campaigns Campaign[]
+  donations Donation[]
+
+  @@map("charities")
+}
+
+model Campaign {
+  id           String           @id @default(cuid())
+  charityId    String           @map("charity_id")
+  title        String
+  description  String
+  imageUrls    String[]         @map("image_urls")
+  targetAmount Float            @map("target_amount")
+  raisedAmount Float            @default(0) @map("raised_amount")
+  category     DonationCategory
+  isEmergency  Boolean          @default(false) @map("is_emergency")
+  startDate    DateTime         @map("start_date")
+  endDate      DateTime?        @map("end_date")
+  isActive     Boolean          @default(true) @map("is_active")
+  createdAt    DateTime         @default(now()) @map("created_at")
+  updatedAt    DateTime         @updatedAt @map("updated_at")
+
+  charity   Charity    @relation(fields: [charityId], references: [id], onDelete: Cascade)
+  donations Donation[]
+
+  @@map("campaigns")
+}
+
+model Donation {
+  id            String           @id @default(cuid())
+  userId        String           @map("user_id")
+  charityId     String           @map("charity_id")
+  campaignId    String?          @map("campaign_id")
+  amount        Float
+  currency      String           @default("IDR")
+  category      DonationCategory
+  paymentMethod PaymentMethod?   @map("payment_method")
+  paymentStatus PaymentStatus    @default(PENDING) @map("payment_status")
+  paymentId     String?          @map("payment_id")
+  isAnonymous   Boolean          @default(false) @map("is_anonymous")
+  isRecurring   Boolean          @default(false) @map("is_recurring")
+  receiptUrl    String?          @map("receipt_url")
+  donatedAt     DateTime         @default(now()) @map("donated_at")
+  completedAt   DateTime?        @map("completed_at")
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  charity  Charity   @relation(fields: [charityId], references: [id])
+  campaign Campaign? @relation(fields: [campaignId], references: [id])
+
+  @@index([userId, donatedAt])
+  @@map("donations")
+}
+
+model DonationStats {
+  id                 String   @id @default(cuid())
+  userId             String   @unique @map("user_id")
+  totalDonated       Float    @default(0) @map("total_donated")
+  donationCount      Int      @default(0) @map("donation_count")
+  charitiesSupported Int      @default(0) @map("charities_supported")
+  streakMonths       Int      @default(0) @map("streak_months")
+  lastDonationAt     DateTime? @map("last_donation_at")
+  updatedAt          DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("donation_stats")
+}
+
+// ==================== ACHIEVEMENTS ====================
+
+enum AchievementCategory {
+  PRAYER
+  QURAN
+  DONATION
+  STREAK
+  MILESTONE
+}
+
+model Achievement {
+  id               String              @id @default(cuid())
+  name             String
+  description      String
+  icon             String
+  category         AchievementCategory
+  requirementType  String              @map("requirement_type")
+  requirementValue Int                 @map("requirement_value")
+
+  userAchievements UserAchievement[]
+
+  @@map("achievements")
+}
+
+model UserAchievement {
+  id            String   @id @default(cuid())
+  userId        String   @map("user_id")
+  achievementId String   @map("achievement_id")
+  progress      Int      @default(0)
+  unlockedAt    DateTime? @map("unlocked_at")
+
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  achievement Achievement @relation(fields: [achievementId], references: [id])
+
+  @@unique([userId, achievementId])
+  @@map("user_achievements")
+}
+
+// ==================== NOTIFICATIONS ====================
+
+enum NotificationType {
+  PRAYER_TIME
+  PRAYER_REMINDER
+  DAILY_VERSE
+  MISSION_REMINDER
+  ACHIEVEMENT
+  DONATION
+  SYSTEM
+}
+
+model Notification {
+  id          String           @id @default(cuid())
+  userId      String           @map("user_id")
+  type        NotificationType
+  title       String
+  body        String
+  data        Json?
+  isRead      Boolean          @default(false) @map("is_read")
+  scheduledAt DateTime?        @map("scheduled_at")
+  createdAt   DateTime         @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead])
+  @@map("notifications")
+}

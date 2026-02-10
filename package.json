@@ -5,9 +5,10 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "dev": "pnpm --filter site dev",
-    "start": "pnpm --filter site dev",
-    "build": "pnpm --filter site build",
-    "preview": "pnpm --filter site preview"
+    "dev": "pnpm --filter @muslimfy/backend dev:local & pnpm --filter muslimfy-web-app dev & wait",
+    "dev:backend": "pnpm --filter @muslimfy/backend dev:local",
+    "dev:web": "pnpm --filter muslimfy-web-app dev",
+    "build": "pnpm --filter muslimfy-web-app build",
+    "preview": "pnpm --filter muslimfy-web-app preview"
   }
 }

@@ -1,0 +1,8 @@
+---
+import MobileLayout from '@/layouts/MobileLayout.astro';
+import { HifzJourney } from '@/components/hifz/HifzJourney';
+---
+
+<MobileLayout currentPath="/hifz">
+  <HifzJourney client:only="react" />
+</MobileLayout>

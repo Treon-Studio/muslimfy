@@ -1,0 +1,18 @@
+---
+import MobileLayout from '@/layouts/MobileLayout.astro';
+import { UserHeader } from '@/components/home/UserHeader';
+import { DailyWisdom } from '@/components/home/DailyWisdom';
+import { ActivityGrid } from '@/components/home/ActivityGrid';
+import { StreakStats } from '@/components/home/StreakStats';
+import { DonationCard } from '@/components/home/DonationCard';
+import { DailyMissions } from '@/components/home/DailyMissions';
+---
+
+<MobileLayout currentPath="/">
+  <UserHeader client:only="react" />
+  <DailyWisdom client:only="react" />
+  <ActivityGrid client:only="react" />
+  <StreakStats client:only="react" />
+  <DonationCard client:load />
+  <DailyMissions client:only="react" />
+</MobileLayout>

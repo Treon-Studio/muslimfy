@@ -1,0 +1,6 @@
+# Database (Neon PostgreSQL)
+DATABASE_URL="postgresql://user:password@ep-xxx.region.aws.neon.tech/dbname?sslmode=require"
+
+# Redis (Upstash)
+UPSTASH_REDIS_URL="https://xxx.upstash.io"
+UPSTASH_REDIS_TOKEN="your-token"

@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Muslimfy Design System - Clean Islamic Lifestyle App */
+
+@layer base {
+  :root {
+    --background: 0 0% 98%;
+    --foreground: 220 20% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 15%;
+
+    --primary: 158 64% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 158 30% 94%;
+    --secondary-foreground: 158 64% 35%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 10% 50%;
+
+    --accent: 158 50% 92%;
+    --accent-foreground: 158 64% 35%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 158 64% 45%;
+
+    --radius: 1rem;
+
+    /* Custom Muslimfy tokens */
+    --emerald: 158 64% 45%;
+    --emerald-light: 158 50% 92%;
+    --emerald-dark: 158 64% 35%;
+    --streak: 25 95% 53%;
+    --streak-light: 25 100% 95%;
+    --wisdom-bg: 158 40% 96%;
+    --card-shadow: 0 2px 12px -2px hsl(220 20% 15% / 0.08);
+    --card-shadow-lg: 0 8px 24px -4px hsl(220 20% 15% / 0.12);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 220 10% 30%;
+    --sidebar-primary: 158 64% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 158 50% 92%;
+    --sidebar-accent-foreground: 158 64% 35%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 158 64% 45%;
+  }
+
+  .dark {
+    --background: 220 20% 10%;
+    --foreground: 0 0% 95%;
+
+    --card: 220 20% 13%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 220 20% 13%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 158 64% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 20% 18%;
+    --secondary-foreground: 158 64% 60%;
+
+    --muted: 220 20% 18%;
+    --muted-foreground: 220 10% 60%;
+
+    --accent: 220 20% 18%;
+    --accent-foreground: 158 64% 60%;
+
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 20% 20%;
+    --input: 220 20% 20%;
+    --ring: 158 64% 50%;
+
+    --sidebar-background: 220 20% 10%;
+    --sidebar-foreground: 0 0% 85%;
+    --sidebar-primary: 158 64% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 20% 18%;
+    --sidebar-accent-foreground: 158 64% 60%;
+    --sidebar-border: 220 20% 20%;
+    --sidebar-ring: 158 64% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer utilities {
+  .card-shadow {
+    box-shadow: var(--card-shadow);
+  }
+  
+  .card-shadow-lg {
+    box-shadow: var(--card-shadow-lg);
+  }
+
+  .text-gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--emerald-dark)) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-wisdom-gradient {
+    background: linear-gradient(180deg, hsl(var(--wisdom-bg)) 0%, hsl(var(--card)) 100%);
+  }
+
+  .activity-cell {
+    @apply w-3 h-3 rounded-sm transition-colors;
+  }
+
+  .activity-0 { background-color: hsl(var(--muted)); }
+  .activity-1 { background-color: hsl(158 50% 80%); }
+  .activity-2 { background-color: hsl(158 55% 65%); }
+  .activity-3 { background-color: hsl(158 60% 50%); }
+  .activity-4 { background-color: hsl(var(--primary)); }
+}

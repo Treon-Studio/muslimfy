@@ -1,0 +1,8 @@
+---
+import MobileLayout from '@/layouts/MobileLayout.astro';
+import { QuranContent } from '@/components/quran/QuranContent';
+---
+
+<MobileLayout currentPath="/quran">
+  <QuranContent client:only="react" />
+</MobileLayout>

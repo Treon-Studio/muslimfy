@@ -1,0 +1,14 @@
+---
+import MobileLayout from '@/layouts/MobileLayout.astro';
+import { ProfileHeader } from '@/components/profile/ProfileHeader';
+import { AchievementsGrid } from '@/components/profile/AchievementsGrid';
+import { WeeklyStats } from '@/components/profile/WeeklyStats';
+import { AccountSettings } from '@/components/profile/AccountSettings';
+---
+
+<MobileLayout currentPath="/profile">
+  <ProfileHeader client:only="react" />
+  <AchievementsGrid client:only="react" />
+  <WeeklyStats client:only="react" />
+  <AccountSettings client:load />
+</MobileLayout>

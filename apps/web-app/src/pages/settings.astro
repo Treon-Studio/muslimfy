@@ -1,0 +1,8 @@
+---
+import MobileLayout from '@/layouts/MobileLayout.astro';
+import { SettingsMenu } from '@/components/settings/SettingsMenu';
+---
+
+<MobileLayout currentPath="/settings">
+  <SettingsMenu client:only="react" />
+</MobileLayout>

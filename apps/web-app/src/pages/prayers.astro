@@ -1,0 +1,8 @@
+---
+import MobileLayout from '@/layouts/MobileLayout.astro';
+import { PrayersContent } from '@/components/prayers/PrayersContent';
+---
+
+<MobileLayout currentPath="/prayers">
+  <PrayersContent client:only="react" />
+</MobileLayout>

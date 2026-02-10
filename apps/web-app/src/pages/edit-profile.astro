@@ -1,0 +1,8 @@
+---
+import MobileLayout from '@/layouts/MobileLayout.astro';
+import { EditProfileForm } from '@/components/profile/EditProfileForm';
+---
+
+<MobileLayout currentPath="/edit-profile">
+  <EditProfileForm client:only="react" />
+</MobileLayout>

@@ -1,0 +1,29 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { BottomNav } from '@/components/layout/BottomNav';
+import { Toaster } from '@/components/ui/toaster';
+import { Toaster as Sonner } from '@/components/ui/sonner';
+
+interface Props {
+  title?: string;
+  currentPath: string;
+}
+
+const { title, currentPath } = Astro.props;
+---
+
+<BaseLayout title={title}>
+  <script is:inline>
+    if (!localStorage.getItem('accessToken')) {
+      window.location.replace('/login');
+    }
+  </script>
+  <div class="min-h-screen bg-background max-w-md mx-auto relative">
+    <main class="pb-24">
+      <slot />
+    </main>
+    <BottomNav currentPath={currentPath} client:load />
+  </div>
+  <Toaster client:load />
+  <Sonner client:load />
+</BaseLayout>

@@ -1,0 +1,54 @@
+{
+  "name": "@muslimfy/backend",
+  "version": "0.0.1",
+  "private": true,
+  "exports": {
+    "./trpc": "./src/trpc/index.ts"
+  },
+  "scripts": {
+    "dev": "wrangler dev",
+    "dev:local": "tsx src/dev-server.ts",
+    "start": "node --import tsx src/dev-server.ts",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio",
+    "db:seed": "tsx prisma/seed/index.ts",
+    "db:seed:quran": "tsx prisma/seed/quran.ts",
+    "db:seed:sources": "tsx prisma/seed/data-sources.ts",
+    "db:reset": "prisma db push --force-reset && pnpm db:seed:quran && pnpm db:seed",
+    "docker:build": "docker build -t muslimfy-api .",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f api",
+    "docker:external": "docker-compose -f docker-compose.external.yml up -d"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.19.9",
+    "@neondatabase/serverless": "^1.0.2",
+    "@prisma/adapter-neon": "^7.3.0",
+    "@prisma/adapter-pg": "^7.3.0",
+    "@prisma/client": "^7.3.0",
+    "@trpc/server": "^11",
+    "@upstash/redis": "^1.36.2",
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.2.4",
+    "hono": "^4.6.0",
+    "ioredis": "^5.9.2",
+    "jose": "^6.1.3",
+    "pg": "^8.18.0",
+    "prisma": "^7.3.0",
+    "superjson": "^2",
+    "zod": "^3.25"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241205.0",
+    "@types/bcryptjs": "^3.0.0",
+    "@types/pg": "^8.16.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.7.0",
+    "wrangler": "^3.99.0"
+  }
+}

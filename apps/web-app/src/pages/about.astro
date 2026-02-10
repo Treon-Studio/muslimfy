@@ -1,0 +1,8 @@
+---
+import MobileLayout from '@/layouts/MobileLayout.astro';
+import { AboutContent } from '@/components/about/AboutContent';
+---
+
+<MobileLayout currentPath="/about">
+  <AboutContent client:load />
+</MobileLayout>
